@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathörnet | Orientaliska Delikatesser</title>
+    <meta name="description" content="Upptäck Mathörnets fantastiska sortiment av orientaliska matprodukter - från Kubbe Trabolsie till Kubbe Halab.">
+    <link rel="stylesheet" href="style.css?v=15">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="page-preloader" class="preloader">
+        <div class="loader"></div>
+    </div>
+    <header class="main-header">
+        <div class="header-inner container">
+            <a href="index.html" class="logo">
+                <img src="img/mathörnet logo.png" alt="Mathörnet Logotyp" class="main-logo">
+            </a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="produkter.html">Produkter</a></li>
+                    <li><a href="recept.html">Recept</a></li>
+                    <li><a href="nyheter.html">Nyheter</a></li>
+                    <li><a href="aterforsaljare.html">Återförsäljare</a></li>
+                    <li><a href="om-oss.html">Om oss</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions" style="display: flex; align-items: center; gap: 1rem;">
+                <div class="custom-lang-picker">
+                    <button class="lang-toggle-btn" aria-label="Välj språk">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    </button>
+                    <div class="lang-dropdown">
+                        <button class="lang-option" data-lang="sv">
+                            <img src="https://flagcdn.com/w20/se.png" srcset="https://flagcdn.com/w40/se.png 2x" width="20" alt="Sverige"> Svenska
+                        </button>
+                        <button class="lang-option" data-lang="en">
+                            <img src="https://flagcdn.com/w20/gb.png" srcset="https://flagcdn.com/w40/gb.png 2x" width="20" alt="Storbritannien"> English
+                        </button>
+                        <button class="lang-option" data-lang="ar">
+                            <img src="https://flagcdn.com/w20/sa.png" srcset="https://flagcdn.com/w40/sa.png 2x" width="20" alt="Saudiarabien"> العربية
+                        </button>
+                    </div>
+                </div>
+                <div class="search-container">
+                    <button class="search-btn" aria-label="Sök">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </button>
+                    <div class="search-dropdown">
+                        <input type="text" id="search-input" placeholder="Sök, t.ex. falafel...">
+                        <div class="search-results" id="search-results">
+                            <!-- JS injected results -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-bg" style="background-image: url('img/Mathörnet.png');"></div>
+            <div class="hero-overlay"></div>
+            <div class="container" style="width: 100%;">
+                <div class="hero-content">
+                    <h1 style="line-height: 1.2; margin-bottom: 2.5rem;">Autentiska smaker<br>från mellanöstern</h1>
+                    <p style="font-size: 1.15rem; line-height: 1.6;">Med rötter i generationers familjerecept och noggrant utvalda ingredienser producerar vi autentiska mellanösternska specialiteter med hög och jämn kvalitet för grossister, restauranger och detaljhandel.</p>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+                        <a href="#" class="btn btn-primary" style="padding: 15px 30px; border-radius: 8px;">Se vårt sortiment</a>
+                        <a href="kontakt.html" class="btn btn-outline-white">Bli återförsäljare</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Produktnyheter (Cloetta style) -->
+        <section class="products-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Våra produkter</h2>
+                    <a href="#" class="btn btn-red">Se alla produkter &rarr;</a>
+                </div>
+
+                <div class="products-grid">
+                    <!-- Product 1: Sandwich Kubbe (Nyhet) -->
+                    <a href="sandwich-kubbe.html" class="product-card">
+                        <span class="product-badge">Nyhet</span>
+                        <div class="product-img-wrapper">
+                            <img src="img/sandwich kubbe.png" alt="Sandwich Kubbe">
+                        </div>
+                        <div class="product-info">
+                            <h3>Sandwich Kubbe</h3>
+                            <div class="product-meta">
+                                <span class="weight">450g</span>
+                                <span class="read-more">Tryck för att läsa mer &rarr;</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Product 2 -->
+                    <a href="kubbe-trabolsie.html" class="product-card">
+                        <div class="product-img-wrapper">
+                            <img src="img/kubbe trabolsie.png" alt="Kubbe Trabolsie">
+                        </div>
+                        <div class="product-info">
+                            <h3>Kubbe Trabolsie</h3>
+                            <div class="product-meta">
+                                <span class="weight">500g</span>
+                                <span class="read-more">Tryck för att läsa mer &rarr;</span>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <!-- Product 3 -->
+                    <a href="kubbe-halab.html" class="product-card">
+                        <div class="product-img-wrapper">
+                            <img src="img/kubbe halab.png" alt="Kubbe Halab">
+                        </div>
+                        <div class="product-info">
+                            <h3>Kubbe Halab</h3>
+                            <div class="product-meta">
+                                <span class="weight">500g</span>
+                                <span class="read-more">Tryck för att läsa mer &rarr;</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Product 4 -->
+                    <a href="potatis-kubbe.html" class="product-card">
+                        <div class="product-img-wrapper">
+                            <img src="img/potatis kubbe.png" alt="Potatis Kubbe">
+                        </div>
+                        <div class="product-info">
+                            <h3>Potatis Kubbe</h3>
+                            <div class="product-meta">
+                                <span class="weight">400g</span>
+                                <span class="read-more">Tryck för att läsa mer &rarr;</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Product 5 -->
+                    <a href="ris-kubbe.html" class="product-card">
+                        <div class="product-img-wrapper">
+                            <img src="img/ris kubbe.png" alt="Ris Kubbe">
+                        </div>
+                        <div class="product-info">
+                            <h3>Ris Kubbe</h3>
+                            <div class="product-meta">
+                                <span class="weight">400g</span>
+                                <span class="read-more">Tryck för att läsa mer &rarr;</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Product 6 -->
+                    <a href="kubbe-mosel.html" class="product-card">
+                        <div class="product-img-wrapper">
+                            <img src="img/kubbe mosel.png" alt="Kubbe Mosel">
+                        </div>
+                        <div class="product-info">
+                            <h3>Kubbe Mosel</h3>
+                            <div class="product-meta">
+                                <span class="weight">450g</span>
+                                <span class="read-more">Tryck för att läsa mer &rarr;</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Våra återförsäljare (Senaste artiklarna style - Mint background) -->
+        <section class="retailers-section">
+            <div class="custom-shape-divider-top">
+                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+                </svg>
+            </div>
+            <div class="container">
+                <div class="zigzag-wrapper" style="margin-top: 3rem;">
+
+                    <!-- Row 1: Our Heritage -->
+                    <div class="zigzag-row">
+                        <div class="zigzag-logo">
+                            <img src="img/heritage_hands.png" alt="Gammalt hantverk" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="zigzag-content">
+                            <h3>Vårt Arv</h3>
+                            <div class="zigzag-content-divider"></div>
+                            <p>Mathörnet grundades på principerna om tålamod och precision och började i ett litet kök där varje detalj var ett hantverk av kärlek. Idag bevarar vi samma traditionella tekniker och ser till att varje produkt bär på vår genuina mathistoria.</p>
+                            <a href="#" class="btn btn-navy" style="margin-top: 1.5rem; width: max-content;">Upptäck vår historia</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Row 2: Selected Ingredients -->
+                    <div class="zigzag-row">
+                        <div class="zigzag-logo">
+                            <img src="img/selected_ingredients.png" alt="Utvalda ingredienser" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="zigzag-content">
+                            <h3>Noggrant Utvalda Råvaror</h3>
+                            <div class="zigzag-content-divider"></div>
+                            <p>Vi tror att kvalitet börjar vid källan. Vår bulgur hämtas från bördiga slätter, och vårt kött är noggrant utvalt, blandat med en unik och hemlig kryddblandning som definierar Mathörnets karaktäristiska smakprofil.</p>
+                            <div style="display: flex; gap: 2rem; margin-top: 1rem;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem; color: #555; font-size: 0.9rem; font-weight: 600;">
+                                    <svg width="18" height="18" viewBox="0 0 24 24"><defs><pattern id="teal-texture" patternUnits="userSpaceOnUse" width="24" height="24"><image href="img/smooth_teal_watercolor.png" x="0" y="0" width="24" height="24" preserveAspectRatio="none" /></pattern></defs><path fill="url(#teal-texture)" d="M12 0a12 12 0 1 0 12 12A12.01 12.01 0 0 0 12 0zm-2 17l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg> 100% Naturliga Kryddor
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 0.5rem; color: #555; font-size: 0.9rem; font-weight: 600;">
+                                    <svg width="18" height="18" viewBox="0 0 24 24"><defs><pattern id="teal-texture" patternUnits="userSpaceOnUse" width="24" height="24"><image href="img/smooth_teal_watercolor.png" x="0" y="0" width="24" height="24" preserveAspectRatio="none" /></pattern></defs><path fill="url(#teal-texture)" d="M12 0a12 12 0 1 0 12 12A12.01 12.01 0 0 0 12 0zm-2 17l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg> Färska Råvaror
+                                </div>
+                            </div>
+                            <a href="#" class="btn btn-navy" style="margin-top: 1.5rem; width: max-content;">Upptäck våra produkter</a>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Modern Production -->
+                    <div class="zigzag-row">
+                        <div class="zigzag-logo">
+                            <img src="img/modern_production.png" alt="Modern produktion" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="zigzag-content">
+                            <h3>Modern Produktion</h3>
+                            <div class="zigzag-content-divider"></div>
+                            <p>Vår toppmoderna anläggning förenar tradition med modern teknologi och uppfyller de högsta kvalitetsstandarderna (ISO 22000). Vi har skalat upp vår produktion för att servera tusentals partners i restaurangbranschen, utan att någonsin kompromissa med originalreceptens hantverkskänsla.</p>
+                            <a href="#" class="btn btn-navy" style="margin-top: 1.5rem; width: max-content;">Upptäck vår produktion</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="custom-shape-divider-bottom" style="position: absolute; bottom: -1px; left: 0; width: 100%; overflow: hidden; line-height: 0; transform: rotate(180deg); z-index: 2;">
+                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" style="position: relative; display: block; width: calc(100% + 1.3px); height: 60px;">
+                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" style="fill: #ffffff;"></path>
+                </svg>
+            </div>
+        </section>
+
+        <!-- RETAILERS GALLERY SECTION -->
+        <section class="retailers-gallery" style="padding: 100px 0; background-color: #fff; position: relative; margin-top: -1px;">
+            <div class="container" style="text-align: center;">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem; color: #000; font-weight: 800;">På väg till din lokala matbutik</h2>
+                <p style="font-size: 1.2rem; color: #555; max-width: 800px; margin: 0 auto 5rem auto; line-height: 1.6;">
+                    Vår stora passion är att göra Mathörnets autentiska matupplevelser tillgängliga för alla. Därför är vår tydliga målsättning att inom en snar framtid finnas representerade hos Sveriges ledande dagligvarukedjor och grossister. Vi arbetar målmedvetet för att du snart ska kunna hitta våra produkter oavsett var du handlar – från de stora stormarknaderna till din lokala handlare.
+                </p>
+                
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4rem 6rem; width: 100%; margin: 0 auto;">
+                    <!-- Rad 1/2 Loggor -->
+                    <img src="img/coop.png" alt="Coop" style="height: 80px; object-fit: contain;">
+                    <img src="img/maxi.png" alt="ICA Maxi" style="height: 80px; object-fit: contain;">
+                    <img src="img/willys.png" alt="Willys" style="height: 80px; object-fit: contain;">
+                    <img src="img/hemköp.png" alt="Hemköp" style="height: 80px; object-fit: contain;">
+                    <img src="img/citygross.png" alt="City Gross" style="height: 80px; object-fit: contain;">
+                    <img src="img/lidl.png" alt="Lidl" style="height: 80px; object-fit: contain;">
+                    <!-- Rad 3/4 Loggor -->
+                    <img src="img/xtra.jpg" alt="Xtra" style="height: 80px; object-fit: contain;">
+                    <img src="img/blu grossist.png" alt="BLU Grossist" style="height: 80px; object-fit: contain;">
+                    <img src="img/snabbgross.png" alt="Snabbgross" style="height: 80px; object-fit: contain;">
+                    <img src="img/lucu food.png" alt="Lucu Food" style="height: 80px; object-fit: contain;">
+                    <img src="img/Jonourfood.png" alt="Jonourfood" style="height: 80px; object-fit: contain;">
+                </div>
+            </div>
+        </section>
+
+        <!-- Nyheter (Cloettas varumärken style - Light pink/grey background) -->
+        <section class="news-section">
+            <div class="custom-shape-divider-top">
+                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" style="transform: scaleX(-1);">
+                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+                </svg>
+            </div>
+            <div class="container">
+                <div class="section-header">
+                    <h2>Nyheter</h2>
+                    <a href="nyheter.html" class="btn btn-navy">Se alla nyheter &rarr;</a>
+                </div>
+
+                <!-- NEWS CAROUSEL START -->
+
+                <div class="carousel-wrapper">
+                    <div class="carousel-viewport" style="overflow: hidden;">
+                        <div class="carousel-track" style="display: flex; transition: transform 0.5s ease-in-out;">
+                            <a href="nyhet-hostens-sortiment.html" class="carousel-card news-card-v2" style="flex: 0 0 calc(33.333% - 22px); min-width: 300px; margin-right: 32px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
+                                <div class="news-img" style="height: 250px; overflow: hidden;">
+                                    <img src="img/news_1_1780604259746.png" alt="Höstens utvalda sortiment" style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                                <div class="news-content" style="padding: 2rem; display: flex; flex-direction: column; flex-grow: 1;">
+                                    <div class="news-meta" style="font-size: 0.85rem; color: #666; margin-bottom: 1rem; display: flex; gap: 0.5rem; align-items: center;">
+                                        <span class="date">24 sep 2026</span>
+                                        <span class="divider">|</span>
+                                        <span class="category" style="color: var(--navy-bg); font-weight: 600;">Nyhet</span>
+                                    </div>
+                                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #000;">Höstens utvalda sortiment</h3>
+                                    <p style="color: #555; margin-bottom: 2rem; flex-grow: 1; line-height: 1.6;">Vi är stolta över att presentera vårt uppdaterade sortiment inför hösten, med fokus på värmande och smakrika klassiker för restauranger.</p>
+                                    <span class="btn btn-navy" style="text-align: center; width: 100%;">Läs inlägg</span>
+                                </div>
+                            </a>
+                            <a href="nyhet-sponsrar-fotbollslag.html" class="carousel-card news-card-v2" style="flex: 0 0 calc(33.333% - 22px); min-width: 300px; margin-right: 32px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
+                                <div class="news-img" style="height: 250px; overflow: hidden;">
+                                    <img src="img/news_2_1780604270066.png" alt="Mathörnet sponsrar lokala FC" style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                                <div class="news-content" style="padding: 2rem; display: flex; flex-direction: column; flex-grow: 1;">
+                                    <div class="news-meta" style="font-size: 0.85rem; color: #666; margin-bottom: 1rem; display: flex; gap: 0.5rem; align-items: center;">
+                                        <span class="date">12 aug 2026</span>
+                                        <span class="divider">|</span>
+                                        <span class="category" style="color: var(--navy-bg); font-weight: 600;">Nyhet</span>
+                                    </div>
+                                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #000;">Mathörnet sponsrar lokala FC</h3>
+                                    <p style="color: #555; margin-bottom: 2rem; flex-grow: 1; line-height: 1.6;">Vi är oerhört stolta över att gå in som huvudsponsor för den lokala fotbollsklubben och stötta ungdomsidrotten i regionen.</p>
+                                    <span class="btn btn-navy" style="text-align: center; width: 100%;">Läs inlägg</span>
+                                </div>
+                            </a>
+                            <a href="nyhet-blu-grossist.html" class="carousel-card news-card-v2" style="flex: 0 0 calc(33.333% - 22px); min-width: 300px; margin-right: 32px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
+                                <div class="news-img" style="height: 250px; overflow: hidden;">
+                                    <img src="img/retailer_1_1780604249865.png" alt="Nu hittar ni oss hos BLU Grossist!" style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                                <div class="news-content" style="padding: 2rem; display: flex; flex-direction: column; flex-grow: 1;">
+                                    <div class="news-meta" style="font-size: 0.85rem; color: #666; margin-bottom: 1rem; display: flex; gap: 0.5rem; align-items: center;">
+                                        <span class="date">01 jul 2026</span>
+                                        <span class="divider">|</span>
+                                        <span class="category" style="color: var(--navy-bg); font-weight: 600;">Nyhet</span>
+                                    </div>
+                                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #000;">Nu hittar ni oss hos BLU Grossist!</h3>
+                                    <p style="color: #555; margin-bottom: 2rem; flex-grow: 1; line-height: 1.6;">Vi är glada att meddela att BLU Grossist nu erbjuder Mathörnets fulla sortiment för restaurang och storkök.</p>
+                                    <span class="btn btn-navy" style="text-align: center; width: 100%;">Läs inlägg</span>
+                                </div>
+                            </a>
+                            <a href="nyhet-ny-produktionsanlaggning.html" class="carousel-card news-card-v2" style="flex: 0 0 calc(33.333% - 22px); min-width: 300px; margin-right: 32px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
+                                <div class="news-img" style="height: 250px; overflow: hidden;">
+                                    <img src="img/hero_feast_1780604012322.png" alt="Vi utökar med ny produktionsanläggning" style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                                <div class="news-content" style="padding: 2rem; display: flex; flex-direction: column; flex-grow: 1;">
+                                    <div class="news-meta" style="font-size: 0.85rem; color: #666; margin-bottom: 1rem; display: flex; gap: 0.5rem; align-items: center;">
+                                        <span class="date">15 jun 2026</span>
+                                        <span class="divider">|</span>
+                                        <span class="category" style="color: var(--navy-bg); font-weight: 600;">Nyhet</span>
+                                    </div>
+                                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #000;">Vi utökar med ny produktionsanläggning</h3>
+                                    <p style="color: #555; margin-bottom: 2rem; flex-grow: 1; line-height: 1.6;">För att möta den enorma efterfrågan från landets grossister slår vi nu upp portarna till en ny toppmodern anläggning.</p>
+                                    <span class="btn btn-navy" style="text-align: center; width: 100%;">Läs inlägg</span>
+                                </div>
+                            </a>
+                            <a href="nyhet-arets-leverantor-2026.html" class="carousel-card news-card-v2" style="flex: 0 0 calc(33.333% - 22px); min-width: 300px; margin-right: 32px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
+                                <div class="news-img" style="height: 250px; overflow: hidden;">
+                                    <img src="img/award_ceremony.png" alt="Mathörnet nominerade till Årets Leverantör" style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                                <div class="news-content" style="padding: 2rem; display: flex; flex-direction: column; flex-grow: 1;">
+                                    <div class="news-meta" style="font-size: 0.85rem; color: #666; margin-bottom: 1rem; display: flex; gap: 0.5rem; align-items: center;">
+                                        <span class="date">28 maj 2026</span>
+                                        <span class="divider">|</span>
+                                        <span class="category" style="color: var(--navy-bg); font-weight: 600;">Nyhet</span>
+                                    </div>
+                                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #000;">Mathörnet nominerade till Årets Leverantör</h3>
+                                    <p style="color: #555; margin-bottom: 2rem; flex-grow: 1; line-height: 1.6;">Det är med stor glädje vi kan meddela att vi blivit nominerade till det prestigefyllda priset Årets Leverantör 2026 i livsmedelsbranschen.</p>
+                                    <span class="btn btn-navy" style="text-align: center; width: 100%;">Läs inlägg</span>
+                                </div>
+                            </a>
+                            <a href="nyhet-hallbar-framtid.html" class="carousel-card news-card-v2" style="flex: 0 0 calc(33.333% - 22px); min-width: 300px; margin-right: 32px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
+                                <div class="news-img" style="height: 250px; overflow: hidden;">
+                                    <img src="img/green_energy_factory.png" alt="Vårt nya hållbarhetslöfte: 100% grön energi" style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                                <div class="news-content" style="padding: 2rem; display: flex; flex-direction: column; flex-grow: 1;">
+                                    <div class="news-meta" style="font-size: 0.85rem; color: #666; margin-bottom: 1rem; display: flex; gap: 0.5rem; align-items: center;">
+                                        <span class="date">14 apr 2026</span>
+                                        <span class="divider">|</span>
+                                        <span class="category" style="color: var(--navy-bg); font-weight: 600;">Nyhet</span>
+                                    </div>
+                                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #000;">Vårt nya hållbarhetslöfte: 100% grön energi</h3>
+                                    <p style="color: #555; margin-bottom: 2rem; flex-grow: 1; line-height: 1.6;">Som ett led i vårt miljöarbete övergår samtliga av våra produktionsanläggningar till att drivas helt på förnybar sol- och vindkraft.</p>
+                                    <span class="btn btn-navy" style="text-align: center; width: 100%;">Läs inlägg</span>
+                                </div>
+                            </a>
+                            <a href="nyhet-ica-maxi-avtal.html" class="carousel-card news-card-v2" style="flex: 0 0 calc(33.333% - 22px); min-width: 300px; margin-right: 32px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
+                                <div class="news-img" style="height: 250px; overflow: hidden;">
+                                    <img src="img/retailer_1_1780604249865.png" alt="Rikstäckande avtal med ICA Maxi klart" style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                                <div class="news-content" style="padding: 2rem; display: flex; flex-direction: column; flex-grow: 1;">
+                                    <div class="news-meta" style="font-size: 0.85rem; color: #666; margin-bottom: 1rem; display: flex; gap: 0.5rem; align-items: center;">
+                                        <span class="date">02 mar 2026</span>
+                                        <span class="divider">|</span>
+                                        <span class="category" style="color: var(--navy-bg); font-weight: 600;">Nyhet</span>
+                                    </div>
+                                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #000;">Rikstäckande avtal med ICA Maxi klart</h3>
+                                    <p style="color: #555; margin-bottom: 2rem; flex-grow: 1; line-height: 1.6;">Nu blir våra populära färdigrätter ännu mer lättillgängliga. Ett nytt avtal innebär att Mathörnet snart finns i kyldiskarna hos alla ICA Maxi i Sverige.</p>
+                                    <span class="btn btn-navy" style="text-align: center; width: 100%;">Läs inlägg</span>
+                                </div>
+                            </a>
+                            <a href="nyhet-staller-ut-pa-massa.html" class="carousel-card news-card-v2" style="flex: 0 0 calc(33.333% - 22px); min-width: 300px; margin-right: 32px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
+                                <div class="news-img" style="height: 250px; overflow: hidden;">
+                                    <img src="img/food_exhibition.png" alt="Träffa Mathörnet på årets stora matmässa" style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                                <div class="news-content" style="padding: 2rem; display: flex; flex-direction: column; flex-grow: 1;">
+                                    <div class="news-meta" style="font-size: 0.85rem; color: #666; margin-bottom: 1rem; display: flex; gap: 0.5rem; align-items: center;">
+                                        <span class="date">18 feb 2026</span>
+                                        <span class="divider">|</span>
+                                        <span class="category" style="color: var(--navy-bg); font-weight: 600;">Nyhet</span>
+                                    </div>
+                                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #000;">Träffa Mathörnet på årets stora matmässa</h3>
+                                    <p style="color: #555; margin-bottom: 2rem; flex-grow: 1; line-height: 1.6;">Kom förbi vår monter på branschens största fackmässa! Vi bjuder på smakprov från hela vårt sortiment och presenterar flera nyheter.</p>
+                                    <span class="btn btn-navy" style="text-align: center; width: 100%;">Läs inlägg</span>
+                                </div>
+                            </a>
+                            <a href="nyhet-okad-produktion-veganskt.html" class="carousel-card news-card-v2" style="flex: 0 0 calc(33.333% - 22px); min-width: 300px; margin-right: 32px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
+                                <div class="news-img" style="height: 250px; overflow: hidden;">
+                                    <img src="img/vegan_production.png" alt="Vi fördubblar produktionen av våra veganska alternativ" style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                                <div class="news-content" style="padding: 2rem; display: flex; flex-direction: column; flex-grow: 1;">
+                                    <div class="news-meta" style="font-size: 0.85rem; color: #666; margin-bottom: 1rem; display: flex; gap: 0.5rem; align-items: center;">
+                                        <span class="date">05 jan 2026</span>
+                                        <span class="divider">|</span>
+                                        <span class="category" style="color: var(--navy-bg); font-weight: 600;">Nyhet</span>
+                                    </div>
+                                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #000;">Vi fördubblar produktionen av våra veganska alternativ</h3>
+                                    <p style="color: #555; margin-bottom: 2rem; flex-grow: 1; line-height: 1.6;">Efterfrågan på plantbaserat fortsätter att skjuta i höjden. Nu fördubblar vi kapaciteten för vår veganska produktlinje.</p>
+                                    <span class="btn btn-navy" style="text-align: center; width: 100%;">Läs inlägg</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="carousel-controls" style="display: flex; justify-content: center; align-items: center; gap: 2rem; margin-top: 3rem;">
+                        <button class="carousel-btn prev-btn" aria-label="Föregående" style="background: none; border: 1px solid #ddd; border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--navy-bg);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        </button>
+                        <div class="carousel-dots" style="display: flex; gap: 0.5rem;">
+                            <!-- Dots generated by JS -->
+                        </div>
+                        <button class="carousel-btn next-btn" aria-label="Nästa" style="background: none; border: 1px solid #ddd; border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--navy-bg);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </button>
+                    </div>
+                </div>
+<!-- NEWS CAROUSEL END -->
+            </div>
+        </section>
+        <!-- CTA Section -->
+        <section class="cta-bottom-section">
+            <div class="custom-shape-divider-top">
+                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+                </svg>
+            </div>
+            <div class="container">
+                <div class="cta-bottom-card">
+                    <h2>Autentiska smaker för din verksamhet</h2>
+                    <p>Säkra en jämn och hög kvalitet i ditt utbud. Vi levererar handgjorda specialiteter från Mellanöstern, färdigpackade och anpassade för grossister, restauranger och storkök.</p>
+                    <div class="cta-buttons">
+                        <a href="sortiment.html" class="btn cta-btn-solid">Se vårt sortiment</a>
+                        <a href="kontakt.html" class="btn cta-btn-outline">Kontakta oss</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-col">
+                <a href="index.html" class="footer-logo" style="display: block; margin-top: -20px;">
+                    <img src="img/mathörnet logo.png" alt="Mathörnet Logotyp" style="height: 110px; width: auto; margin-bottom: -40px; margin-left: -15px;">
+                </a>
+                <p style="color: #555; max-width: 260px; font-size: 0.9rem; line-height: 1.6;">Mathörnet bygger på generationer av kunskap om orientalisk matlagning. Äkta råvaror, äkta smak.</p>
+                <div class="social-links" style="display: flex; gap: 1.2rem; margin-top: 1.5rem;">
+                    <!-- Facebook (Fyrkantig) -->
+                    <a href="#" style="color: #888; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-3 7h-1.924c-.615 0-1.076.252-1.076.889v1.111h3l-.238 3h-2.762v8h-3v-8h-2v-3h2v-1.923c0-2.022 1.064-3.077 3.461-3.077h2.539v3z"/></svg>
+                    </a>
+                    <!-- LinkedIn (Fyrkantig) -->
+                    <a href="#" style="color: #888; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                    <!-- Instagram -->
+                    <a href="#" style="color: #888; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    </a>
+                    <!-- TikTok -->
+                    <a href="#" style="color: #888; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93v7.2c0 1.96-.5 3.96-1.6 5.56-1.15 1.7-2.92 2.85-4.94 3.09-2.05.25-4.22-.16-5.96-1.34-1.72-1.14-2.87-3.05-3.07-5.11-.2-2.12.35-4.28 1.68-5.91 1.34-1.66 3.32-2.67 5.4-2.85 1.1-.09 2.22 0 3.28.32v3.91c-.43-.13-.88-.18-1.32-.16-1.38.05-2.66.86-3.32 2.05-.65 1.19-.68 2.67-.09 3.89.57 1.2 1.8 2.05 3.12 2.12 1.35.08 2.7-.49 3.52-1.57.8-.57 1.25-1.54 1.25-2.52V.02h-2.02z"/></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Snabblänkar</h3>
+                <ul>
+                    <li><a href="produkter.html">Produkter</a></li>
+                    <li><a href="recept.html">Recept</a></li>
+                    <li><a href="nyheter.html">Nyheter</a></li>
+                    <li><a href="aterforsaljare.html">Återförsäljare</a></li>
+                    <li><a href="om-oss.html">Om Oss</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Kategorier</h3>
+                <ul>
+                    <li><a href="#">Kubbe</a></li>
+                    <li><a href="#">Meze</a></li>
+                    <li><a href="#">Sött</a></li>
+                    <li><a href="#">Kryddor</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Kontakt</h3>
+                <ul class="contact-info">
+                    <li>Strängnäsvägen 123, 132 44 Strängnäs</li>
+                    <li><a href="mailto:info@mathornet.se">info@mathornet.se</a></li>
+                    <li>072 - 182 67 84</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom container">
+            <p>&copy; 2026 Mathörnet. Alla rättigheter reserverade.</p>
+            <div class="footer-legal">
+                <a href="#">Köpvillkor</a> | <a href="#">Integritetspolicy</a> | <a href="#">Cookies</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Google Translate Script & Custom Logic -->
+    <div id="google_translate_element" style="display:none;"></div>
+    <script src="js/translate.js"></script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- Main Script -->
+    <script src="main.js?v=3"></script>
+    <script>
+        // Skydda innehållet från att enkelt inspekteras eller laddas ner
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.onkeydown = function(e) {
+            if(e.keyCode == 123) return false; // F12
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false; // Ctrl+Shift+I
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false; // Ctrl+Shift+C
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false; // Ctrl+Shift+J
+            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; // Ctrl+U (Källkod)
+        }
+    </script>
+</body>
+</html>
+
+

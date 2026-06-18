@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rökig Baba Ganoush | Mathörnet</title>
+    <link rel="stylesheet" href="style.css?v=12">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .post-hero { position: relative; height: 60vh; min-height: 400px; display: flex; align-items: center; justify-content: center; color: #fff; text-align: center; }
+        .post-hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+        .post-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.45); z-index: 1; }
+        .post-hero-content { position: relative; z-index: 2; max-width: 800px; padding: 0 2rem; }
+        .post-title { font-size: 4rem; font-weight: 800; margin-bottom: 1rem; }
+        .post-meta { font-size: 1.1rem; font-weight: 500; opacity: 0.9; }
+        .post-content-container { max-width: 800px; margin: 4rem auto 6rem; padding: 0 2rem; font-size: 1.2rem; line-height: 1.8; color: #333; }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="page-preloader" class="preloader">
+        <div class="loader"></div>
+    </div>
+    <header class="main-header">
+        <div class="header-inner container">
+            <a href="index.html" class="logo">
+                <img src="img/mathörnet logo.png" alt="Mathörnet Logotyp" class="main-logo">
+            </a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="produkter.html">Produkter</a></li>
+                    <li><a href="recept.html">Recept</a></li>
+                    <li><a href="nyheter.html">Nyheter</a></li>
+                    <li><a href="aterforsaljare.html">Återförsäljare</a></li>
+                    <li><a href="om-oss.html">Om oss</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                </ul>
+            </nav>
+
+            <div class="search-container">
+                <button class="search-btn" aria-label="Sök">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
+                <div class="search-dropdown">
+                    <input type="text" id="search-input" placeholder="Sök, t.ex. falafel...">
+                    <div class="search-results" id="search-results">
+                        <!-- JS injected results -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <section class="post-hero">
+            <img src="img/recipe_babaganoush_1781120991044.png" class="post-hero-bg" alt="Rökig Baba Ganoush">
+            <div class="post-overlay"></div>
+            <div class="post-hero-content">
+                <h1 class="post-title">Rökig Baba Ganoush</h1>
+                <div class="post-meta">Tillagningstid: 45 min</div>
+            </div>
+        </section>
+        
+        <div class="post-content-container">
+            <p class="lead" style="font-size: 1.4rem; font-weight: 500; margin-bottom: 2rem;">Grillad aubergine, tahini och vitlök i en krämig och rökig röra. Passar fantastiskt till grillat kött och bröd.</p>
+            <p>Bränn auberginen över öppen låga för den rätta smaken...</p>
+            
+            <div style="margin-top: 4rem; text-align: center;">
+                <a href="recept.html" class="btn btn-navy">&larr; Tillbaka till alla recept</a>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-col">
+                <a href="index.html" class="footer-logo" style="display: block; margin-top: -20px;">
+                    <img src="img/mathörnet logo.png" alt="Mathörnet Logotyp" style="height: 110px; width: auto; margin-bottom: -40px; margin-left: -15px;">
+                </a>
+                <p style="color: #555; max-width: 260px; font-size: 0.9rem; line-height: 1.6;">Mathörnet bygger på generationer av kunskap om orientalisk matlagning. Äkta råvaror, äkta smak.</p>
+                <div class="social-links" style="display: flex; gap: 1.2rem; margin-top: 1.5rem;">
+                    <!-- Facebook (Fyrkantig) -->
+                    <a href="#" style="color: #888; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-3 7h-1.924c-.615 0-1.076.252-1.076.889v1.111h3l-.238 3h-2.762v8h-3v-8h-2v-3h2v-1.923c0-2.022 1.064-3.077 3.461-3.077h2.539v3z"/></svg>
+                    </a>
+                    <!-- LinkedIn (Fyrkantig) -->
+                    <a href="#" style="color: #888; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                    <!-- Instagram -->
+                    <a href="#" style="color: #888; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    </a>
+                    <!-- TikTok -->
+                    <a href="#" style="color: #888; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93v7.2c0 1.96-.5 3.96-1.6 5.56-1.15 1.7-2.92 2.85-4.94 3.09-2.05.25-4.22-.16-5.96-1.34-1.72-1.14-2.87-3.05-3.07-5.11-.2-2.12.35-4.28 1.68-5.91 1.34-1.66 3.32-2.67 5.4-2.85 1.1-.09 2.22 0 3.28.32v3.91c-.43-.13-.88-.18-1.32-.16-1.38.05-2.66.86-3.32 2.05-.65 1.19-.68 2.67-.09 3.89.57 1.2 1.8 2.05 3.12 2.12 1.35.08 2.7-.49 3.52-1.57.8-.57 1.25-1.54 1.25-2.52V.02h-2.02z"/></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Snabblänkar</h3>
+                <ul>
+                    <li><a href="produkter.html">Produkter</a></li>
+                    <li><a href="recept.html">Recept</a></li>
+                    <li><a href="nyheter.html">Nyheter</a></li>
+                    <li><a href="aterforsaljare.html">Återförsäljare</a></li>
+                    <li><a href="om-oss.html">Om Oss</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Kategorier</h3>
+                <ul>
+                    <li><a href="#">Kubbe</a></li>
+                    <li><a href="#">Meze</a></li>
+                    <li><a href="#">Sött</a></li>
+                    <li><a href="#">Kryddor</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Kontakt</h3>
+                <ul class="contact-info">
+                    <li>Strängnäsvägen 123, 132 44 Strängnäs</li>
+                    <li><a href="mailto:info@mathornet.se">info@mathornet.se</a></li>
+                    <li>072 - 182 67 84</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom container">
+            <p>&copy; 2026 Mathörnet. Alla rättigheter reserverade.</p>
+            <div class="footer-legal">
+                <a href="#">Köpvillkor</a> | <a href="#">Integritetspolicy</a> | <a href="#">Cookies</a>
+            </div>
+        </div>
+    </footer>
+    <script src="main.js?v=3"></script>
+</body>
+</html>
+
+

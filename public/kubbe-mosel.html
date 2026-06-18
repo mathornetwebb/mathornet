@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kubbe Mosel | Mathörnet</title>
+    <link rel="stylesheet" href="style.css?v=12">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-inner container">
+            <a href="index.html" class="logo">
+                <img src="img/mathörnet logo.png" alt="Mathörnet Logotyp" class="main-logo">
+            </a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="produkter.html">Produkter</a></li>
+                    <li><a href="#">Recept</a></li>
+                    <li><a href="nyheter.html">Nyheter</a></li>
+                    <li><a href="aterforsaljare.html">Återförsäljare</a></li>
+                    <li><a href="om-oss.html">Om oss</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                </ul>
+            </nav>
+
+            <div class="search-container">
+                <button class="search-btn" aria-label="Sök">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
+                <div class="search-dropdown">
+                    <input type="text" id="search-input" placeholder="Sök, t.ex. falafel...">
+                    <div class="search-results" id="search-results">
+                        <!-- JS injected results -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="product-page-layout">
+            <div class="product-image-col">
+                
+                <img src="img/kubbe mosel.png" alt="Kubbe Mosel">
+            </div>
+            
+            <div class="product-info-col">
+                <div class="breadcrumbs">
+                    <a href="index.html">Hemsida</a> &gt; <a href="index.html">Produkter</a> &gt; Kubbe Mosel
+                </div>
+                
+                <h1 class="product-title">Kubbe Mosel</h1>
+                
+                <p class="product-desc">Klassiska kokta Kubbe för en fyllig smak. Ett måste för den som älskar äkta husmanskost från Mellanöstern.</p>
+                
+                <div class="product-specs">
+                    <span class="spec-label">Kvantitet/förpackning:</span>
+                    <span class="spec-value">-</span>
+                </div>
+                
+                <div class="product-specs" style="border-bottom: 1px solid #eee; margin-bottom: 3rem;">
+                    <span class="spec-label">Nettovikt:</span>
+                    <span class="spec-value">450 gram</span>
+                </div>
+                
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            Ingredienser
+                            <span class="accordion-icon"></span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-inner">
+                                <p style="margin-bottom: 0.5rem"><strong>Deg:</strong> Nötrulle 40%, bulgur-vete 30%, durumvete 30%, vatten, salt</p>
+                                <p style="margin-bottom: 0.5rem"><strong>Fyllning:</strong> Nötfärs 70%, lök 30%, salt, svartpeppar, kanel, nejlika, muskotnöt, kardemumma, E621, kryddpeppar, ingefära</p>
+                                <p><strong>Allergener:</strong> Nötter, sesamfrön och gluten</p>
+                                <div class="warning-text">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                    Se alltid produktinformationen på förpackningen.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            Näringsinnehåll per 100g
+                            <span class="accordion-icon"></span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-inner">
+                                Energi: 1200 kJ / 285 kcal<br>
+                                Fett: 12g<br>
+                                varav mättat fett: 4g<br>
+                                Kolhydrater: 30g<br>
+                                varav sockerarter: 1g<br>
+                                Protein: 14g<br>
+                                Salt: 1.2g
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fler produkter Karusell -->
+        <section class="products-section carousel-section" style="background-color: #fcfcfc;">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Fler produkter</h2>
+                    <a href="index.html" class="btn btn-red">Se alla produkter &rarr;</a>
+                </div>
+                
+                <div class="carousel-wrapper">
+                    <div class="carousel-viewport">
+                        <div class="carousel-track">
+                            
+                    <a href="sandwich-kubbe.html" class="product-card carousel-card">
+                        <span class="badge">Nyhet</span>
+                        <div class="product-img-wrapper">
+                            <img src="img/sandwich kubbe.png" alt="Sandwich Kubbe">
+                        </div>
+                        <div class="product-info">
+                            <h3>Sandwich Kubbe</h3>
+                            <div class="product-meta">
+                                <span class="weight">450 gram</span>
+                                <span class="read-more">Tryck för att läsa mer &rarr;</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="kubbe-trabolsie.html" class="product-card carousel-card">
+                        
+                        <div class="product-img-wrapper">
+                            <img src="img/kubbe trabolsie.png" alt="Kubbe Trabolsie">
+                        </div>
+                        <div class="product-info">
+                            <h3>Kubbe Trabolsie</h3>
+                            <div class="product-meta">
+                                <span class="weight">500 gram</span>
+                                <span class="read-more">Tryck för att läsa mer &rarr;</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="kubbe-halab.html" class="product-card carousel-card">
+                        
+                        <div class="product-img-wrapper">
+                            <img src="img/kubbe halab.png" alt="Kubbe Halab">
+                        </div>
+                        <div class="product-info">
+                            <h3>Kubbe Halab</h3>
+                            <div class="product-meta">
+                                <span class="weight">500 gram</span>
+                                <span class="read-more">Tryck för att läsa mer &rarr;</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="potatis-kubbe.html" class="product-card carousel-card">
+                        
+                        <div class="product-img-wrapper">
+                            <img src="img/potatis kubbe.png" alt="Potatis Kubbe">
+                        </div>
+                        <div class="product-info">
+                            <h3>Potatis Kubbe</h3>
+                            <div class="product-meta">
+                                <span class="weight">500 gram</span>
+                                <span class="read-more">Tryck för att läsa mer &rarr;</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="ris-kubbe.html" class="product-card carousel-card">
+                        
+                        <div class="product-img-wrapper">
+                            <img src="img/ris kubbe.png" alt="Ris Kubbe">
+                        </div>
+                        <div class="product-info">
+                            <h3>Ris Kubbe</h3>
+                            <div class="product-meta">
+                                <span class="weight">500 gram</span>
+                                <span class="read-more">Tryck för att läsa mer &rarr;</span>
+                            </div>
+                        </div>
+                    </a>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-controls">
+                        <button class="carousel-btn prev-btn" aria-label="Föregående">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        </button>
+                        <div class="carousel-dots">
+                            <button class="dot active" data-index="0" aria-label="Sida 1"></button>
+                            <button class="dot" data-index="1" aria-label="Sida 2"></button>
+                            <button class="dot" data-index="2" aria-label="Sida 3"></button>
+                        </div>
+                        <button class="carousel-btn next-btn" aria-label="Nästa">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-col">
+                <a href="index.html" class="footer-logo" style="display: block; margin-top: -20px;">
+                    <img src="img/mathörnet logo.png" alt="Mathörnet Logotyp" style="height: 110px; width: auto; margin-bottom: -40px; margin-left: -15px;">
+                </a>
+                <p style="color: #555; max-width: 260px; font-size: 0.9rem; line-height: 1.6;">Mathörnet bygger på generationer av kunskap om orientalisk matlagning. Äkta råvaror, äkta smak.</p>
+                <div class="social-links" style="display: flex; gap: 1.2rem; margin-top: 1.5rem;">
+                    <!-- Facebook (Fyrkantig) -->
+                    <a href="#" style="color: #888; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-3 7h-1.924c-.615 0-1.076.252-1.076.889v1.111h3l-.238 3h-2.762v8h-3v-8h-2v-3h2v-1.923c0-2.022 1.064-3.077 3.461-3.077h2.539v3z"/></svg>
+                    </a>
+                    <!-- LinkedIn (Fyrkantig) -->
+                    <a href="#" style="color: #888; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                    <!-- Instagram -->
+                    <a href="#" style="color: #888; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    </a>
+                    <!-- TikTok -->
+                    <a href="#" style="color: #888; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93v7.2c0 1.96-.5 3.96-1.6 5.56-1.15 1.7-2.92 2.85-4.94 3.09-2.05.25-4.22-.16-5.96-1.34-1.72-1.14-2.87-3.05-3.07-5.11-.2-2.12.35-4.28 1.68-5.91 1.34-1.66 3.32-2.67 5.4-2.85 1.1-.09 2.22 0 3.28.32v3.91c-.43-.13-.88-.18-1.32-.16-1.38.05-2.66.86-3.32 2.05-.65 1.19-.68 2.67-.09 3.89.57 1.2 1.8 2.05 3.12 2.12 1.35.08 2.7-.49 3.52-1.57.8-.57 1.25-1.54 1.25-2.52V.02h-2.02z"/></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Snabblänkar</h3>
+                <ul>
+                    <li><a href="produkter.html">Produkter</a></li>
+                    <li><a href="recept.html">Recept</a></li>
+                    <li><a href="nyheter.html">Nyheter</a></li>
+                    <li><a href="aterforsaljare.html">Återförsäljare</a></li>
+                    <li><a href="om-oss.html">Om Oss</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Kategorier</h3>
+                <ul>
+                    <li><a href="#">Kubbe</a></li>
+                    <li><a href="#">Meze</a></li>
+                    <li><a href="#">Sött</a></li>
+                    <li><a href="#">Kryddor</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Kontakt</h3>
+                <ul class="contact-info">
+                    <li>Strängnäsvägen 123, 132 44 Strängnäs</li>
+                    <li><a href="mailto:info@mathornet.se">info@mathornet.se</a></li>
+                    <li>072 - 182 67 84</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom container">
+            <p>&copy; 2026 Mathörnet. Alla rättigheter reserverade.</p>
+            <div class="footer-legal">
+                <a href="#">Köpvillkor</a> | <a href="#">Integritetspolicy</a> | <a href="#">Cookies</a>
+            </div>
+        </div>
+    </footer>
+    <script src="main.js?v=3"></script>
+</body>
+</html>
+
+

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Återförsäljare | Mathörnet</title>
+    <meta name="description" content="Bli återförsäljare av Mathörnets autentiska delikatesser. Vi erbjuder hög kvalitet och smidiga leveranser.">
+    <link rel="stylesheet" href="style.css?v=12">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* B2B HERO */
+        .b2b-hero { position: relative; height: 70vh; min-height: 600px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-top: -100px; }
+        .b2b-hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        .b2b-hero-bg img { width: 100%; height: 100%; object-fit: cover; }
+        .b2b-hero-bg .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(8, 25, 43, 0.85) 0%, rgba(11, 94, 94, 0.6) 100%); }
+        .b2b-hero-content { position: relative; z-index: 2; text-align: center; color: #fff; max-width: 1100px; padding: 0 20px; margin-top: 50px; }
+        .b2b-hero-content .tag { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); padding: 6px 16px; border-radius: 30px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; font-size: 0.85rem; display: inline-block; margin-bottom: 1.5rem; backdrop-filter: blur(5px); }
+        .b2b-hero-content h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 1.5rem; line-height: 1.1; }
+        @media (min-width: 768px) { .b2b-hero-content h1 { font-size: 4rem; } }
+        .b2b-hero-content p { font-size: 1.25rem; margin-bottom: 2.5rem; opacity: 0.9; line-height: 1.6; }
+        .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .hero-buttons .btn { padding: 15px 30px; font-size: 1.1rem; }
+        
+        /* NOISE TEXTURE */
+        .b2b-usp-section::before, .b2b-contact::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('img/pure_noise.png'); background-size: 256px; background-repeat: repeat;
+            opacity: 0.8; z-index: -1; pointer-events: none;
+        }
+
+        /* USP GRID */
+        .b2b-usp-section { padding: 8rem 0; }
+        .usp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 3rem; }
+        .usp-card { text-align: center; padding: 3rem 2rem; background: #fff; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); transition: transform 0.3s ease, box-shadow 0.3s ease; border: 1px solid rgba(0,0,0,0.03); }
+        .usp-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
+        .usp-icon { width: 80px; height: 80px; margin: 0 auto 1.5rem; background-image: url('img/smooth_teal_watercolor.png'); background-size: cover; background-position: center; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(11, 94, 94, 0.2); }
+        .usp-icon svg { width: 40px; height: 40px; }
+        .usp-card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: #000; }
+        .usp-card p { color: #555; line-height: 1.6; }
+
+        /* ASSORTMENT */
+        .assortment-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .assortment-card { border-radius: 20px; overflow: hidden; background: #fff; box-shadow: 0 15px 35px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.05); transition: transform 0.3s ease; }
+        .assortment-card:hover { transform: translateY(-5px); }
+        .assortment-card img { width: 100%; height: 240px; object-fit: cover; }
+        .assortment-content { padding: 2.5rem; }
+        .assortment-content h3 { font-size: 1.5rem; margin-bottom: 1rem; color: #000; }
+        .assortment-content p { color: #555; line-height: 1.6; }
+
+        /* PROCESS */
+        .process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; position: relative; margin-top: 2rem; }
+        .process-steps::before { 
+            content: ''; position: absolute; top: 40px; left: 15%; width: 0; height: 2px; 
+            background: rgba(255,255,255,0.6); z-index: 1;
+            transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.3s;
+        }
+        .b2b-process.visible .process-steps::before { width: 70%; }
+        
+        .process-steps::after { 
+            content: ''; position: absolute; top: 40px; left: 15%; width: 70%; height: 2px; 
+            background: rgba(255,255,255,0.1); z-index: 0; 
+        }
+        @media (max-width: 768px) { .process-steps::before, .process-steps::after { display: none; } }
+        
+        .step { position: relative; z-index: 2; text-align: center; opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .step.visible { opacity: 1; transform: translateY(0); }
+        .step:nth-child(1) { transition-delay: 0.2s; }
+        .step:nth-child(2) { transition-delay: 0.6s; }
+        .step:nth-child(3) { transition-delay: 1.0s; }
+        @keyframes heartbeat-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.5); }
+            70% { box-shadow: 0 0 0 15px rgba(255,255,255,0); }
+            100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+        }
+        
+        .step-number { width: 80px; height: 80px; margin: 0 auto 1.5rem; background: #fff; color: #000; font-size: 2rem; font-weight: 800; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 4px solid rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(0,0,0,0.1); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        
+        .step.visible .step-number { animation: heartbeat-pulse 2.5s infinite ease-out; }
+        
+        .step:hover .step-number { animation: none; transform: scale(1.15) translateY(-5px); border-color: #fff; box-shadow: 0 15px 30px rgba(0,0,0,0.2), 0 0 0 8px rgba(255,255,255,0.25); }
+        .step h3 { font-size: 1.5rem; margin-bottom: 1rem; color: #fff; transition: transform 0.3s ease; }
+        .step p { color: #fff; line-height: 1.6; font-size: 1rem; max-width: 260px; margin: 0 auto; opacity: 0.9; text-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.3s ease; }
+        .step:hover h3, .step:hover p { transform: translateY(-3px); }
+
+        /* FORM */
+        .form-row { display: flex; gap: 1.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .form-group { flex: 1; min-width: 200px; display: flex; flex-direction: column; text-align: left; }
+        .form-group label { font-size: 0.9rem; font-weight: 600; color: #333; margin-bottom: 0.5rem; }
+        .form-group input, .form-group select, .form-group textarea { padding: 14px 16px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 1rem; transition: border-color 0.2s, box-shadow 0.2s; background: #fafafa; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--teal-primary); box-shadow: 0 0 0 3px rgba(11, 94, 94, 0.1); background: #fff; }
+        
+        /* OVERRIDES for header on this specific page */
+        .main-header { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); }
+        .section-header { display: block !important; }
+        .section-header h2 { margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="page-preloader" class="preloader">
+        <div class="loader"></div>
+    </div>
+    
+    <header class="main-header">
+        <div class="header-inner container">
+            <a href="index.html" class="logo">
+                <img src="img/mathörnet logo.png" alt="Mathörnet Logotyp" class="main-logo">
+            </a>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="produkter.html">Produkter</a></li>
+                    <li><a href="recept.html">Recept</a></li>
+                    <li><a href="nyheter.html">Nyheter</a></li>
+                    <li><a href="aterforsaljare.html" class="active">Återförsäljare</a></li>
+                    <li><a href="om-oss.html">Om oss</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                </ul>
+            </nav>
+
+            <div class="search-container">
+                <button class="search-btn" aria-label="Sök">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
+                <div class="search-dropdown">
+                    <input type="text" id="search-input" placeholder="Sök, t.ex. falafel...">
+                    <div class="search-results" id="search-results">
+                        <!-- JS injected results -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <!-- HERO SECTION -->
+        <section class="b2b-hero">
+            <div class="b2b-hero-bg">
+                <img src="img/blu_grossist.png" alt="Mathörnet B2B och Återförsäljare">
+                <div class="overlay"></div>
+            </div>
+            <div class="container b2b-hero-content">
+                <h1>Erbjud dina kunder<br>äkta orientaliska smaker</h1>
+                <p>Hantverksmässig kvalitet, stabil leveranskedja och smaker som får dina kunder att komma tillbaka. Bli återförsäljare av Mathörnets premiumdelikatesser idag.</p>
+                <div class="hero-buttons">
+                    <a href="#sortiment" class="btn btn-primary">Se vårt sortiment</a>
+                    <a href="#ansokan" class="btn btn-outline-white">Bli återförsäljare</a>
+                </div>
+            </div>
+            
+            <!-- Shape divider bottom -->
+            <div class="custom-shape-divider-bottom" style="position: absolute; bottom: -1px; left: 0; width: 100%; overflow: hidden; line-height: 0; transform: rotate(180deg);">
+                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" style="display: block; width: 100%; height: 60px;">
+                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" style="fill: #FAF8F5;"></path>
+                </svg>
+            </div>
+        </section>
+
+        <!-- USPs -->
+        <section class="b2b-usp-section" style="background-color: #FAF8F5; position: relative; z-index: 1;">
+            <div class="container">
+                <div class="section-header" style="text-align:center; max-width: 800px; margin: 0 auto 4rem;">
+                    <h2>Varför välja Mathörnet?</h2>
+                    <p style="font-size: 1.1rem; color: #555;">Våra återförsäljare är ryggraden i vår distribution. Vi arbetar kontinuerligt med att säkerställa högsta kvalitet och leveranssäkerhet för butik, restaurang och storkök.</p>
+                </div>
+                
+                <div class="usp-grid">
+                    <div class="usp-card">
+                        <div class="usp-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        </div>
+                        <h3>Äkta Hantverk</h3>
+                        <p>Recept som gått i arv. Vi lagar all vår mat med kärlek, riktiga råvaror och utan onödiga tillsatser. Det märker kunden direkt.</p>
+                    </div>
+                    <div class="usp-card">
+                        <div class="usp-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                        </div>
+                        <h3>Hög Lönsamhet</h3>
+                        <p>Med konkurrenskraftiga inköpspriser och produkter som roterar extremt snabbt i hyllan garanterar vi en stark affär för dig.</p>
+                    </div>
+                    <div class="usp-card">
+                        <div class="usp-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                        </div>
+                        <h3>Pålitlig Leverans</h3>
+                        <p>Vår nya, storskaliga produktionsanläggning i Strängnäs säkerställer snabba och trygga leveranser i hela landet utan avbrott.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ASSORTMENT OVERVIEW -->
+        <section id="sortiment" class="b2b-assortment" style="background-color: #fff; padding: 6rem 0;">
+            <div class="container">
+                <div class="section-header" style="text-align:center; max-width: 800px; margin: 0 auto 4rem;">
+                    <h2>Lösningar för alla verksamheter</h2>
+                    <p style="font-size: 1.1rem; color: #555;">Oavsett om du driver en deli-butik, en stormarknad, eller ett skolkök så har vi förpackningar och produkter som passar just era behov.</p>
+                </div>
+                
+                <div class="assortment-grid">
+                    <div class="assortment-card">
+                        <img src="img/mathörnet förpackning.png" alt="Butik" style="object-fit: contain; padding: 1.5rem; background: #fff;">
+                        <div class="assortment-content">
+                            <h3>Färdigförpackat för Butik</h3>
+                            <p>Snygga och inbjudande konsumentförpackningar som står ut i kyldisken. Perfekt för dagligvaruhandeln och delikatessen.</p>
+                        </div>
+                    </div>
+                    <div class="assortment-card">
+                        <img src="img/restaurant_kitchen_kubbe.png" alt="Restaurang och Storkök">
+                        <div class="assortment-content">
+                            <h3>Restaurang & Storkök</h3>
+                            <p>Storförpackningar utformade för smidig hantering i professionella kök, till oslagbart portionspris och perfekt kvalitet.</p>
+                        </div>
+                    </div>
+                    <div class="assortment-card">
+                        <img src="img/sauces_plastic_tubs.png" alt="Sås & Tillbehör">
+                        <div class="assortment-content">
+                            <h3>Sås & Tillbehör</h3>
+                            <p>Färdiga röror, dipper och autentiska bröd. Komplettera huvudprodukterna och ge kunden en fulländad måltidsupplevelse.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROCESS & CONTACT WRAPPER -->
+        <div style="background-image: url('img/smooth_teal_watercolor.png'); background-size: cover; background-position: center; color: #fff; position: relative;">
+        
+        <!-- PROCESS / HOW IT WORKS -->
+        <section class="b2b-process" style="padding: 6rem 0 3rem; position: relative; z-index: 2;">
+            <div class="container">
+                <div class="section-header" style="text-align:center; max-width: 800px; margin: 0 auto 4rem;">
+                    <h2 style="color: #fff;">Så enkelt kommer du igång</h2>
+                </div>
+                
+                <div class="process-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Gör intresseanmälan</h3>
+                        <p>Fyll i formuläret nedan med dina företagsuppgifter och vad ni söker för typ av produkter.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Vi kontaktar dig</h3>
+                        <p>En av våra säljare ringer upp. Vi ser över era behov och skickar varuprover och prislista.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Klara, färdiga, sälj!</h3>
+                        <p>Lägg er första beställning! Vi supporterar med marknadsmaterial för att bygga försäljning.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT FORM -->
+        <section id="ansokan" class="contact-hero-wrapper" style="padding: 3rem 0 6rem; position: relative; z-index: 2;">
+            <div class="container" style="width: 100%; display: flex; justify-content: center; position: relative; z-index: 2;">
+                <div class="contact-wrapper">
+                    <h2>Bli vår nästa framgångssaga!</h2>
+                    <p>Vi letar alltid efter passionerade återförsäljare som vill erbjuda det lilla extra till sina kunder. Fyll i formuläret så tar vi nästa steg tillsammans.</p>
+                    
+                    <form class="about-contact-form" action="#" method="POST">
+                        <div class="form-row">
+                            <div class="form-group half">
+                                <label for="company">Företagsnamn *</label>
+                                <input type="text" id="company" name="company" placeholder="Företagets namn" required>
+                            </div>
+                            <div class="form-group half">
+                                <label for="orgnr">Org.nummer</label>
+                                <input type="text" id="orgnr" name="orgnr" placeholder="123456-7890">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group half">
+                                <label for="contact">Kontaktperson *</label>
+                                <input type="text" id="contact" name="contact" placeholder="Ditt namn" required>
+                            </div>
+                            <div class="form-group half">
+                                <label for="phone">Telefonnr *</label>
+                                <input type="tel" id="phone" name="phone" placeholder="+46 70 000 00 00" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group half">
+                                <label for="email">E-post *</label>
+                                <input type="email" id="email" name="email" placeholder="din@email.se" required>
+                            </div>
+                            <div class="form-group half">
+                                <label for="type">Typ av verksamhet</label>
+                                <select id="type" name="type" style="padding: 14px 16px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 1rem; width: 100%; background: #fafafa; outline: none; transition: border-color 0.2s;">
+                                    <option value="butik">Dagligvaruhandel / Butik</option>
+                                    <option value="restaurang">Restaurang / Café</option>
+                                    <option value="grossist">Grossist</option>
+                                    <option value="annat">Annat</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Meddelande / Specifika önskemål</label>
+                            <textarea id="message" name="message" rows="4" placeholder="Här kan du skriva din fråga eller berätta mer om ditt ärende..."></textarea>
+                        </div>
+                        <button type="submit" class="btn" style="width:100%; padding: 1rem; font-size: 1.1rem; border: none; border-radius: 5px; cursor:pointer; background-image: url('img/smooth_teal_watercolor.png'); background-size: cover; background-position: center; color: #fff;">Skicka intresseanmälan</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-col">
+                <a href="index.html" class="footer-logo" style="display: block; margin-top: -20px;">
+                    <img src="img/mathörnet logo.png" alt="Mathörnet Logotyp" style="height: 110px; width: auto; margin-bottom: -40px; margin-left: -15px;">
+                </a>
+                <p style="color: #555; max-width: 260px; font-size: 0.9rem; line-height: 1.6;">Mathörnet bygger på generationer av kunskap om orientalisk matlagning. Äkta råvaror, äkta smak.</p>
+                <div class="social-links" style="display: flex; gap: 1.2rem; margin-top: 1.5rem;">
+                    <!-- Facebook (Fyrkantig) -->
+                    <a href="#" style="color: #888; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-3 7h-1.924c-.615 0-1.076.252-1.076.889v1.111h3l-.238 3h-2.762v8h-3v-8h-2v-3h2v-1.923c0-2.022 1.064-3.077 3.461-3.077h2.539v3z"/></svg>
+                    </a>
+                    <!-- LinkedIn (Fyrkantig) -->
+                    <a href="#" style="color: #888; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                    <!-- Instagram -->
+                    <a href="#" style="color: #888; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    </a>
+                    <!-- TikTok -->
+                    <a href="#" style="color: #888; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93v7.2c0 1.96-.5 3.96-1.6 5.56-1.15 1.7-2.92 2.85-4.94 3.09-2.05.25-4.22-.16-5.96-1.34-1.72-1.14-2.87-3.05-3.07-5.11-.2-2.12.35-4.28 1.68-5.91 1.34-1.66 3.32-2.67 5.4-2.85 1.1-.09 2.22 0 3.28.32v3.91c-.43-.13-.88-.18-1.32-.16-1.38.05-2.66.86-3.32 2.05-.65 1.19-.68 2.67-.09 3.89.57 1.2 1.8 2.05 3.12 2.12 1.35.08 2.7-.49 3.52-1.57.8-.57 1.25-1.54 1.25-2.52V.02h-2.02z"/></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Snabblänkar</h3>
+                <ul>
+                    <li><a href="produkter.html">Produkter</a></li>
+                    <li><a href="recept.html">Recept</a></li>
+                    <li><a href="nyheter.html">Nyheter</a></li>
+                    <li><a href="aterforsaljare.html">Återförsäljare</a></li>
+                    <li><a href="om-oss.html">Om Oss</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Kategorier</h3>
+                <ul>
+                    <li><a href="#">Kubbe</a></li>
+                    <li><a href="#">Meze</a></li>
+                    <li><a href="#">Sött</a></li>
+                    <li><a href="#">Kryddor</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Kontakt</h3>
+                <ul class="contact-info">
+                    <li>Strängnäsvägen 123, 132 44 Strängnäs</li>
+                    <li><a href="mailto:info@mathornet.se">info@mathornet.se</a></li>
+                    <li>072 - 182 67 84</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom container">
+            <p>&copy; 2026 Mathörnet. Alla rättigheter reserverade.</p>
+            <div class="footer-legal">
+                <a href="#">Köpvillkor</a> | <a href="#">Integritetspolicy</a> | <a href="#">Cookies</a>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="main.js?v=3"></script>
+    <script>
+        // Intersection Observer för process-stegen (1-2-3 animation)
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); // Animera bara en gång
+                    }
+                });
+            }, { threshold: 0.3 }); // Trigga när 30% av elementet är synligt
+
+            // Obeservera sektionen för linje-animationen
+            const processSection = document.querySelector('.b2b-process');
+            if (processSection) observer.observe(processSection);
+
+            // Obeservera stegen individuellt
+            document.querySelectorAll('.step').forEach(step => {
+                observer.observe(step);
+            });
+        });
+    </script>
+</body>
+</html>
+
+
