@@ -1644,3 +1644,148 @@ body {
     transform: scale(0.97);
     opacity: 0.85;
 }
+
+/* ==========================================================================
+   Hamburger Menu
+   ========================================================================== */
+.mobile-menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #1a2a40;
+    width: 44px;
+    height: 44px;
+    padding: 8px;
+    z-index: 1000;
+}
+
+.mobile-menu-toggle.active svg {
+    color: #118b8b; /* highlight active menu */
+}
+
+/* === MOBILE FIXES === */
+@media (max-width: 768px) {
+    /* Header & Navigation Fixes */
+    .header-inner {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 0.5rem 1rem !important;
+        gap: 0.5rem !important;
+    }
+    .main-logo {
+        height: 50px !important;
+        margin: 0 !important;
+    }
+    .header-actions {
+        gap: 0.5rem !important;
+    }
+    
+    .mobile-menu-toggle {
+        display: block !important;
+        order: -1; /* Puts hamburger to the left of logo if we want, or keep it right. Actually let's let it sit where it is in HTML */
+    }
+    
+    .main-nav {
+        position: fixed !important;
+        top: 0 !important;
+        right: -100% !important; /* Start off-screen */
+        width: 80% !important;
+        max-width: 400px !important;
+        height: 100vh !important;
+        background-color: #fff !important;
+        box-shadow: -5px 0 30px rgba(0,0,0,0.1) !important;
+        z-index: 999 !important;
+        transition: right 0.3s ease-in-out !important;
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 80px 2rem 2rem !important;
+        overflow-y: auto !important;
+    }
+    
+    .main-nav.active {
+        right: 0 !important;
+    }
+    
+    .main-nav ul {
+        flex-direction: column !important;
+        gap: 1.5rem !important;
+        align-items: flex-start !important;
+    }
+    
+    .main-nav ul li a {
+        font-size: 1.25rem !important;
+        font-weight: 600 !important;
+        display: block !important;
+        width: 100% !important;
+        padding: 0.5rem 0 !important;
+        border-bottom: 1px solid #eee !important;
+        color: #1a2a40 !important;
+    }
+    
+    /* Layout & Spacing */
+    .hero-section {
+        padding-top: 130px !important;
+        min-height: auto !important;
+        padding-bottom: 60px !important;
+    }
+    .hero-content h1 {
+        font-size: 2.2rem !important;
+        margin-bottom: 1rem !important;
+    }
+    .hero-content p {
+        font-size: 1.05rem !important;
+    }
+    h2, .section-header h2, .about-hero h1, .contact-wrapper h2, .vision-cards-section h2.section-title, .cta-section h2, .cta-bottom-card h2 {
+        font-size: 2rem !important;
+    }
+    
+    /* Sections padding */
+    .products-section, .retailers-section, .news-section, .retailers-gallery, .cta-bottom-section, .about-hero, .zigzag-section, .contact-form-section, .vision-cards-section, .cta-section {
+        padding-top: 50px !important;
+        padding-bottom: 50px !important;
+    }
+    
+    /* ZigZag Sections */
+    .zigzag-row {
+        gap: 2rem !important;
+        margin-bottom: 4rem !important;
+        padding: 0 1rem !important;
+    }
+    .zigzag-content h3 {
+        font-size: 1.6rem !important;
+    }
+    .zigzag-logo {
+        width: 100% !important;
+    }
+    
+    /* Retailers Gallery */
+    .retailers-gallery div[style*="display: flex"] {
+        gap: 2rem 1.5rem !important;
+        padding: 0 1rem !important;
+    }
+    .retailers-gallery img {
+        height: 45px !important;
+    }
+    
+    /* Footer */
+    .footer-col {
+        margin-bottom: 2rem !important;
+    }
+    
+    /* Specific Page Fixes */
+    .vision-card { 
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important; 
+        margin-bottom: 2rem !important; 
+    }
+    .contact-wrapper { 
+        padding: 2rem 1rem !important; 
+        width: 100% !important; 
+        border-radius: 0 !important; 
+    }
+    .about-contact-form input, .about-contact-form textarea { 
+        font-size: 16px !important; /* Prevents iOS auto-zoom */
+    }
+}

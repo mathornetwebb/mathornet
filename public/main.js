@@ -232,4 +232,24 @@ function initFooterReveal() {
 
 document.addEventListener('DOMContentLoaded', initFooterReveal);
 
+// Hamburger Menu Logic
+document.addEventListener('DOMContentLoaded', () => {
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    const mainNav = document.querySelector('.main-nav');
+    const body = document.body;
+
+    if (menuToggle && mainNav) {
+        menuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+            
+            if (mainNav.classList.contains('active')) {
+                body.style.overflow = 'hidden'; // Prevent background scrolling
+            } else {
+                body.style.overflow = '';
+            }
+        });
+    }
+});
+
 
