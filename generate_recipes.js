@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 
 const recipeData = [
     {
@@ -8,8 +9,22 @@ const recipeData = [
         date: '10 jun 2026',
         category: 'Recept',
         time: '15 min',
+        portions: '4 portioner',
+        difficulty: 'Medel',
         excerpt: 'Den perfekta fluffiga vitlökskrämen som är ett absolut måste till kyckling och våra färdiga grillprodukter.',
-        content: '<p>Toum är magi i en skål. Hemligheten ligger i att hälla oljan extremt långsamt...</p>'
+        ingredients: [
+            '4 vitlöksklyftor (gärna unga)',
+            '1 tsk salt',
+            '3 msk nypressad citronsaft',
+            '3 dl neutral olja (t.ex. rapsolja)'
+        ],
+        instructions: [
+            'Skala vitlöksklyftorna och ta bort eventuella gröna groddar.',
+            'Lägg vitlök och salt i en matberedare. Mixa tills det blir en slät pasta.',
+            'Tillsätt 1 msk citronsaft och mixa ytterligare.',
+            'Börja hälla i oljan i en extremt tunn stråle medan maskinen är igång. Det är superviktigt att hälla långsamt för att emulsionen ska sätta sig!',
+            'Varva försiktigt med resten av citronsaften tills du får en fluffig, vit kräm.'
+        ]
     },
     {
         id: 'kramig-hummus',
@@ -18,8 +33,25 @@ const recipeData = [
         date: '08 jun 2026',
         category: 'Recept',
         time: '30 min',
+        portions: '6 portioner',
+        difficulty: 'Enkel',
         excerpt: 'Silkeslen hummus med tahini och citron. Det självklara tillbehöret till nyfriterad falafel och varmt pitabröd.',
-        content: '<p>Blötlägg kikärterna över natten för bäst resultat...</p>'
+        ingredients: [
+            '250 g torkade kikärtor (blötlagda över natten)',
+            '1 tsk bikarbonat (till kokning)',
+            '1,5 dl ljus tahini',
+            '3 msk nypressad citronsaft',
+            '2 vitlöksklyftor, pressade',
+            '1 dl isvatten',
+            'Salt efter smak'
+        ],
+        instructions: [
+            'Skölj de blötlagda kikärtorna och koka dem mjuka tillsammans med bikarbonat i ca 1-2 timmar tills de är riktigt mjuka.',
+            'Låt svalna. Mixa tahini, citronsaft och vitlök i en matberedare tills det ljusnar och blir fluffigt.',
+            'Tillsätt isvattnet lite i taget under mixning.',
+            'Vänd ner kikärtorna i tahiniblandningen och mixa i flera minuter tills du får en otroligt silkeslen kräm.',
+            'Smaka av med salt och eventuellt mer citron.'
+        ]
     },
     {
         id: 'shish-taouk-marinad',
@@ -28,8 +60,26 @@ const recipeData = [
         date: '05 jun 2026',
         category: 'Recept',
         time: '10 min',
+        portions: '4 portioner',
+        difficulty: 'Enkel',
         excerpt: 'En fräsch och smakrik marinad på yoghurt, vitlök, citron och tomatpuré som gör grillkycklingen oslagbar.',
-        content: '<p>Låt kycklingen marinera i minst 4 timmar...</p>'
+        ingredients: [
+            '800 g kycklingfilé eller lårfilé i bitar',
+            '2 dl turkisk yoghurt',
+            '3 msk olivolja',
+            '4 pressade vitlöksklyftor',
+            '1 msk tomatpuré',
+            '1 tsk paprikapulver',
+            '1 msk citronsaft',
+            'Salt och svartpeppar'
+        ],
+        instructions: [
+            'Skär kycklingen i jämna bitar, lämpliga för grillspett.',
+            'Blanda yoghurt, olivolja, vitlök, tomatpuré, paprikapulver, citronsaft, salt och peppar i en stor skål.',
+            'Vänd ner kycklingen i marinaden och se till att alla bitar är täckta.',
+            'Täck skålen och låt marinera i kylen i minst 4 timmar, gärna över natten.',
+            'Trä upp på spett och grilla tills kycklingen är helt genomstekt.'
+        ]
     },
     {
         id: 'tabbouleh',
@@ -38,8 +88,26 @@ const recipeData = [
         date: '01 jun 2026',
         category: 'Recept',
         time: '20 min',
+        portions: '4 portioner',
+        difficulty: 'Medel',
         excerpt: 'En explosion av smak med finhackad persilja, mynta, citron och bulgur. Det perfekta fräscha tillbehöret.',
-        content: '<p>Nyckeln är att inte fuska med hackandet...</p>'
+        ingredients: [
+            '3 stora knippen bladpersilja',
+            '1 knippe färsk mynta',
+            '0,5 dl fin bulgur',
+            '4 fasta tomater',
+            '3 salladslökar',
+            '4 msk nypressad citronsaft',
+            '4 msk god olivolja',
+            'Salt och svartpeppar'
+        ],
+        instructions: [
+            'Skölj bulgurn och blötlägg i kallt vatten i 10 minuter. Krama ur allt vatten.',
+            'Finhacka persilja och mynta extremt fint. Använd en vass kniv (inga matberedare!).',
+            'Finhacka tomater och salladslök i små, jämna tärningar.',
+            'Blanda alla grönsaker och bulgur i en stor skål.',
+            'Tillsätt olivolja, citronsaft, salt och peppar precis innan servering. Blanda väl.'
+        ]
     },
     {
         id: 'baba-ganoush',
@@ -48,8 +116,25 @@ const recipeData = [
         date: '28 maj 2026',
         category: 'Recept',
         time: '45 min',
+        portions: '4 portioner',
+        difficulty: 'Medel',
         excerpt: 'Grillad aubergine, tahini och vitlök i en krämig och rökig röra. Passar fantastiskt till grillat kött och bröd.',
-        content: '<p>Bränn auberginen över öppen låga för den rätta smaken...</p>'
+        ingredients: [
+            '2 stora auberginer',
+            '2 msk ljus tahini',
+            '1-2 vitlöksklyftor, pressade',
+            '2 msk nypressad citronsaft',
+            '2 msk olivolja',
+            'Salt',
+            'Persilja och granatäpplekärnor till garnering'
+        ],
+        instructions: [
+            'Bränn auberginerna hela över öppen låga (gasspis eller grill) eller baka högt upp i ugnen (250°C) tills skalet är helt svart och innanmätet mjukt.',
+            'Låt svalna något och gröp sedan ur köttet. Kassera skalet.',
+            'Låt aubergineköttet rinna av i en sil i 10 minuter.',
+            'Hacka eller mosa köttet grovt med en gaffel (mixa inte, baba ganoush ska ha textur).',
+            'Rör i tahini, vitlök, citronsaft, olivolja och salt. Garnera med persilja och granatäpple.'
+        ]
     },
     {
         id: 'tarator',
@@ -58,8 +143,22 @@ const recipeData = [
         date: '20 maj 2026',
         category: 'Recept',
         time: '5 min',
+        portions: '4 portioner',
+        difficulty: 'Enkel',
         excerpt: 'En snabb och nötig sås gjord på tahini, citron och vitlök som är klassikern att ringla över nygjord falafel.',
-        content: '<p>Blanda tahini och citron först, det kommer att tjockna innan du tillsätter vatten...</p>'
+        ingredients: [
+            '1 dl ljus tahini (sesampasta)',
+            '0,5 dl nypressad citronsaft',
+            '1 vitlöksklyfta, pressad',
+            '0,5-1 dl vatten',
+            'En nypa salt'
+        ],
+        instructions: [
+            'Vispa ihop tahini, citronsaft och vitlök i en skål. Blandningen kommer först att tjockna och bli grynig.',
+            'Tillsätt vattnet gradvis, lite i taget, medan du vispar konstant.',
+            'Fortsätt vispa tills såsen ljusnar och får en slät, krämig och ringelbar konsistens.',
+            'Smaka av med salt och eventuellt lite mer citron.'
+        ]
     },
     {
         id: 'batata-harra',
@@ -68,8 +167,26 @@ const recipeData = [
         date: '15 maj 2026',
         category: 'Recept',
         time: '35 min',
+        portions: '4 portioner',
+        difficulty: 'Medel',
         excerpt: 'Krispiga potatiskuber slungade i vitlök, koriander, chili och citron. En garanterad succé på middagsbordet.',
-        content: '<p>Fritera potatisen först för bäst textur...</p>'
+        ingredients: [
+            '800 g fast potatis',
+            'Neutral olja till fritering',
+            '4 vitlöksklyftor, pressade',
+            '1 röd chili, finhackad (eller 1 tsk chiliflakes)',
+            '1 stor knippe färsk koriander, grovhackad',
+            '3 msk olivolja',
+            '2 msk nypressad citronsaft',
+            'Salt'
+        ],
+        instructions: [
+            'Skala och skär potatisen i jämna kuber, ca 2x2 cm.',
+            'Fritera potatiskuberna i varm olja tills de är gyllene och krispiga. Låt rinna av på hushållspapper.',
+            'Värm olivoljan i en stor stekpanna. Fräs vitlök och chili i någon minut utan att de tar färg.',
+            'Vänd ner den friterade potatisen och rör om så de täcks av vitlöksoljan.',
+            'Stäng av värmen, tillsätt koriander, citronsaft och salt. Blanda väl och servera genast.'
+        ]
     },
     {
         id: 'hembakat-pitabrod',
@@ -78,8 +195,25 @@ const recipeData = [
         date: '10 maj 2026',
         category: 'Recept',
         time: '90 min',
+        portions: '8 bröd',
+        difficulty: 'Svår',
         excerpt: 'Inget slår ett varmt, nygräddat pitabröd att doppa i din hummus eller att fylla med frasig falafel och grönsaker.',
-        content: '<p>Grädda på hög värme så att de blåser upp sig som bollar...</p>'
+        ingredients: [
+            '25 g färsk jäst',
+            '3 dl fingervarmt vatten',
+            '1 tsk socker',
+            '1 tsk salt',
+            '2 msk olivolja',
+            '7-8 dl vetemjöl special'
+        ],
+        instructions: [
+            'Smula jästen i en bunke. Häll över det fingervarma vattnet och rör tills jästen lösts upp. Tillsätt socker och olivolja.',
+            'Arbeta in vetemjölet och saltet lite i taget. Knåda degen smidig i maskin i ca 8-10 minuter.',
+            'Låt degen jäsa övertäckt till dubbel storlek i ca 45 minuter.',
+            'Sätt ugnen på 250°C (gärna med en pizzasten eller en uppochnedvänd plåt inne i ugnen).',
+            'Dela degen i 8 bitar. Rulla till bollar och kavla ut varje boll till en tunn cirkel (ca 3-4 mm tjock).',
+            'Grädda bröden 1-2 i taget i mitten av ugnen i 4-5 minuter. De kommer att blåsa upp sig som bollar! Låt svalna under bakduk.'
+        ]
     },
     {
         id: 'krispig-fattoush',
@@ -88,12 +222,35 @@ const recipeData = [
         date: '02 maj 2026',
         category: 'Recept',
         time: '20 min',
+        portions: '4 portioner',
+        difficulty: 'Enkel',
         excerpt: 'Mellanösterns godaste sallad! Fylld med färska grönsaker, sumak och toppad med krispiga pitabrödskrutonger.',
-        content: '<p>Fritera gärna dina pitabrödskrutonger för extra mycket krisp...</p>'
+        ingredients: [
+            '2 st libabröd (eller pitabröd)',
+            '2 hjärtsalladshuvuden',
+            '4 salladstomater',
+            '1 gurka',
+            '1 röd paprika',
+            '4 rädisor',
+            '1 knippe persilja och mynta',
+            '2 tsk sumak (krydda)',
+            '3 msk granatäppelsirap',
+            '3 msk olivolja',
+            '1 msk citronsaft',
+            'Salt och peppar'
+        ],
+        instructions: [
+            'Klipp pitabrödet i fyrkanter och fritera dem krispiga i olja (eller rosta dem i ugnen med lite olivolja).',
+            'Skär grönsakerna i grova bitar. Finhacka örterna.',
+            'Blanda en dressing av granatäppelsirap, olivolja, citronsaft, sumak, salt och peppar i botten av en stor skål.',
+            'Vänd ner alla grönsaker och örter i dressingen.',
+            'Toppa salladen med det friterade brödet strax innan servering så det behåller sin krispighet.'
+        ]
     }
 ];
 
-let indexHtml = fs.readFileSync('f:/Antigravity/Mathörnet/public/index.html', 'utf8');
+const publicDir = path.join(__dirname, 'public');
+let indexHtml = fs.readFileSync(path.join(publicDir, 'index.html'), 'utf8');
 const headerMatch = indexHtml.match(/<header class="main-header">[\s\S]*?<\/header>/);
 const header = headerMatch ? headerMatch[0] : '';
 const footerMatch = indexHtml.match(/<footer class="site-footer">[\s\S]*?<\/footer>/);
@@ -181,26 +338,231 @@ const receptHtml = `<!DOCTYPE html>
 </body>
 </html>`;
 
-fs.writeFileSync('f:/Antigravity/Mathörnet/public/recept.html', receptHtml);
+fs.writeFileSync(path.join(publicDir, 'recept.html'), receptHtml);
 
-// Generate individual recipe pages
+// Generate individual recipe pages (Arla-inspired redesign)
 recipeData.forEach(recipe => {
+    
+    const ingredientsHtml = recipe.ingredients.map(ing => `<li>${ing}</li>`).join('\n                    ');
+    const instructionsHtml = recipe.instructions.map((inst, idx) => `
+                <div class="instruction-step">
+                    <div class="step-number">${idx + 1}</div>
+                    <div class="step-text">${inst}</div>
+                </div>`).join('');
+
     const postHtml = `<!DOCTYPE html>
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${recipe.title} | Mathörnet</title>
-    <link rel="stylesheet" href="style.css?v=4">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=6">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        .post-hero { position: relative; height: 60vh; min-height: 400px; display: flex; align-items: center; justify-content: center; color: #fff; text-align: center; }
-        .post-hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
-        .post-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.45); z-index: 1; }
-        .post-hero-content { position: relative; z-index: 2; max-width: 800px; padding: 0 2rem; }
-        .post-title { font-size: 4rem; font-weight: 800; margin-bottom: 1rem; }
-        .post-meta { font-size: 1.1rem; font-weight: 500; opacity: 0.9; }
-        .post-content-container { max-width: 800px; margin: 4rem auto 6rem; padding: 0 2rem; font-size: 1.2rem; line-height: 1.8; color: #333; }
+        body { font-family: 'Inter', sans-serif; background-color: #faf9f6; margin: 0; padding: 0; }
+        
+        /* Hero Section */
+        .post-hero { 
+            position: relative; 
+            height: 70vh; 
+            min-height: 500px; 
+            display: flex; 
+            flex-direction: column;
+            align-items: center; 
+            justify-content: flex-end;
+        }
+        .post-hero-bg { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            object-fit: cover; z-index: 0; 
+        }
+        .post-overlay { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.7)); 
+            z-index: 1; 
+        }
+        
+        /* Overlapping Glassmorphism Card */
+        .recipe-header-card {
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 3rem 4rem;
+            border-radius: 24px;
+            text-align: center;
+            max-width: 900px;
+            width: 90%;
+            transform: translateY(30%);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .recipe-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+        .recipe-excerpt {
+            font-size: 1.25rem;
+            color: #555;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .recipe-meta-tags {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            flex-wrap: wrap;
+        }
+        .recipe-meta-tag {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f0f0f0;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.95rem;
+        }
+
+        /* 2-Column Layout */
+        .recipe-content-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 12rem auto 6rem;
+            padding: 0 2rem;
+        }
+        @media(min-width: 992px) {
+            .recipe-content-grid {
+                grid-template-columns: 350px 1fr;
+            }
+        }
+
+        /* Ingredients */
+        .ingredients-panel {
+            background: #fff;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            border-top: 5px solid var(--navy-bg, #0b2545);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+        .ingredients-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #111;
+        }
+        .ingredients-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .ingredients-list li {
+            padding: 1rem 0;
+            border-bottom: 1px solid #eaeaea;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.1rem;
+            color: #333;
+        }
+        .ingredients-list li:last-child {
+            border-bottom: none;
+        }
+        .ingredients-list li::before {
+            content: '✓';
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        /* Instructions */
+        .instructions-panel {
+            padding-top: 1rem;
+        }
+        .instructions-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #111;
+        }
+        .instruction-step {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .step-number {
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            background: var(--navy-bg, #0b2545);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+        }
+        .step-text {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: #333;
+            padding-top: 0.5rem;
+        }
+        
+        /* Action buttons */
+        .recipe-actions {
+            margin-top: 6rem;
+            text-align: center;
+            padding-bottom: 4rem;
+        }
+        .btn-outline {
+            display: inline-block;
+            border: 2px solid var(--navy-bg, #0b2545);
+            color: var(--navy-bg, #0b2545);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+        }
+        .btn-outline:hover {
+            background: var(--navy-bg, #0b2545);
+            color: white;
+        }
+        
+        /* Header Fix for absolute positioned hero */
+        .main-header {
+            position: absolute !important;
+            width: 100%;
+            z-index: 100;
+            background: transparent !important;
+        }
+        .main-header.scrolled {
+            position: fixed !important;
+            background: var(--navy-bg, #0b2545) !important;
+        }
+        
+        @media(max-width: 768px) {
+            .recipe-header-card {
+                padding: 2rem;
+                transform: translateY(20%);
+                width: 95%;
+            }
+            .recipe-title { font-size: 2.2rem; }
+            .recipe-content-grid { margin-top: 8rem; gap: 3rem; }
+            .post-hero { height: 60vh; }
+        }
     </style>
 </head>
 <body>
@@ -208,33 +570,60 @@ recipeData.forEach(recipe => {
     <div id="page-preloader" class="preloader">
         <div class="loader"></div>
     </div>
+    
     ${header}
     
     <main>
         <section class="post-hero">
             <img src="img/${recipe.img}" class="post-hero-bg" alt="${recipe.title}">
             <div class="post-overlay"></div>
-            <div class="post-hero-content">
-                <h1 class="post-title">${recipe.title}</h1>
-                <div class="post-meta">Tillagningstid: ${recipe.time}</div>
+            
+            <div class="recipe-header-card">
+                <h1 class="recipe-title">${recipe.title}</h1>
+                <p class="recipe-excerpt">${recipe.excerpt}</p>
+                <div class="recipe-meta-tags">
+                    <span class="recipe-meta-tag">⏱️ ${recipe.time}</span>
+                    <span class="recipe-meta-tag">🍽️ ${recipe.portions}</span>
+                    <span class="recipe-meta-tag">👨‍🍳 ${recipe.difficulty}</span>
+                </div>
             </div>
         </section>
         
-        <div class="post-content-container">
-            <p class="lead" style="font-size: 1.4rem; font-weight: 500; margin-bottom: 2rem;">${recipe.excerpt}</p>
-            ${recipe.content}
+        <div class="recipe-content-grid">
+            <aside class="ingredients-panel">
+                <h2 class="ingredients-title">Ingredienser</h2>
+                <ul class="ingredients-list">
+                    ${ingredientsHtml}
+                </ul>
+            </aside>
             
-            <div style="margin-top: 4rem; text-align: center;">
-                <a href="recept.html" class="btn btn-navy">&larr; Tillbaka till alla recept</a>
-            </div>
+            <section class="instructions-panel">
+                <h2 class="instructions-title">Gör så här</h2>
+                ${instructionsHtml}
+                
+                <div class="recipe-actions">
+                    <a href="recept.html" class="btn-outline">&larr; Tillbaka till alla recept</a>
+                </div>
+            </section>
         </div>
     </main>
     
     ${footer}
     <script src="main.js"></script>
+    <script>
+        // Make header solid on scroll
+        window.addEventListener('scroll', function() {
+            var header = document.querySelector('.main-header');
+            if(window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
 </body>
 </html>`;
-    fs.writeFileSync(`f:/Antigravity/Mathörnet/public/recept-${recipe.id}.html`, postHtml);
+    fs.writeFileSync(path.join(publicDir, `recept-${recipe.id}.html`), postHtml);
 });
 
-console.log("Recipe pages generated successfully.");
+console.log("Recipe pages generated successfully with new Arla-inspired design.");

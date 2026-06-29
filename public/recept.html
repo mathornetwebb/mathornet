@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recept | Mathörnet - Autentisk mat från Mellanöstern</title>
-    <link rel="stylesheet" href="style.css?v=12">
+    <link rel="stylesheet" href="style.css?v=4">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         .page-header { padding: 60px 0 20px; }
@@ -50,15 +50,32 @@
                     <li><a href="kontakt.html">Kontakt</a></li>
                 </ul>
             </nav>
-
-            <div class="search-container">
-                <button class="search-btn" aria-label="Sök">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                </button>
-                <div class="search-dropdown">
-                    <input type="text" id="search-input" placeholder="Sök, t.ex. falafel...">
-                    <div class="search-results" id="search-results">
-                        <!-- JS injected results -->
+            <div class="header-actions" style="display: flex; align-items: center; gap: 1rem;">
+                <div class="custom-lang-picker">
+                    <button class="lang-toggle-btn" aria-label="Välj språk">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    </button>
+                    <div class="lang-dropdown">
+                        <button class="lang-option" data-lang="sv">
+                            <img src="https://flagcdn.com/w20/se.png" srcset="https://flagcdn.com/w40/se.png 2x" width="20" alt="Sverige"> Svenska
+                        </button>
+                        <button class="lang-option" data-lang="en">
+                            <img src="https://flagcdn.com/w20/gb.png" srcset="https://flagcdn.com/w40/gb.png 2x" width="20" alt="Storbritannien"> English
+                        </button>
+                        <button class="lang-option" data-lang="ar">
+                            <img src="https://flagcdn.com/w20/sa.png" srcset="https://flagcdn.com/w40/sa.png 2x" width="20" alt="Saudiarabien"> العربية
+                        </button>
+                    </div>
+                </div>
+                <div class="search-container">
+                    <button class="search-btn" aria-label="Sök">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </button>
+                    <div class="search-dropdown">
+                        <input type="text" id="search-input" placeholder="Sök, t.ex. falafel...">
+                        <div class="search-results" id="search-results">
+                            <!-- JS injected results -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -245,8 +262,6 @@
             </div>
         </div>
     </footer>
-    <script src="main.js?v=3"></script>
+    <script src="main.js"></script>
 </body>
 </html>
-
-
