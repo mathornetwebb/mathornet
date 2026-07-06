@@ -250,7 +250,7 @@ const recipeData = [
 ];
 
 const publicDir = path.join(__dirname, 'public');
-let indexHtml = fs.readFileSync(path.join(publicDir, 'index.html'), 'utf8');
+let indexHtml = fs.readFileSync(path.join(publicDir, 'mathornet.html'), 'utf8');
 const headerMatch = indexHtml.match(/<header class="main-header">[\s\S]*?<\/header>/);
 const header = headerMatch ? headerMatch[0] : '';
 const footerMatch = indexHtml.match(/<footer class="site-footer">[\s\S]*?<\/footer>/);

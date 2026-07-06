@@ -12,7 +12,7 @@
 <body>
     <header class="main-header">
         <div class="header-inner container">
-            <a href="index.html" class="logo">
+            <a href="mathornet.html" class="logo">
                 <img src="img/mathörnet logo.png" alt="Mathörnet Logotyp" class="main-logo">
             </a>
             
@@ -30,6 +30,7 @@
                     <li><a href="nyheter.html">Nyheter</a></li>
                     <li><a href="aterforsaljare.html">Återförsäljare</a></li>
                     <li><a href="om-oss.html">Om oss</a></li>
+                    <li><a href="hitta-oss.html">Hitta oss</a></li>
                     <li><a href="kontakt.html">Kontakt</a></li>
                 </ul>
             </nav>
@@ -49,64 +50,180 @@
     </header>
 
     <main>
-        <section class="product-page-layout">
-            <div class="product-image-col">
-                
+        <section class="product-detail-layout container">
+            <div class="product-detail-img">
                 <img src="img/kubbe mosel.png" alt="Kubbe Mosel">
             </div>
             
-            <div class="product-info-col">
-                <div class="breadcrumbs">
-                    <a href="index.html">Hemsida</a> &gt; <a href="index.html">Produkter</a> &gt; Kubbe Mosel
+            <div class="product-detail-info">
+                <div class="breadcrumbs" style="margin-bottom: 1.5rem; font-size: 0.9rem; color: #666;">
+                    <a href="mathornet.html" style="color: #666; text-decoration: none;">Hemsida</a> &gt; <a href="produkter.html" style="color: #666; text-decoration: none;">Produkter</a> &gt; Kubbe Mosel
                 </div>
                 
-                <h1 class="product-title">Kubbe Mosel</h1>
+                <h1>Kubbe Mosel</h1>
                 
-                <p class="product-desc">Klassiska kokta Kubbe för en fyllig smak. Ett måste för den som älskar äkta husmanskost från Mellanöstern.</p>
-                
-                <div class="product-specs">
-                    <span class="spec-label">Kvantitet/förpackning:</span>
-                    <span class="spec-value">-</span>
+                <div style="display: flex; justify-content: flex-end; width: 100%; margin-top: -3rem; margin-bottom: 1rem;">
+                    
                 </div>
-                
-                <div class="product-specs" style="border-bottom: 1px solid #eee; margin-bottom: 3rem;">
-                    <span class="spec-label">Nettovikt:</span>
-                    <span class="spec-value">450 gram</span>
+
+                <div class="pack-type-selector">
+                    <span>Typ</span>
+                    <button class="pack-btn active" data-type="bag" 
+                            data-artnr="140440" 
+                            data-antal-label="Antal/påse:" data-antal-value="12 st á 37.5g" 
+                            data-vikt-label="Vikt/påse:" data-vikt-value="450 g">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><rect x="9" y="11" width="6" height="4" rx="1"></rect></svg>
+        <span class="pack-label">Påse</span>
+                    </button>
+                    <button class="pack-btn" data-type="box" 
+                            data-artnr="240440" 
+                            data-antal-label="Antal påsar/låda:" data-antal-value="12 st á 450g" 
+                            data-vikt-label="Nettovikt/låda:" data-vikt-value="5,4 kg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+        <span class="pack-label">Kartong</span>
+                    </button>
+                    <button class="pack-btn" data-type="pallet" 
+                            data-artnr="340440" 
+                            data-antal-label="Antal lådor/pall:" data-antal-value="60 st á 5,4kg" 
+                            data-vikt-label="Nettovikt/pall:" data-vikt-value="324 kg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="21" x2="22" y2="21"></line><line x1="4" y1="21" x2="4" y2="18"></line><line x1="12" y1="21" x2="12" y2="18"></line><line x1="20" y1="21" x2="20" y2="18"></line><line x1="2" y1="18" x2="22" y2="18"></line><rect x="4" y="12" width="7" height="6"></rect><rect x="13" y="12" width="7" height="6"></rect><rect x="8" y="6" width="8" height="6"></rect></svg>
+        <span class="pack-label">Pall</span>
+                    </button>
                 </div>
-                
-                <div class="accordion">
+
+                <table class="product-data-table">
+                    <tbody>
+                        <tr>
+                            <td>Art. nr:</td>
+                            <td id="td-artnr">140440</td>
+                        </tr>
+                        <tr>
+                            <td>Benämning:</td>
+                            <td>Kubbe Mosel - Nöt/Bulgur (Kokt)</td>
+                        </tr>
+                        <tr>
+                            <td>EAN13:</td>
+                            <td>7350171380440</td>
+                        </tr>
+                        <tr>
+                            <td id="td-antal-label">Antal/påse:</td>
+                            <td id="td-antal-value">12 st á 37.5g</td>
+                        </tr>
+                        <tr>
+                            <td id="td-vikt-label">Vikt/påse:</td>
+                            <td id="td-vikt-value">450 g</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="product-accordions">
                     <div class="accordion-item">
                         <button class="accordion-header">
-                            Ingredienser
-                            <span class="accordion-icon"></span>
+                            Beskrivning
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
                         </button>
                         <div class="accordion-content">
-                            <div class="accordion-inner">
-                                <p style="margin-bottom: 0.5rem"><strong>Deg:</strong> Nötrulle 40%, bulgur-vete 30%, durumvete 30%, vatten, salt</p>
-                                <p style="margin-bottom: 0.5rem"><strong>Fyllning:</strong> Nötfärs 70%, lök 30%, salt, svartpeppar, kanel, nejlika, muskotnöt, kardemumma, E621, kryddpeppar, ingefära</p>
-                                <p><strong>Allergener:</strong> Nötter, sesamfrön och gluten</p>
-                                <div class="warning-text">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-                                    Se alltid produktinformationen på förpackningen.
-                                </div>
+                            <div class="accordion-content-inner">
+                                <p>Klassiska kokta Kubbe för en fyllig smak. Ett måste för den som älskar äkta husmanskost från Mellanöstern.</p>
                             </div>
                         </div>
                     </div>
-                    
                     <div class="accordion-item">
                         <button class="accordion-header">
-                            Näringsinnehåll per 100g
-                            <span class="accordion-icon"></span>
+                            Produktinformation
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
                         </button>
                         <div class="accordion-content">
-                            <div class="accordion-inner">
-                                Energi: 1200 kJ / 285 kcal<br>
-                                Fett: 12g<br>
-                                varav mättat fett: 4g<br>
-                                Kolhydrater: 30g<br>
-                                varav sockerarter: 1g<br>
-                                Protein: 14g<br>
-                                Salt: 1.2g
+                            <div class="accordion-content-inner">
+                                <p><strong>Tillverkningsland:</strong> Sverige</p>
+                                <p><strong>Tillagas av:</strong> Mathörnet</p>
+                                <br>
+                                <p>Färdiglagat.</p>
+                                <p>Inga konserveringsmedel.</p>
+                                <p>Förpackningen sorteras som plastförpackning.</p>
+                                <br>
+                                <p><strong>Specialanpassningar:</strong> N/A</p>
+                                <p><strong>Ledtid:</strong> 5 dagar</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            Näringsvärde
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner">
+                                <table class="nutrition-table">
+                                    <tbody>
+                                        <tr>
+                                            <td>Energi, 100g</td>
+                                            <td>1200 kJ / 285 kcal</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Fett</td>
+                                            <td>12 g</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Varav mättat</td>
+                                            <td>4 g</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Kolhydrat</td>
+                                            <td>30 g</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Varav socker</td>
+                                            <td>1 g</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Protein</td>
+                                            <td>14 g</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Salt</td>
+                                            <td>1.2 g</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            Innehållsförteckning
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner">
+                                <p><strong>Deg:</strong> Nötrulle 40%, bulgur-vete 30%, durumvete 30%, vatten, salt.</p>
+                                <p><strong>Fyllning:</strong> Nötfärs 70%, lök 30%, salt, svartpeppar, kanel, nejlika, muskotnöt, kardemumma, E621, kryddpeppar, ingefära.</p>
+                                <p><strong>Allergener:</strong> Nötter, sesamfrön och gluten.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            Förvaring
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner">
+                                <p>Djupfryst vara, förvaras i frys i 365 dagar, -18°C eller kallare. Bör ej frysas efter upptining.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            Tillagningsanvisningar
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner">
+                                <p style="margin-bottom: 1.5rem;">Tillaga från djupfryst, vänd efter halva tiden.</p>
+                                <p style="margin-bottom: 1rem;"><strong>Varmluftsugn</strong><br>225°C, 7-9 min</p>
+                                <p style="margin-bottom: 1rem;"><strong>Airfryer</strong><br>200°C, 9-10 min</p>
+                                <p><strong>Stekpanna</strong><br>8-10 min</p>
                             </div>
                         </div>
                     </div>
@@ -119,7 +236,7 @@
             <div class="container">
                 <div class="section-header">
                     <h2>Fler produkter</h2>
-                    <a href="index.html" class="btn btn-red">Se alla produkter &rarr;</a>
+                    <a href="mathornet.html" class="btn btn-red">Se alla produkter &rarr;</a>
                 </div>
                 
                 <div class="carousel-wrapper">
@@ -215,7 +332,7 @@
     <footer class="site-footer">
         <div class="container footer-grid">
             <div class="footer-col">
-                <a href="index.html" class="footer-logo" style="display: block; margin-top: -20px;">
+                <a href="mathornet.html" class="footer-logo" style="display: block; margin-top: -20px;">
                     <img src="img/mathörnet logo.png" alt="Mathörnet Logotyp" style="height: 110px; width: auto; margin-bottom: -40px; margin-left: -15px;">
                 </a>
                 <p style="color: #555; max-width: 260px; font-size: 0.9rem; line-height: 1.6;">Mathörnet bygger på generationer av kunskap om orientalisk matlagning. Äkta råvaror, äkta smak.</p>
@@ -247,6 +364,7 @@
                     <li><a href="nyheter.html">Nyheter</a></li>
                     <li><a href="aterforsaljare.html">Återförsäljare</a></li>
                     <li><a href="om-oss.html">Om Oss</a></li>
+                    <li><a href="hitta-oss.html">Hitta oss</a></li>
                     <li><a href="kontakt.html">Kontakt</a></li>
                 </ul>
             </div>
@@ -277,8 +395,7 @@
             </div>
         </div>
     </footer>
-    <script src="main.js?v=3"></script>
+    <script src="js/product-detail.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
-
-

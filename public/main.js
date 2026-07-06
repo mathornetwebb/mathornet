@@ -6,10 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Real data for search suggestions
     const db = [
-        { title: 'Kubbe Trabolsie', category: 'Produkt', text: 'Vår bästsäljande friterade bulgur- och köttkrokett.', url: 'index.html' },
-        { title: 'Kubbe Halab', category: 'Produkt', text: 'Krispig riskrokett fylld med köttfärs, mandel och lök.', url: 'index.html' },
-        { title: 'Sandwich Kubbe', category: 'Produkt', text: 'Två lager krispig bulgur fyllda med välkryddad köttfärs.', url: 'index.html' },
-        { title: 'Falafel', category: 'Produkt', text: 'Autentiska kikärtsbollar kryddade med persilja och koriander.', url: 'index.html' },
+        { title: 'Kubbe Trabolsie', category: 'Produkt', text: 'Vår bästsäljande friterade bulgur- och köttkrokett.', url: 'mathornet.html' },
+        { title: 'Kubbe Halab', category: 'Produkt', text: 'Krispig riskrokett fylld med köttfärs, mandel och lök.', url: 'mathornet.html' },
+        { title: 'Sandwich Kubbe', category: 'Produkt', text: 'Två lager krispig bulgur fyllda med välkryddad köttfärs.', url: 'mathornet.html' },
+        { title: 'Falafel', category: 'Produkt', text: 'Autentiska kikärtsbollar kryddade med persilja och koriander.', url: 'mathornet.html' },
         { title: 'Äkta Libanesisk Toum', category: 'Recept', text: 'Den perfekta fluffiga vitlökskrämen som är ett absolut måste till kyckling.', url: 'recept-libanesisk-toum.html' },
         { title: 'Krämig Hummus', category: 'Recept', text: 'Silkeslen hummus med tahini och citron. Det självklara tillbehöret.', url: 'recept-kramig-hummus.html' },
         { title: 'Krispig Fattoush', category: 'Recept', text: 'Mellanösterns godaste sallad! Fylld med färska grönsaker och sumak.', url: 'recept-krispig-fattoush.html' },
@@ -250,6 +250,32 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+});
+
+/* ==========================================================================
+   Teza Product Carousel Logic (Swiper)
+   ========================================================================== */
+document.addEventListener('DOMContentLoaded', () => {
+    const tezaSwiper = new Swiper('.teza-swiper', {
+        loop: true,
+        centeredSlides: true,
+        slidesPerView: 1.5,
+        spaceBetween: 20,
+        breakpoints: {
+            768: {
+                slidesPerView: 3,
+                spaceBetween: 40,
+            }
+        },
+        navigation: {
+            nextEl: '.teza-nav-btn.swiper-button-next',
+            prevEl: '.teza-nav-btn.swiper-button-prev',
+        },
+        pagination: {
+            el: '.teza-pagination',
+            clickable: true,
+        },
+    });
 });
 
 
