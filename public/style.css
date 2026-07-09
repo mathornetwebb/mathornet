@@ -5,7 +5,7 @@
     --dark-text: #171717;
     --gray-bg: #F7F7F7;
     --mint-bg: #B5E3C4;
-    --navy-bg: #1a365d;
+    --theme-green: #64b000;
     --white: #ffffff;
     --gray-light: #fdf2f4;
 }
@@ -62,7 +62,7 @@ ul {
 }
 
 .btn-red {
-    background-image: url('img/smooth_teal_watercolor.png');
+    /* background-image removed */
     background-size: cover;
     background-position: center;
     background-color: var(--red-primary); /* Fallback */
@@ -72,7 +72,7 @@ ul {
 }
 
 .btn-red:hover {
-    background-image: url('img/smooth_teal_watercolor.png');
+    /* background-image removed */
     background-size: cover;
     background-position: center;
     color: var(--white);
@@ -80,7 +80,7 @@ ul {
 
 .btn-primary {
     background-color: var(--white);
-    color: var(--navy-bg);
+    color: var(--theme-green);
 }
 
 .btn-primary:hover {
@@ -153,7 +153,7 @@ ul {
     height: 2px;
     bottom: 0;
     left: 0;
-    background-color: var(--navy-bg);
+    background-color: var(--theme-green);
     transform-origin: bottom right;
     transition: transform 0.25s ease-out;
 }
@@ -172,7 +172,7 @@ ul {
     background: transparent;
     border: none;
     cursor: pointer;
-    color: var(--navy-bg);
+    color: var(--theme-green);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -225,7 +225,7 @@ ul {
 }
 
 .search-dropdown input:focus {
-    border-color: var(--navy-bg);
+    border-color: var(--theme-green);
 }
 
 .search-results {
@@ -254,7 +254,7 @@ ul {
 
 .search-result-item h4 {
     font-size: 0.9rem;
-    color: var(--navy-bg);
+    color: var(--theme-green);
     margin-bottom: 0.2rem;
 }
 
@@ -399,10 +399,10 @@ ul {
     position: absolute;
     top: 15px;
     right: 15px;
-    background-image: url('img/smooth_teal_watercolor.png');
+    /* background-image removed */
     background-size: cover;
     background-position: center;
-    background-color: #0b5e5e; /* Fallback */
+    background-color: #4b8500; /* Fallback */
     text-shadow: 0 1px 3px rgba(0,0,0,0.4);
     color: var(--white);
     z-index: 10;
@@ -470,10 +470,10 @@ ul {
     transform: translate(-50%, 5px);
     width: max-content;
     padding: 0.5rem 1.2rem;
-    background-image: url('img/smooth_teal_watercolor.png');
+    /* background-image removed */
     background-size: cover;
     background-position: center;
-    background-color: #0b5e5e; /* Fallback */
+    background-color: #4b8500; /* Fallback */
     border: none;
     text-shadow: 0 1px 3px rgba(0,0,0,0.4);
     color: var(--white);
@@ -669,8 +669,8 @@ ul {
 
 /* FOOTER */
 .site-footer {
-    background-color: var(--white);
-    color: var(--dark-text);
+    background-color: var(--theme-green);
+    color: var(--white);
     padding: 4rem 0 2rem;
     border-top: none; /* Inget border-top så skuggan syns bättre */
     position: fixed;
@@ -890,7 +890,7 @@ main {
 }
 
 .footer-col a:hover {
-    color: var(--navy-bg);
+    color: var(--theme-green);
 }
 
 .contact-info li {
@@ -915,7 +915,7 @@ main {
 }
 
 .footer-legal a:hover {
-    color: var(--navy-bg);
+    color: var(--theme-green);
 }
 
 /* PRODUCT PAGE */
@@ -961,7 +961,7 @@ main {
 }
 
 .breadcrumbs a:hover {
-    color: var(--navy-bg);
+    color: var(--theme-green);
 }
 
 .product-info-col .badge {
@@ -1035,7 +1035,7 @@ main {
 }
 
 .accordion-header:hover {
-    color: var(--navy-bg);
+    color: var(--theme-green);
 }
 
 .accordion-icon {
@@ -1048,7 +1048,7 @@ main {
 .accordion-icon::after {
     content: '';
     position: absolute;
-    background-color: var(--navy-bg);
+    background-color: var(--theme-green);
     transition: transform 0.3s ease;
 }
 
@@ -1225,19 +1225,33 @@ main {
 }
 .contact-form-section {
     padding: 120px 0;
-    background-image: url('img/kontaktformulär.png');
-    background-size: cover;
-    background-position: center;
+    background-color: #fcf9f4; /* Mjuk beige/off-white som följer temat */
     position: relative;
+    overflow: hidden;
 }
+
+/* Grafiska element i bakgrunden för att skapa djup och följa premium-temat */
 .contact-form-section::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Mörk overlay för att formuläret ska poppa */
+    top: -10%;
+    left: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(220, 179, 123, 0.15) 0%, rgba(252, 249, 244, 0) 70%);
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.contact-form-section::after {
+    content: '';
+    position: absolute;
+    bottom: -20%;
+    right: -10%;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(220, 179, 123, 0.1) 0%, rgba(252, 249, 244, 0) 70%);
+    border-radius: 50%;
     z-index: 1;
 }
 .contact-wrapper {
@@ -1374,16 +1388,16 @@ main {
     line-height: 1.6;
 }
 .btn-navy {
-    background-image: url('img/smooth_teal_watercolor.png');
+    /* background-image removed */
     background-size: cover;
     background-position: center;
-    background-color: #118b8b; /* Fallback */
+    background-color: #64b000; /* Fallback */
     border: none;
     color: #fff;
     text-shadow: 0 1px 3px rgba(0,0,0,0.4);
 }
 .btn-navy:hover {
-    background-image: url('img/smooth_teal_watercolor.png');
+    /* background-image removed */
     background-size: cover;
     background-position: center;
     color: #fff;
@@ -1518,7 +1532,7 @@ main {
     width: 50px;
     height: 50px;
     border: 5px solid #f3f3f3;
-    border-top: 5px solid var(--navy-bg);
+    border-top: 5px solid var(--theme-green);
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
@@ -1617,7 +1631,7 @@ main {
 }
 .btn-outline-white:hover {
     background: var(--white);
-    color: var(--navy-bg);
+    color: var(--theme-green);
 }
 
 @media (max-width: 768px) {
@@ -1654,7 +1668,7 @@ main {
     background-image: url('img/smooth_teal_watercolor.png') !important;
     background-size: cover !important;
     background-position: center !important;
-    background-color: #118b8b !important; /* Fallback */
+    background-color: #64b000 !important; /* Fallback */
     position: relative;
     margin-top: -120px;
     -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' fill='black' /%3E%3C/svg%3E"), linear-gradient(black, black);
@@ -1704,7 +1718,7 @@ main {
 
 .cta-btn-solid {
     background-color: #fff;
-    color: #0b1e36;
+    color: #4b8500;
     border: 2px solid #fff;
     font-weight: 600;
 }
@@ -1766,7 +1780,7 @@ body {
     height: 2px;
     bottom: 0;
     left: 0;
-    background-color: var(--navy-bg);
+    background-color: var(--theme-green);
     transform-origin: bottom right;
     transition: transform 0.25s ease-out;
 }
@@ -1831,7 +1845,7 @@ body {
 
 .lang-option.active-lang {
     background-color: #f0f4f8;
-    color: #0b1e36; /* navy-bg */
+    color: #4b8500; /* navy-bg */
     font-weight: 700;
 }
 
@@ -1863,7 +1877,7 @@ body {
 }
 
 .mobile-menu-toggle.active svg {
-    color: #118b8b; /* highlight active menu */
+    color: #64b000; /* highlight active menu */
 }
 
 /* === MOBILE FIXES === */
