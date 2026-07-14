@@ -239,7 +239,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
 
     if (menuToggle && mainNav) {
-        menuToggle.addEventListener('click', () => {
+        function closeMenu() {
+            mainNav.classList.remove('active');
+            menuToggle.classList.remove('active');
+            body.style.overflow = '';
+        }
+
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
             mainNav.classList.toggle('active');
             menuToggle.classList.toggle('active');
             
@@ -247,6 +254,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 body.style.overflow = 'hidden'; // Prevent background scrolling
             } else {
                 body.style.overflow = '';
+            }
+        });
+
+        // Stäng om man klickar utanför menyn
+        document.addEventListener('click', (e) => {
+            if (mainNav.classList.contains('active') && !mainNav.contains(e.target) && !menuToggle.contains(e.target)) {
+                closeMenu();
+            }
+        });
+
+        // Stäng om man lyckas scrolla bakgrunden (t.ex. vid swipe utanför)
+        window.addEventListener('scroll', () => {
+            if (mainNav.classList.contains('active')) {
+                closeMenu();
             }
         });
     }
