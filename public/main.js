@@ -141,7 +141,8 @@ document.addEventListener('DOMContentLoaded', () => {
         function updateCarousel() {
             if (!items.length) return;
             const itemWidth = items[0].getBoundingClientRect().width;
-            const gap = 32; // 2rem
+            const itemStyle = window.getComputedStyle(items[0]);
+            const gap = parseFloat(itemStyle.marginRight) || 0;
             const moveAmount = currentIndex * (itemWidth + gap);
             
             track.style.transform = `translateX(-${moveAmount}px)`;
@@ -300,3 +301,44 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+
+/* ==========================================================================
+   Om Oss - Tidslinje Animering (Endast Desktop)
+   ========================================================================== */
+document.addEventListener("DOMContentLoaded", () => {
+    const timelineTrack = document.querySelector(".timeline-track");
+    const timelineProgress = document.querySelector(".timeline-progress");
+    const timelineMarkers = document.querySelectorAll(".timeline-marker");
+    const timelineContainer = document.querySelector(".timeline-container");
+
+    if (timelineTrack && timelineProgress && timelineContainer) {
+        const updateTimeline = () => {
+            if (window.innerWidth < 992) return; // Endast desktop
+
+            const containerRect = timelineContainer.getBoundingClientRect();
+            const viewportCenter = window.innerHeight / 2;
+            
+            let progress = viewportCenter - containerRect.top;
+            
+            if (progress < 0) progress = 0;
+            if (progress > containerRect.height) progress = containerRect.height;
+            
+            timelineProgress.style.height = progress + "px";
+
+            timelineMarkers.forEach(marker => {
+                const markerRect = marker.getBoundingClientRect();
+                const markerCenter = markerRect.top + (markerRect.height / 2);
+                
+                if (viewportCenter >= markerCenter) {
+                    marker.classList.add("active");
+                } else {
+                    marker.classList.remove("active");
+                }
+            });
+        };
+
+        window.addEventListener("scroll", updateTimeline);
+        window.addEventListener("resize", updateTimeline);
+        updateTimeline();
+    }
+});

@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kontakt | Mathörnet</title>
-    <link rel="stylesheet" href="style.css?v=12">
+    <title>Integritetspolicy | Mathörnet</title>
+    <meta name="description" content="Upptäck Mathörnets fantastiska sortiment av orientaliska matprodukter - från Kubbe Trabolsie till Kubbe Halab.">
+    <link rel="stylesheet" href="style.css?v=15">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Leaflet CSS for Map -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 </head>
 <body>
     <!-- Preloader -->
@@ -33,7 +32,7 @@
             <nav class="main-nav">
                 <ul>
                     <li><a href="produkter.html">Produkter</a></li>
-                    <li><a href="#">Recept</a></li>
+                    <li><a href="recept.html">Recept</a></li>
                     <li><a href="nyheter.html">Nyheter</a></li>
                     <li><a href="aterforsaljare.html">Återförsäljare</a></li>
                     <li><a href="om-oss.html">Om oss</a></li>
@@ -41,87 +40,64 @@
                     <li><a href="kontakt.html">Kontakt</a></li>
                 </ul>
             </nav>
-
-            <div class="search-container">
-                <button class="search-btn" aria-label="Sök">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                </button>
-                <div class="search-dropdown">
-                    <input type="text" id="search-input" placeholder="Sök, t.ex. falafel...">
-                    <div class="search-results" id="search-results">
-                        <!-- JS injected results -->
+            <div class="header-actions" style="display: flex; align-items: center; gap: 1rem;">
+                <div class="custom-lang-picker">
+                    <button class="lang-toggle-btn" aria-label="Välj språk">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    </button>
+                    <div class="lang-dropdown">
+                        <button class="lang-option" data-lang="sv">
+                            <img src="https://flagcdn.com/w20/se.png" srcset="https://flagcdn.com/w40/se.png 2x" width="20" alt="Sverige"> Svenska
+                        </button>
+                        <button class="lang-option" data-lang="en">
+                            <img src="https://flagcdn.com/w20/gb.png" srcset="https://flagcdn.com/w40/gb.png 2x" width="20" alt="Storbritannien"> English
+                        </button>
+                        <button class="lang-option" data-lang="ar">
+                            <img src="https://flagcdn.com/w20/sa.png" srcset="https://flagcdn.com/w40/sa.png 2x" width="20" alt="Saudiarabien"> العربية
+                        </button>
+                    </div>
+                </div>
+                <div class="search-container">
+                    <button class="search-btn" aria-label="Sök">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </button>
+                    <div class="search-dropdown">
+                        <input type="text" id="search-input" placeholder="Sök, t.ex. falafel...">
+                        <div class="search-results" id="search-results">
+                            <!-- JS injected results -->
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </header>
-    <main>
-        
-    <!-- Hero / Contact Form Section -->
-    <section class="contact-form-section contact-hero-wrapper" style="padding: 4rem 0;">
-        <div class="container" style="width: 100%; max-width: 1200px; margin: 0 auto;">
-            <div class="contact-split-layout">
-                <div class="contact-text-side">
-                    <h2 style="font-size: 2.5rem; margin-bottom: 1rem; color: #111;">Hör av dig till oss!</h2>
-                    <p style="font-size: 1.2rem; font-weight: 500; color: #111; line-height: 1.6; margin-bottom: 2rem;">Oavsett om du är intresserad av att bli återförsäljare eller har frågor om våra produkter – hör av dig via formuläret bredvid så kontaktar vi dig inom kort.</p>
-                </div>
-                
-                <form class="about-contact-form" action="#" method="POST" style="background: #fff; padding: 2.5rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #eee;">
-                    <div class="form-row">
-                        <div class="form-group half">
-                            <label for="company">Företag (frivilligt)</label>
-                            <input type="text" id="company" name="company" placeholder="Företagets namn">
-                        </div>
-                        <div class="form-group half">
-                            <label for="name">Kontaktperson *</label>
-                            <input type="text" id="name" name="name" placeholder="Ditt namn" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group half">
-                            <label for="email">E-post *</label>
-                            <input type="email" id="email" name="email" placeholder="din@email.se" required>
-                        </div>
-                        <div class="form-group half">
-                            <label for="phone">Telefon *</label>
-                            <input type="tel" id="phone" name="phone" placeholder="+46 70 000 00 00" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Adress (frivilligt)</label>
-                        <input type="text" id="address" name="address" placeholder="Gatuadress">
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group half">
-                            <label for="zip">Postnr (frivilligt)</label>
-                            <input type="text" id="zip" name="zip" placeholder="123 45">
-                        </div>
-                        <div class="form-group half">
-                            <label for="city">Ort (frivilligt)</label>
-                            <input type="text" id="city" name="city" placeholder="Stad">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Meddelande</label>
-                        <textarea id="message" name="message" rows="4" placeholder="Här kan du skriva din fråga eller berätta mer om ditt ärende..."></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-navy" style="width:100%; padding: 1rem; font-size: 1.1rem; border: none; border-radius: 5px; cursor:pointer;">Skicka förfrågan</button>
-                </form>
-                
-                <div class="contact-map-wrapper">
-                    <div class="contact-map" style="width: 100%; height: 350px; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-                        <div id="contact-map" style="width: 100%; height: 100%;"></div>
-                    </div>
-                    <div style="margin-top: 1rem; font-size: 1.1rem; font-weight: 600; color: #111; display: flex; align-items: center; gap: 0.5rem;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                        Mariefredsvägen 35, Strängnäs
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
+    
+    <main style="padding: 120px 20px; background-color: #fcf9f4; min-height: 60vh;">
+        <div class="container" style="max-width: 800px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+            <h1 style="color: var(--theme-green); font-size: 2.5rem; margin-bottom: 20px;">Integritetspolicy</h1>
+            <p style="margin-bottom: 15px; line-height: 1.6; color: #444;">Din personliga integritet är viktig för oss på Mathörnet. I denna integritetspolicy förklarar vi hur vi samlar in, använder och skyddar dina personuppgifter när du besöker vår webbplats eller kontaktar oss, i enlighet med dataskyddsförordningen (GDPR).</p>
+            
+            <h2 style="color: #222; font-size: 1.5rem; margin: 30px 0 15px;">1. Vilka uppgifter vi samlar in</h2>
+            <p style="margin-bottom: 15px; line-height: 1.6; color: #444;">Vi samlar endast in uppgifter som du frivilligt delar med oss, till exempel när du fyller i kontaktformuläret (namn, e-post, telefonnummer och meddelande) eller ansöker om att bli återförsäljare.</p>
+            
+            <h2 style="color: #222; font-size: 1.5rem; margin: 30px 0 15px;">2. Hur vi använder uppgifterna</h2>
+            <p style="margin-bottom: 15px; line-height: 1.6; color: #444;">Dina uppgifter används uteslutande för att:</p>
+            <ul style="margin-bottom: 15px; line-height: 1.6; color: #444; padding-left: 20px;">
+                <li>Svara på dina förfrågningar och meddelanden.</li>
+                <li>Hantera återförsäljaransökningar.</li>
+                <li>Förbättra vår service och hemsida.</li>
+            </ul>
+            
+            <h2 style="color: #222; font-size: 1.5rem; margin: 30px 0 15px;">3. Hur vi skyddar dina uppgifter</h2>
+            <p style="margin-bottom: 15px; line-height: 1.6; color: #444;">Vi vidtar lämpliga tekniska och organisatoriska säkerhetsåtgärder för att skydda dina personuppgifter mot obehörig åtkomst, ändring eller radering. Vi säljer aldrig dina uppgifter till tredje part.</p>
+            
+            <h2 style="color: #222; font-size: 1.5rem; margin: 30px 0 15px;">4. Dina rättigheter</h2>
+            <p style="margin-bottom: 15px; line-height: 1.6; color: #444;">Du har rätt att begära utdrag, rättelse eller radering av dina personuppgifter. Om du vill utöva dessa rättigheter, vänligen kontakta oss på info@mathornet.se.</p>
+        </div>
     </main>
+</main>
+
     <footer class="site-footer">
         <div class="container footer-grid">
             <div class="footer-col">
@@ -190,45 +166,28 @@
             </div>
         </div>
     </footer>
-    <script src="main.js"></script>
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+    <!-- Google Translate Script & Custom Logic -->
+    <div id="google_translate_element" style="display:none;"></div>
+    <script src="js/translate.js"></script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- Main Script -->
+    <script src="main.js?v=3"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Coordinates for Mariefredsvägen 35, Strängnäs
-            const mathornetLocation = [59.375, 17.032]; 
-
-            const map = L.map('contact-map', {
-                zoomControl: false
-            }).setView(mathornetLocation, 14);
-
-            L.control.zoom({
-                position: 'topright'
-            }).addTo(map);
-
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-                attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-                subdomains: 'abcd',
-                maxZoom: 20
-            }).addTo(map);
-
-            const mathornetIcon = L.divIcon({
-                className: 'custom-map-marker',
-                html: `<img src="img/mathörnet logo.png" style="width: 20px; filter: brightness(0) invert(1);" alt="Icon">`,
-                iconSize: [40, 40],
-                iconAnchor: [20, 20],
-                popupAnchor: [0, -20]
-            });
-
-            L.marker(mathornetLocation, { icon: mathornetIcon })
-                .addTo(map)
-                .bindPopup('<strong>Mathörnet</strong><br>Mariefredsvägen 35<br>Strängnäs');
-                
-            // Fix map sizing inside flex/grid container
-            setTimeout(() => {
-                map.invalidateSize();
-            }, 100);
-        });
+        // Skydda innehållet från att enkelt inspekteras eller laddas ner
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.onkeydown = function(e) {
+            if(e.keyCode == 123) return false; // F12
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false; // Ctrl+Shift+I
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false; // Ctrl+Shift+C
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false; // Ctrl+Shift+J
+            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; // Ctrl+U (Källkod)
+        }
     </script>
 </body>
 </html>
+
+
