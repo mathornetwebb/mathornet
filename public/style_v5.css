@@ -2684,13 +2684,13 @@ body {
 }
 
 /* ==========================================================================
-   PRODUCT DETAIL FIXES (MOBILE HARMONY)
+   PRODUCT DETAIL FIXES
    ========================================================================== */
 .product-badge {
     position: absolute;
     top: 0.75rem;
     left: 0.75rem;
-    background: rgba(255, 255, 255, 0.92);
+    background: rgba(255, 255, 255, 0.9);
     color: #333;
     border-radius: 6px;
     padding: 4px 10px;
@@ -2700,50 +2700,4 @@ body {
     letter-spacing: 0.5px;
     border: 1px solid rgba(0, 0, 0, 0.08);
     z-index: 10;
-}
-
-@media (max-width: 900px) {
-    .product-detail-layout {
-        display: grid !important;
-        grid-template-columns: 1fr !important;
-        grid-template-areas:
-            "breadcrumbs"
-            "title"
-            "image"
-            "selector"
-            "table"
-            "accordions";
-        gap: 0 !important;
-        padding: 16px 0 !important;
-    }
-    .product-detail-info {
-        display: contents;
-    }
-    .product-detail-info .breadcrumbs {
-        grid-area: breadcrumbs;
-        margin-bottom: 0.5rem !important;
-    }
-    .product-detail-info h1 {
-        grid-area: title;
-        font-size: 1.8rem !important;
-        margin-bottom: 1rem !important;
-        line-height: 1.2 !important;
-    }
-    .product-detail-img {
-        grid-area: image;
-        position: relative !important;
-        margin-bottom: 1.5rem;
-        padding: 1rem !important;
-        border-radius: 8px !important;
-        top: auto !important;
-    }
-    .product-detail-info .pack-type-selector {
-        grid-area: selector;
-    }
-    .product-detail-info .product-data-table {
-        grid-area: table;
-    }
-    .product-detail-info .product-accordions {
-        grid-area: accordions;
-    }
 }
