@@ -2444,37 +2444,23 @@ body {
 .product-detail-layout {
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
-    gap: 0 6rem;
+    gap: 6rem;
     padding: 60px 0;
     align-items: start;
 }
 
-/* Desktop: place breadcrumbs & title in right column */
-.product-detail-breadcrumbs {
-    grid-column: 2;
-    grid-row: 1;
-    margin-bottom: 0.5rem;
-}
-
-.product-detail-title {
-    grid-column: 2;
-    grid-row: 2;
-    font-size: 2.8rem;
-    font-weight: 800;
-    color: #111;
-    margin-bottom: 2rem;
-    line-height: 1.1;
-}
-
-.product-detail-img {
-    grid-column: 1;
-    grid-row: 1 / 5;
+/* Mobile-only header: hidden on desktop */
+.mobile-product-header {
+    display: none;
 }
 
 .product-detail-info {
-    grid-column: 2;
-    grid-row: 3;
     max-width: 540px;
+}
+
+/* Desktop-only elements inside product-detail-info */
+.desktop-only {
+    display: block;
 }
 
 .product-detail-img {
