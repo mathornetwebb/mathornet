@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 items.forEach(item => {
                     item.style.minWidth = viewportWidth + "px";
                     item.style.flex = "0 0 " + viewportWidth + "px";
-                    item.style.marginRight = "16px";
+                    item.style.marginRight = "0px";
                 });
             } else if (window.innerWidth <= 992) {
                 itemsPerView = 2;
@@ -160,7 +160,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const trackStyle = window.getComputedStyle(track);
             
             // Check both flex gap and margin-right
-            let gap = parseFloat(trackStyle.gap) || parseFloat(itemStyle.marginRight) || 0;
+            let gap = 0;
+            if (items.length > 1) {
+                // The most reliable way to find the stride is measuring the distance between item 0 and item 1
+                gap = items[1].getBoundingClientRect().left - items[0].getBoundingClientRect().right;
+            }
             
             let moveAmount = currentIndex * (itemWidth + gap);
             

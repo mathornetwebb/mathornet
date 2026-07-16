@@ -2215,7 +2215,7 @@ body {
     .carousel-card.news-card-v2 {
         flex: 0 0 100% !important;
         min-width: 100% !important;
-        margin-right: 16px !important;
+        
     }
     
     /* GRIDS */
