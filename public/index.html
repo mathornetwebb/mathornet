@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Välj Varumärke | Mathörnet & Ahalna</title>
+    <meta name="description" content="Välj vilket varumärke du vill besöka. Mathörnet - Autentiska smaker från Mellanöstern, eller Ahalna.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --mathornet-color: #0b1d3a;
+            --ahalna-color: #7b2c2c; /* Warm, rich red/ochre */
+            --transition-speed: 0.6s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            background-color: #000;
+        }
+
+        .portal-container {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .split-side {
+            position: relative;
+            flex: 1; /* 50% default */
+            height: 100%;
+            transition: flex var(--transition-speed) cubic-bezier(0.25, 1, 0.5, 1);
+            cursor: pointer;
+            overflow: hidden;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .split-side::before {
+            content: '';
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            transition: transform var(--transition-speed) ease;
+            z-index: 1;
+        }
+
+        /* Mathörnet Side */
+        .mathornet-side::before {
+            top: 0;
+            left: 0;
+            background-image: url('img/mathörnet.png');
+        }
+        
+        /* Ahalna Side */
+        .ahalna-side::before {
+            bottom: 0;
+            right: 0;
+            background-image: url('img/hero_feast_1780604012322.png');
+        }
+
+        /* Overlay */
+        .overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            transition: background-color var(--transition-speed) ease, backdrop-filter var(--transition-speed) ease;
+        }
+
+        .mathornet-side .overlay {
+            background-color: rgba(11, 29, 58, 0.65);
+        }
+
+        .mathornet-side {
+            border-right: 2px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .ahalna-side .overlay {
+            background-color: rgba(123, 44, 44, 0.65);
+        }
+
+        .content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            color: #fff;
+            padding: 2rem;
+            transition: transform var(--transition-speed) ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-width: 500px; /* Prevents text wrapping during flex shrink */
+        }
+
+        .brand-logo-container {
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            transition: transform 0.4s ease;
+        }
+
+        .logo-img {
+            max-width: 280px;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
+        }
+
+        .text-logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 800;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        .slogan {
+            font-size: 1.3rem;
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            max-width: 400px;
+            line-height: 1.4;
+            min-height: 75px; /* Ensures buttons align */
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            background: transparent;
+            color: #fff;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Hover Effects */
+        .portal-container:hover .split-side:not(:hover) {
+            flex: 0.65; /* Shrinks the non-hovered side */
+        }
+        
+        .portal-container:hover .split-side:hover {
+            flex: 1.35; /* Expands the hovered side */
+        }
+
+        .split-side:hover::before {
+            transform: scale(1.05); /* Zoom image */
+        }
+
+        /* Darken the non-hovered side */
+        .portal-container:hover .split-side:not(:hover) .overlay {
+            background-color: rgba(0, 0, 0, 0.85); 
+            backdrop-filter: blur(4px);
+        }
+
+        /* Lighten the hovered side slightly so both have identical color anim */
+        .mathornet-side:hover .overlay {
+            background-color: rgba(11, 29, 58, 0.4);
+        }
+        .ahalna-side:hover .overlay {
+            background-color: rgba(123, 44, 44, 0.4);
+        }
+
+        /* Identical content animation for both brands */
+        .split-side:hover .content {
+            transform: translateY(-10px);
+        }
+
+        .split-side:hover .brand-logo-container {
+            transform: scale(1.05);
+        }
+
+        .split-side:hover .cta-btn {
+            background: #fff;
+            color: #000;
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Middle Divider */
+        .middle-divider {
+            position: absolute;
+            left: 50%;
+            top: 25%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            pointer-events: none; /* Let clicks pass through to the sides */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .middle-text {
+            background: #fff;
+            color: #000;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            white-space: nowrap;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 900px) {
+            .portal-container {
+                flex-direction: column;
+            }
+
+            .split-side {
+                width: 100%;
+                flex: 1; /* Both take 50% height */
+            }
+
+            .portal-container:hover .split-side:not(:hover) {
+                flex: 1; /* Disable flex-grow on mobile */
+            }
+            
+            .portal-container:hover .split-side:hover {
+                flex: 1;
+            }
+
+            .mathornet-side {
+                border-right: none;
+                border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+            }
+
+            .middle-divider {
+                top: 50%;
+            }
+            
+            .middle-text {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.8rem;
+            }
+
+            .content {
+                min-width: 100%;
+                padding: 1rem;
+            }
+
+            /* Push content away from the center divider */
+            .mathornet-side .content {
+                padding-bottom: 2.5rem;
+            }
+
+            .ahalna-side .content {
+                padding-top: 2.5rem;
+            }
+
+            .brand-logo-container {
+                height: auto;
+                margin-bottom: 0.5rem;
+            }
+
+            .text-logo {
+                font-size: 2.5rem;
+                letter-spacing: 2px;
+            }
+
+            .logo-img {
+                max-width: 160px;
+            }
+
+            .slogan {
+                font-size: 0.95rem;
+                margin-bottom: 1rem;
+                min-height: auto;
+                line-height: 1.3;
+            }
+            
+            .cta-btn {
+                padding: 0.7rem 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="middle-divider">
+        <div class="middle-text">Välj Varumärke</div>
+    </div>
+
+    <div class="portal-container">
+        <!-- Mathörnet (Left/Top) -->
+        <a href="mathornet.html" class="split-side mathornet-side">
+            <div class="overlay"></div>
+            <div class="content">
+                <div class="brand-logo-container">
+                    <img src="img/mathörnet logo.png" alt="Mathörnet" class="logo-img">
+                </div>
+                <p class="slogan">Autentiska smaker från Mellanöstern.<br>Handlagat och förpackat med kärlek.</p>
+                <div class="cta-btn">Utforska Mathörnet</div>
+            </div>
+        </a>
+
+        <!-- Ahalna (Right/Bottom) -->
+        <a href="#" class="split-side ahalna-side">
+            <div class="overlay"></div>
+            <div class="content">
+                <div class="brand-logo-container">
+                    <div class="text-logo">AHALNA</div>
+                </div>
+                <p class="slogan">En ny värld av orientaliska delikatesser.<br>Kommer snart.</p>
+                <div class="cta-btn">Utforska Ahalna</div>
+            </div>
+        </a>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krispig Fattoush (Brödsallad) | Mathörnet</title>
+    <link rel="stylesheet" href="style.css?v=6">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #faf9f6; margin: 0; padding: 0; }
+        
+        /* Hero Section */
+        .post-hero { 
+            position: relative; 
+            height: 55vh; 
+            min-height: 400px; 
+            display: flex; 
+            flex-direction: column;
+            align-items: center; 
+            justify-content: flex-end;
+            background: #faf9f6;
+        }
+        .post-hero-bg { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 85%;
+            object-fit: cover; z-index: 0; 
+        }
+        
+        /* Overlapping Clean Card */
+        .recipe-header-card {
+            position: relative;
+            z-index: 2;
+            background: #ffffff;
+            padding: 3rem 4rem;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 900px;
+            width: 90%;
+            transform: translateY(15%);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            border: 1px solid #f0f0f0;
+        }
+        .recipe-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+        .recipe-excerpt {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .recipe-meta-tags {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            font-weight: 600;
+            color: #444;
+            flex-wrap: wrap;
+        }
+        .recipe-meta-tag {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        /* 2-Column Layout */
+        .recipe-content-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 6rem auto 6rem;
+            padding: 0 2rem;
+        }
+        @media(min-width: 992px) {
+            .recipe-content-grid {
+                grid-template-columns: 380px 1fr;
+            }
+        }
+
+        /* Ingredients */
+        .ingredients-panel {
+            background: #ffffff;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            border: 1px solid #eaeaea;
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+            margin-bottom: 5rem;
+        }
+        .ingredients-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #222;
+            display: block;
+            border-bottom: 2px solid #64b000;
+            padding-bottom: 0.8rem;
+        }
+        
+        .ingredients-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .ingredients-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f5f5f5;
+            font-size: 1.1rem;
+            color: #333;
+        }
+        .ingredients-list li:last-child {
+            border-bottom: none;
+        }
+        
+        /* Custom Checkbox */
+        .ingredient-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            cursor: pointer;
+            user-select: none;
+        }
+        .ingredient-checkbox input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        .checkmark {
+            margin-top: 2px;
+            height: 22px;
+            width: 22px;
+            background-color: #fff;
+            border: 2px solid #ddd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .ingredient-checkbox:hover input ~ .checkmark {
+            border-color: #64b000;
+        }
+        .ingredient-checkbox input:checked ~ .checkmark {
+            background-color: #64b000;
+            border-color: #64b000;
+        }
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            margin-bottom: 2px;
+        }
+        .ingredient-checkbox input:checked ~ .checkmark:after {
+            display: block;
+        }
+        .ingredient-text {
+            line-height: 1.4;
+            transition: color 0.2s;
+        }
+        .ingredient-checkbox input:checked ~ .ingredient-text {
+            color: #aaa;
+            text-decoration: line-through;
+        }
+
+        /* Instructions */
+        .instructions-panel {
+            padding-top: 1rem;
+        }
+        .instructions-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 2.5rem;
+            color: #222;
+        }
+        .instruction-step {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .step-number {
+            flex-shrink: 0;
+            width: 44px;
+            height: 44px;
+            background: #f0f7e6;
+            color: #64b000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+        }
+        .step-text {
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: #333;
+            padding-top: 0.4rem;
+        }
+        
+        /* Action buttons */
+        .recipe-actions {
+            margin-top: 4rem;
+            text-align: left;
+            padding-bottom: 4rem;
+            border-top: 1px solid #eaeaea;
+            padding-top: 2rem;
+        }
+        .btn-outline {
+            display: inline-block;
+            border: 2px solid #222;
+            color: #222;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 1.05rem;
+        }
+        .btn-outline:hover {
+            background: #222;
+            color: white;
+        }
+        
+        /* Header Fix for absolute positioned hero */
+        .main-header {
+            position: absolute !important;
+            width: 100%;
+            z-index: 100;
+            background: transparent !important;
+        }
+        .main-header.scrolled {
+            position: fixed !important;
+            background: #fff !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .main-header.scrolled .main-nav ul li a,
+        .main-header.scrolled .search-btn,
+        .main-header.scrolled .lang-toggle-btn,
+        .main-header.scrolled .mobile-menu-toggle {
+            color: #222 !important;
+        }
+        
+        @media(max-width: 768px) {
+            .post-hero { height: 45vh; min-height: 350px; justify-content: flex-end; }
+            .post-hero-bg { height: 100%; }
+            .recipe-header-card {
+                padding: 1.5rem;
+                transform: translateY(2rem);
+                width: 90%;
+                margin: 0 auto;
+            }
+            .recipe-title { font-size: 2rem; }
+            .recipe-content-grid { margin-top: 4rem; gap: 3rem; padding: 0 1rem; }
+            .ingredients-panel { position: static; padding: 1.5rem; }
+            .instruction-step { flex-direction: column; gap: 0.8rem; }
+        }
+
+        /* Fix for header icons visibility over dark image */
+        .post-hero::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 150px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .main-header:not(.scrolled) .main-logo {
+            filter: brightness(0) invert(1);
+        }
+        .main-header:not(.scrolled) .main-nav ul li a,
+        .main-header:not(.scrolled) .search-btn,
+        .main-header:not(.scrolled) .lang-toggle-btn,
+        .main-header:not(.scrolled) .mobile-menu-toggle {
+            color: #fff !important;
+        }
+        
+        /* Prevent horizontal scroll */
+        body {
+            overflow-x: hidden !important;
+            width: 100%;
+            position: relative;
+        }
+
+</style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="page-preloader" class="preloader">
+        <div class="loader"></div>
+    </div>
+    
+    <header class="main-header">
+        <div class="header-inner container">
+            <a href="mathornet.html" class="logo">
+                <img src="img/mathörnet logo.png" alt="Mathörnet Logotyp" class="main-logo">
+            </a>
+            
+            <button class="mobile-menu-toggle" aria-label="Öppna meny">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="produkter.html">Produkter</a></li>
+                    <li><a href="recept.html">Recept</a></li>
+                    <li><a href="nyheter.html">Nyheter</a></li>
+                    <li><a href="aterforsaljare.html">Återförsäljare</a></li>
+                    <li><a href="om-oss.html">Om oss</a></li>
+                    <li><a href="hitta-oss.html">Hitta oss</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions" style="display: flex; align-items: center; gap: 1rem;">
+                <div class="custom-lang-picker">
+                    <button class="lang-toggle-btn" aria-label="Välj språk">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    </button>
+                    <div class="lang-dropdown">
+                        <button class="lang-option" data-lang="sv">
+                            <img src="https://flagcdn.com/w20/se.png" srcset="https://flagcdn.com/w40/se.png 2x" width="20" alt="Sverige"> Svenska
+                        </button>
+                        <button class="lang-option" data-lang="en">
+                            <img src="https://flagcdn.com/w20/gb.png" srcset="https://flagcdn.com/w40/gb.png 2x" width="20" alt="Storbritannien"> English
+                        </button>
+                        <button class="lang-option" data-lang="ar">
+                            <img src="https://flagcdn.com/w20/sa.png" srcset="https://flagcdn.com/w40/sa.png 2x" width="20" alt="Saudiarabien"> العربية
+                        </button>
+                    </div>
+                </div>
+                <div class="search-container">
+                    <button class="search-btn" aria-label="Sök">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </button>
+                    <div class="search-dropdown">
+                        <input type="text" id="search-input" placeholder="Sök, t.ex. falafel...">
+                        <div class="search-results" id="search-results">
+                            <!-- JS injected results -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <section class="post-hero">
+            <img src="img/recipe_fattoush_1781121468759.png" class="post-hero-bg" alt="Krispig Fattoush (Brödsallad)">
+            <!-- no overlay -->
+            
+            <div class="recipe-header-card">
+                <h1 class="recipe-title">Krispig Fattoush (Brödsallad)</h1>
+                <p class="recipe-excerpt">Mellanösterns godaste sallad! Fylld med färska grönsaker, sumak och toppad med krispiga pitabrödskrutonger.</p>
+                <div class="recipe-meta-tags">
+                    <span class="recipe-meta-tag">⏱️ 20 min</span>
+                    <span class="recipe-meta-tag">🍽️ 4 portioner</span>
+                    <span class="recipe-meta-tag">👨‍🍳 Enkel</span>
+                </div>
+            </div>
+        </section>
+        
+        <div class="recipe-content-grid">
+            <aside class="ingredients-panel">
+                <h2 class="ingredients-title">Ingredienser</h2>
+                <ul class="ingredients-list">
+                    <li><label class="ingredient-checkbox"><input type="checkbox"><span class="checkmark"></span><span class="ingredient-text">2 st libabröd (eller pitabröd)</span></label></li>
+                    <li><label class="ingredient-checkbox"><input type="checkbox"><span class="checkmark"></span><span class="ingredient-text">2 hjärtsalladshuvuden</span></label></li>
+                    <li><label class="ingredient-checkbox"><input type="checkbox"><span class="checkmark"></span><span class="ingredient-text">4 salladstomater</span></label></li>
+                    <li><label class="ingredient-checkbox"><input type="checkbox"><span class="checkmark"></span><span class="ingredient-text">1 gurka</span></label></li>
+                    <li><label class="ingredient-checkbox"><input type="checkbox"><span class="checkmark"></span><span class="ingredient-text">1 röd paprika</span></label></li>
+                    <li><label class="ingredient-checkbox"><input type="checkbox"><span class="checkmark"></span><span class="ingredient-text">4 rädisor</span></label></li>
+                    <li><label class="ingredient-checkbox"><input type="checkbox"><span class="checkmark"></span><span class="ingredient-text">1 knippe persilja och mynta</span></label></li>
+                    <li><label class="ingredient-checkbox"><input type="checkbox"><span class="checkmark"></span><span class="ingredient-text">2 tsk sumak (krydda)</span></label></li>
+                    <li><label class="ingredient-checkbox"><input type="checkbox"><span class="checkmark"></span><span class="ingredient-text">3 msk granatäppelsirap</span></label></li>
+                    <li><label class="ingredient-checkbox"><input type="checkbox"><span class="checkmark"></span><span class="ingredient-text">3 msk olivolja</span></label></li>
+                    <li><label class="ingredient-checkbox"><input type="checkbox"><span class="checkmark"></span><span class="ingredient-text">1 msk citronsaft</span></label></li>
+                    <li><label class="ingredient-checkbox"><input type="checkbox"><span class="checkmark"></span><span class="ingredient-text">Salt och peppar</span></label></li>
+                </ul>
+            </aside>
+            
+            <section class="instructions-panel">
+                <h2 class="instructions-title">Gör så här</h2>
+                
+                <div class="instruction-step">
+                    <div class="step-number">1</div>
+                    <div class="step-text">Klipp pitabrödet i fyrkanter och fritera dem krispiga i olja (eller rosta dem i ugnen med lite olivolja).</div>
+                </div>
+                <div class="instruction-step">
+                    <div class="step-number">2</div>
+                    <div class="step-text">Skär grönsakerna i grova bitar. Finhacka örterna.</div>
+                </div>
+                <div class="instruction-step">
+                    <div class="step-number">3</div>
+                    <div class="step-text">Blanda en dressing av granatäppelsirap, olivolja, citronsaft, sumak, salt och peppar i botten av en stor skål.</div>
+                </div>
+                <div class="instruction-step">
+                    <div class="step-number">4</div>
+                    <div class="step-text">Vänd ner alla grönsaker och örter i dressingen.</div>
+                </div>
+                <div class="instruction-step">
+                    <div class="step-number">5</div>
+                    <div class="step-text">Toppa salladen med det friterade brödet strax innan servering så det behåller sin krispighet.</div>
+                </div>
+                
+                <div class="recipe-actions">
+                    <a href="recept.html" class="btn-outline">&larr; Tillbaka till alla recept</a>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-col">
+                <a href="mathornet.html" class="footer-logo" style="display: block; margin-top: -20px;">
+                    <img src="img/mathörnet logo.png" alt="Mathörnet Logotyp" style="height: 110px; width: auto; margin-bottom: -40px; margin-left: -15px;">
+                </a>
+                <p style="color: rgba(255,255,255,0.9); max-width: 260px; font-size: 0.9rem; line-height: 1.6;">Mathörnet bygger på generationer av kunskap om orientalisk matlagning. Äkta råvaror, äkta smak.</p>
+                <div class="social-links" style="display: flex; gap: 1.2rem; margin-top: 1.5rem;">
+                    <!-- Facebook (Fyrkantig) -->
+                    <a href="#" style="color: rgba(255,255,255,0.8); transition: opacity 0.2s;" onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-3 7h-1.924c-.615 0-1.076.252-1.076.889v1.111h3l-.238 3h-2.762v8h-3v-8h-2v-3h2v-1.923c0-2.022 1.064-3.077 3.461-3.077h2.539v3z"/></svg>
+                    </a>
+                    <!-- LinkedIn (Fyrkantig) -->
+                    <a href="#" style="color: rgba(255,255,255,0.8); transition: opacity 0.2s;" onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                    <!-- Instagram -->
+                    <a href="#" style="color: rgba(255,255,255,0.8); transition: opacity 0.2s;" onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    </a>
+                    <!-- TikTok -->
+                    <a href="#" style="color: rgba(255,255,255,0.8); transition: opacity 0.2s;" onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93v7.2c0 1.96-.5 3.96-1.6 5.56-1.15 1.7-2.92 2.85-4.94 3.09-2.05.25-4.22-.16-5.96-1.34-1.72-1.14-2.87-3.05-3.07-5.11-.2-2.12.35-4.28 1.68-5.91 1.34-1.66 3.32-2.67 5.4-2.85 1.1-.09 2.22 0 3.28.32v3.91c-.43-.13-.88-.18-1.32-.16-1.38.05-2.66.86-3.32 2.05-.65 1.19-.68 2.67-.09 3.89.57 1.2 1.8 2.05 3.12 2.12 1.35.08 2.7-.49 3.52-1.57.8-.57 1.25-1.54 1.25-2.52V.02h-2.02z"/></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Snabblänkar</h3>
+                <ul>
+                    <li><a href="produkter.html">Produkter</a></li>
+                    <li><a href="recept.html">Recept</a></li>
+                    <li><a href="nyheter.html">Nyheter</a></li>
+                    <li><a href="aterforsaljare.html">Återförsäljare</a></li>
+                    <li><a href="om-oss.html">Om Oss</a></li>
+                    <li><a href="hitta-oss.html">Hitta oss</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Kategorier</h3>
+                <ul>
+                    <li><a href="#">Kubbe</a></li>
+                    <li><a href="#">Meze</a></li>
+                    <li><a href="#">Sött</a></li>
+                    <li><a href="#">Kryddor</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Kontakt</h3>
+                <ul class="contact-info">
+                    <li>Strängnäsvägen 123, 132 44 Strängnäs</li>
+                    <li><a href="mailto:info@mathornet.se">info@mathornet.se</a></li>
+                    <li>072 - 182 67 84</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom container">
+            <p>&copy; 2026 Mathörnet. Alla rättigheter reserverade.</p>
+            <div class="footer-legal">
+                <a href="kopvillkor.html">Köpvillkor</a>
+                <a href="integritetspolicy.html">Integritetspolicy</a>
+                <a href="cookies.html">Cookies</a>
+            </div>
+        </div>
+    </footer>
+    <script src="main.js"></script>
+    <script>
+        // Make header solid on scroll
+        window.addEventListener('scroll', function() {
+            var header = document.querySelector('.main-header');
+            if(window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
