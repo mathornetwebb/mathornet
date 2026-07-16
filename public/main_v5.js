@@ -111,9 +111,23 @@ document.addEventListener('DOMContentLoaded', () => {
         let autoSlideInterval;
 
         function updateConfig() {
-            if (window.innerWidth <= 768) itemsPerView = 1;
-            else if (window.innerWidth <= 992) itemsPerView = 2;
-            else itemsPerView = 3;
+            const viewportWidth = carouselWrapper.querySelector('.carousel-viewport').getBoundingClientRect().width;
+            
+            if (window.innerWidth <= 768) {
+                itemsPerView = 1;
+                // Force items to be exactly the viewport width on mobile to avoid slivers
+                items.forEach(item => {
+                    item.style.minWidth = viewportWidth + "px";
+                    item.style.flex = "0 0 " + viewportWidth + "px";
+                    item.style.marginRight = "16px";
+                });
+            } else if (window.innerWidth <= 992) {
+                itemsPerView = 2;
+                items.forEach(item => { item.style.minWidth = ""; item.style.flex = ""; item.style.marginRight = ""; });
+            } else {
+                itemsPerView = 3;
+                items.forEach(item => { item.style.minWidth = ""; item.style.flex = ""; item.style.marginRight = ""; });
+            }
             
             maxIndex = Math.max(0, items.length - itemsPerView);
             if (currentIndex > maxIndex) currentIndex = maxIndex;
