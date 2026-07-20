@@ -17,11 +17,11 @@
             display: flex; 
             flex-direction: column;
             align-items: center; 
-            justify-content: flex-end;
+            justify-content: center;
             background: #faf9f6;
         }
         .post-hero-bg { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 85%;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             object-fit: cover; z-index: 0; 
         }
         
@@ -35,7 +35,7 @@
             text-align: center;
             max-width: 900px;
             width: 90%;
-            transform: translateY(15%);
+            transform: translateY(0);
             box-shadow: 0 10px 40px rgba(0,0,0,0.08);
             border: 1px solid #f0f0f0;
         }
@@ -93,7 +93,7 @@
             height: fit-content;
             position: sticky;
             top: 120px;
-            margin-bottom: 5rem;
+            margin-bottom: 0rem;
         }
         .ingredients-title {
             font-family: 'Outfit', sans-serif;
@@ -217,79 +217,32 @@
         /* Action buttons */
         .recipe-actions {
             margin-top: 4rem;
-            text-align: left;
+            text-align: center;
             padding-bottom: 4rem;
-            border-top: 1px solid #eaeaea;
+            border-top: none;
             padding-top: 2rem;
         }
-        .btn-outline {
-            display: inline-block;
-            border: 2px solid #222;
-            color: #222;
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s;
-            font-size: 1.05rem;
-        }
-        .btn-outline:hover {
-            background: #222;
-            color: white;
-        }
         
-        /* Header Fix for absolute positioned hero */
-        .main-header {
-            position: absolute !important;
-            width: 100%;
-            z-index: 100;
-            background: transparent !important;
-        }
-        .main-header.scrolled {
-            position: fixed !important;
-            background: #fff !important;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        .main-header.scrolled .main-nav ul li a,
-        .main-header.scrolled .search-btn,
-        .main-header.scrolled .lang-toggle-btn,
-        .main-header.scrolled .mobile-menu-toggle {
-            color: #222 !important;
-        }
+        
+        
+        
         
         @media(max-width: 768px) {
-            .post-hero { height: 45vh; min-height: 350px; justify-content: flex-end; }
+            .post-hero { height: 45vh; min-height: 350px; justify-content: center; }
             .post-hero-bg { height: 100%; }
             .recipe-header-card {
                 padding: 1.5rem;
-                transform: translateY(2rem);
+                transform: translateY(0);
                 width: 90%;
                 margin: 0 auto;
             }
             .recipe-title { font-size: 2rem; }
             .recipe-content-grid { margin-top: 4rem; gap: 3rem; padding: 0 1rem; }
             .ingredients-panel { position: static; padding: 1.5rem; }
-            .instruction-step { flex-direction: column; gap: 0.8rem; }
+            
         }
 
-        /* Fix for header icons visibility over dark image */
-        .post-hero::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 150px;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%);
-            z-index: 1;
-            pointer-events: none;
-        }
-        .main-header:not(.scrolled) .main-logo {
-            filter: brightness(0) invert(1);
-        }
-        .main-header:not(.scrolled) .main-nav ul li a,
-        .main-header:not(.scrolled) .search-btn,
-        .main-header:not(.scrolled) .lang-toggle-btn,
-        .main-header:not(.scrolled) .mobile-menu-toggle {
-            color: #fff !important;
-        }
+        
         
         /* Prevent horizontal scroll */
         body {
@@ -420,7 +373,7 @@
                 </div>
                 
                 <div class="recipe-actions">
-                    <a href="recept.html" class="btn-outline">&larr; Tillbaka till alla recept</a>
+                    <a href="recept.html" class="btn btn-navy">&larr; Tillbaka till alla recept</a>
                 </div>
             </section>
         </div>
@@ -467,21 +420,11 @@
             </div>
 
             <div class="footer-col">
-                <h3>Kategorier</h3>
-                <ul>
-                    <li><a href="#">Kubbe</a></li>
-                    <li><a href="#">Meze</a></li>
-                    <li><a href="#">Sött</a></li>
-                    <li><a href="#">Kryddor</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-col">
                 <h3>Kontakt</h3>
                 <ul class="contact-info">
                     <li>Strängnäsvägen 123, 132 44 Strängnäs</li>
                     <li><a href="mailto:info@mathornet.se">info@mathornet.se</a></li>
-                    <li>072 - 182 67 84</li>
+                    <li><a href="tel:0721826784" style="color: inherit; text-decoration: none; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">072 - 182 67 84</a></li>
                 </ul>
             </div>
         </div>

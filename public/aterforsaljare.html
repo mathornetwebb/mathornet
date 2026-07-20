@@ -9,11 +9,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         /* B2B HERO */
-        .b2b-hero { position: relative; height: 70vh; min-height: 600px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-top: -100px; }
+        .b2b-hero { position: relative; height: 80vh; min-height: 700px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-top: -100px; }
         .b2b-hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
         .b2b-hero-bg img { width: 100%; height: 100%; object-fit: cover; }
         .b2b-hero-bg .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(8, 25, 43, 0.85) 0%, rgba(11, 94, 94, 0.6) 100%); }
-        .b2b-hero-content { position: relative; z-index: 2; text-align: center; color: #fff; max-width: 1100px; padding: 0 20px; margin-top: 50px; }
+        .b2b-hero-content { position: relative; z-index: 2; text-align: center; color: #fff; max-width: 1100px; padding: 0 20px; margin-top: 80px; }
         .b2b-hero-content .tag { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); padding: 6px 16px; border-radius: 30px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; font-size: 0.85rem; display: inline-block; margin-bottom: 1.5rem; backdrop-filter: blur(5px); }
         .b2b-hero-content h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 1.5rem; line-height: 1.1; }
         @media (min-width: 768px) { .b2b-hero-content h1 { font-size: 4rem; } }
@@ -126,7 +126,24 @@
                 </ul>
             </nav>
 
-            <div class="search-container">
+            <div class="header-actions" style="display: flex; align-items: center; gap: 1rem;">
+                <div class="custom-lang-picker">
+                    <button class="lang-toggle-btn" aria-label="Välj språk">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    </button>
+                    <div class="lang-dropdown">
+                        <button class="lang-option" data-lang="sv">
+                            <img src="https://flagcdn.com/w20/se.png" srcset="https://flagcdn.com/w40/se.png 2x" width="20" alt="Sverige"> Svenska
+                        </button>
+                        <button class="lang-option" data-lang="en">
+                            <img src="https://flagcdn.com/w20/gb.png" srcset="https://flagcdn.com/w40/gb.png 2x" width="20" alt="Storbritannien"> English
+                        </button>
+                        <button class="lang-option" data-lang="ar">
+                            <img src="https://flagcdn.com/w20/sa.png" srcset="https://flagcdn.com/w40/sa.png 2x" width="20" alt="Saudiarabien"> العربية
+                        </button>
+                    </div>
+                </div>
+                <div class="search-container">
                 <button class="search-btn" aria-label="Sök">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 </button>
@@ -136,6 +153,7 @@
                         <!-- JS injected results -->
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     </header>
@@ -164,7 +182,7 @@
         </section>
 
         <!-- USPs -->
-        <section class="b2b-usp-section" style="background-color: #FAF8F5; position: relative; z-index: 1;">
+        <section class="b2b-usp-section" style="background-color: #FAF8F5; position: relative; z-index: 1; padding: 2rem 0 4rem;">
             <div class="container">
                 <div class="section-header" style="text-align:center; max-width: 800px; margin: 0 auto 4rem;">
                     <h2>Varför välja Mathörnet?</h2>
@@ -192,40 +210,6 @@
                         </div>
                         <h3>Pålitlig Leverans</h3>
                         <p>Vår nya, storskaliga produktionsanläggning i Strängnäs säkerställer snabba och trygga leveranser i hela landet utan avbrott.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ASSORTMENT OVERVIEW -->
-        <section id="sortiment" class="b2b-assortment" style="background-color: #fff; padding: 6rem 0;">
-            <div class="container">
-                <div class="section-header" style="text-align:center; max-width: 800px; margin: 0 auto 4rem;">
-                    <h2>Lösningar för alla verksamheter</h2>
-                    <p style="font-size: 1.1rem; color: #555;">Oavsett om du driver en deli-butik, en stormarknad, eller ett skolkök så har vi förpackningar och produkter som passar just era behov.</p>
-                </div>
-                
-                <div class="assortment-grid">
-                    <div class="assortment-card">
-                        <img src="img/mathörnet förpackning.png" alt="Butik" style="object-fit: contain; padding: 1.5rem; background: #fff;">
-                        <div class="assortment-content">
-                            <h3>Färdigförpackat för Butik</h3>
-                            <p>Snygga och inbjudande konsumentförpackningar som står ut i kyldisken. Perfekt för dagligvaruhandeln och delikatessen.</p>
-                        </div>
-                    </div>
-                    <div class="assortment-card">
-                        <img src="img/restaurant_kitchen_kubbe.png" alt="Restaurang och Storkök">
-                        <div class="assortment-content">
-                            <h3>Restaurang & Storkök</h3>
-                            <p>Storförpackningar utformade för smidig hantering i professionella kök, till oslagbart portionspris och perfekt kvalitet.</p>
-                        </div>
-                    </div>
-                    <div class="assortment-card">
-                        <img src="img/sauces_plastic_tubs.png" alt="Sås & Tillbehör">
-                        <div class="assortment-content">
-                            <h3>Sås & Tillbehör</h3>
-                            <p>Färdiga röror, dipper och autentiska bröd. Komplettera huvudprodukterna och ge kunden en fulländad måltidsupplevelse.</p>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -296,7 +280,7 @@
                             </div>
                             <div class="form-group half">
                                 <label for="type">Typ av verksamhet</label>
-                                <select id="type" name="type" style="padding: 14px 16px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 1rem; width: 100%; background: #fafafa; outline: none; transition: border-color 0.2s;">
+                                <select id="type" name="type" style="padding: 14px 40px 14px 16px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 1rem; width: 100%; background-color: #fafafa; background-image: url('data:image/svg+xml,%3Csvg viewBox=%270 0 24 24%27 width=%2716%27 height=%2716%27 xmlns=%27http://www.w3.org/2000/svg%27 fill=%27none%27 stroke=%27%23333%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpolyline points=%276 9 12 15 18 9%27%3E%3C/polyline%3E%3C/svg%3E'); background-repeat: no-repeat; background-position: right 16px center; background-size: 16px; -webkit-appearance: none; appearance: none; outline: none; transition: border-color 0.2s;">
                                     <option value="butik">Dagligvaruhandel / Butik</option>
                                     <option value="restaurang">Restaurang / Café</option>
                                     <option value="grossist">Grossist</option>
@@ -358,21 +342,11 @@
             </div>
 
             <div class="footer-col">
-                <h3>Kategorier</h3>
-                <ul>
-                    <li><a href="#">Kubbe</a></li>
-                    <li><a href="#">Meze</a></li>
-                    <li><a href="#">Sött</a></li>
-                    <li><a href="#">Kryddor</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-col">
                 <h3>Kontakt</h3>
                 <ul class="contact-info">
                     <li>Strängnäsvägen 123, 132 44 Strängnäs</li>
                     <li><a href="mailto:info@mathornet.se">info@mathornet.se</a></li>
-                    <li>072 - 182 67 84</li>
+                    <li><a href="tel:0721826784" style="color: inherit; text-decoration: none; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">072 - 182 67 84</a></li>
                 </ul>
             </div>
         </div>

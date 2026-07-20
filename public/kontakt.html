@@ -33,7 +33,7 @@
             <nav class="main-nav">
                 <ul>
                     <li><a href="produkter.html">Produkter</a></li>
-                    <li><a href="#">Recept</a></li>
+                    <li><a href="recept.html">Recept</a></li>
                     <li><a href="nyheter.html">Nyheter</a></li>
                     <li><a href="aterforsaljare.html">Återförsäljare</a></li>
                     <li><a href="om-oss.html">Om oss</a></li>
@@ -42,7 +42,24 @@
                 </ul>
             </nav>
 
-            <div class="search-container">
+            <div class="header-actions" style="display: flex; align-items: center; gap: 1rem;">
+                <div class="custom-lang-picker">
+                    <button class="lang-toggle-btn" aria-label="Välj språk">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    </button>
+                    <div class="lang-dropdown">
+                        <button class="lang-option" data-lang="sv">
+                            <img src="https://flagcdn.com/w20/se.png" srcset="https://flagcdn.com/w40/se.png 2x" width="20" alt="Sverige"> Svenska
+                        </button>
+                        <button class="lang-option" data-lang="en">
+                            <img src="https://flagcdn.com/w20/gb.png" srcset="https://flagcdn.com/w40/gb.png 2x" width="20" alt="Storbritannien"> English
+                        </button>
+                        <button class="lang-option" data-lang="ar">
+                            <img src="https://flagcdn.com/w20/sa.png" srcset="https://flagcdn.com/w40/sa.png 2x" width="20" alt="Saudiarabien"> العربية
+                        </button>
+                    </div>
+                </div>
+                <div class="search-container">
                 <button class="search-btn" aria-label="Sök">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 </button>
@@ -53,6 +70,7 @@
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </header>
     <main>
@@ -62,8 +80,8 @@
         <div class="container" style="width: 100%; max-width: 1200px; margin: 0 auto;">
             <div class="contact-split-layout">
                 <div class="contact-text-side">
-                    <h2 style="font-size: 2.5rem; margin-bottom: 1rem; color: #111;">Hör av dig till oss!</h2>
-                    <p style="font-size: 1.2rem; font-weight: 500; color: #111; line-height: 1.6; margin-bottom: 2rem;">Oavsett om du är intresserad av att bli återförsäljare eller har frågor om våra produkter – hör av dig via formuläret bredvid så kontaktar vi dig inom kort.</p>
+                    <h1 style="font-size: 3.5rem; margin-bottom: 0.5rem; color: #111; font-weight: 800; letter-spacing: -1px;">Kontakta oss</h1>
+                    <p style="font-size: 1.2rem; font-weight: 500; color: #111; line-height: 1.6; margin-bottom: 0;">Vi hör av oss inom 24 timmar</p>
                 </div>
                 
                 <form class="about-contact-form" action="#" method="POST" style="background: #fff; padding: 2.5rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #eee;">
@@ -109,6 +127,7 @@
                 </form>
                 
                 <div class="contact-map-wrapper">
+                    <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: #111; font-weight: 700;">Besöksadress</h3>
                     <div class="contact-map" style="width: 100%; height: 350px; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
                         <div id="contact-map" style="width: 100%; height: 100%;"></div>
                     </div>
@@ -163,21 +182,11 @@
             </div>
 
             <div class="footer-col">
-                <h3>Kategorier</h3>
-                <ul>
-                    <li><a href="#">Kubbe</a></li>
-                    <li><a href="#">Meze</a></li>
-                    <li><a href="#">Sött</a></li>
-                    <li><a href="#">Kryddor</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-col">
                 <h3>Kontakt</h3>
                 <ul class="contact-info">
                     <li>Strängnäsvägen 123, 132 44 Strängnäs</li>
                     <li><a href="mailto:info@mathornet.se">info@mathornet.se</a></li>
-                    <li>072 - 182 67 84</li>
+                    <li><a href="tel:0721826784" style="color: inherit; text-decoration: none; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">072 - 182 67 84</a></li>
                 </ul>
             </div>
         </div>
@@ -206,18 +215,21 @@
                 position: 'topright'
             }).addTo(map);
 
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-                attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-                subdomains: 'abcd',
+            L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+                attribution: '&copy; Google Maps',
                 maxZoom: 20
             }).addTo(map);
 
+            map.attributionControl.setPrefix(false);
+
             const mathornetIcon = L.divIcon({
-                className: 'custom-map-marker',
-                html: `<img src="img/mathörnet logo.png" style="width: 20px; filter: brightness(0) invert(1);" alt="Icon">`,
-                iconSize: [40, 40],
-                iconAnchor: [20, 20],
-                popupAnchor: [0, -20]
+                className: '',
+                html: `<div style="background-color: white; border-radius: 12px; padding: 4px 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); display: inline-flex; align-items: center; justify-content: center;">
+                           <img src="img/mathörnet logo.png" style="width: 65px; height: auto; display: block;" alt="Mathörnet">
+                       </div>`,
+                iconSize: [81, 32],
+                iconAnchor: [40, 16],
+                popupAnchor: [0, -16]
             });
 
             L.marker(mathornetLocation, { icon: mathornetIcon })

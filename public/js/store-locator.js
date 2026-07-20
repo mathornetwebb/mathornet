@@ -90,20 +90,24 @@ document.addEventListener('DOMContentLoaded', () => {
         position: 'topright'
     }).addTo(map);
 
-    // Add CartoDB Positron tile layer (clean, light map very similar to the screenshot)
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: 'abcd',
+    // Add Google Maps tile layer (bypasses Leaflet attribution flag and gives Google Maps styling)
+    L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+        attribution: '&copy; Google Maps',
         maxZoom: 20
     }).addTo(map);
 
+    // Remove the default Leaflet attribution prefix (which contains the Ukrainian flag)
+    map.attributionControl.setPrefix(false);
+
     // 3. Custom Icon for Mathörnet
     const mathornetIcon = L.divIcon({
-        className: 'custom-map-marker',
-        html: `<img src="img/mathörnet logo.png" style="width: 20px; filter: brightness(0) invert(1);" alt="Icon">`,
-        iconSize: [40, 40],
-        iconAnchor: [20, 20],
-        popupAnchor: [0, -20]
+        className: '',
+        html: `<div style="background-color: white; border-radius: 12px; padding: 4px 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); display: inline-flex; align-items: center; justify-content: center;">
+                   <img src="img/mathörnet logo.png" style="width: 65px; height: auto; display: block;" alt="Mathörnet">
+               </div>`,
+        iconSize: [81, 32],
+        iconAnchor: [40, 16],
+        popupAnchor: [0, -16]
     });
 
     // 4. Store Markers and List Logic
