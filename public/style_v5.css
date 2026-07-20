@@ -2569,7 +2569,7 @@ body {
 .product-data-table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 3rem;
+    margin-bottom: 32px;
 }
 
 .product-data-table tr {
@@ -2594,7 +2594,7 @@ body {
 
 /* Accordion */
 .product-accordions {
-    margin-top: 2rem;
+    margin-top: 0;
     border-top: 2px solid #111;
 }
 
@@ -2607,7 +2607,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 0;
+    padding: 32px 0;
     background: transparent;
     border: none;
     font-size: 1.2rem;
