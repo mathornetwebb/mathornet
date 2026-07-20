@@ -121,10 +121,10 @@ ul {
 }
 
 .main-logo {
-    height: 105px;
+    height: 75px;
     width: auto;
     display: block;
-    margin: -15px 0; /* Drar in tomrummet över och under bilden så headern inte blir för hög */
+    margin: 5px 0; /* Ge lite space för den nya loggan */
 }
 
 .main-nav ul {
@@ -1144,8 +1144,8 @@ main {
         gap: 1rem;
     }
     .main-logo {
-        height: 100px;
-        margin: -15px 0;
+        height: 65px;
+        margin: 5px 0;
     }
     .main-nav ul {
         flex-wrap: wrap;
@@ -2047,8 +2047,8 @@ body {
         box-sizing: border-box !important;
     }
     .main-logo {
-        height: 40px !important;
-        max-width: 120px !important;
+        height: 50px !important;
+        max-width: 160px !important;
         object-fit: contain !important;
         margin: 0 !important;
     }

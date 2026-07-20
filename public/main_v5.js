@@ -21,6 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
     searchBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         searchDropdown.classList.toggle('active');
+        
+        // Stäng eventuell öppen språk-meny
+        const langDropdown = document.querySelector('.lang-dropdown');
+        if (langDropdown && langDropdown.classList.contains('active')) {
+            langDropdown.classList.remove('active');
+        }
+
         if (searchDropdown.classList.contains('active')) {
             searchInput.focus();
         }

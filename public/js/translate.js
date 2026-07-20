@@ -22,6 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             dropdown.classList.toggle('active');
+            
+            // Stäng eventuell öppen sök-meny
+            const searchDropdown = document.querySelector('.search-dropdown');
+            if (searchDropdown && searchDropdown.classList.contains('active')) {
+                searchDropdown.classList.remove('active');
+            }
         });
 
         // Close menu when clicking outside
