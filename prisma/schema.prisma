@@ -24,18 +24,17 @@ enum Role {
   EDITOR
 }
 
-// KUNSKAPSBANKEN (BLOGG)
-model BlogPost {
+// NYHETER (News)
+model News {
   id              String    @id @default(cuid())
   slug            String    @unique
   title           String
   seoTitle        String?
   metaDescription String?
   featuredImage   String?
+  excerpt         String?   @db.Text
   content         String    @db.Text
   author          String?
-  tags            String[]
-  categories      String[]
   published       Boolean   @default(false)
   publishedAt     DateTime?
   createdAt       DateTime  @default(now())
@@ -44,48 +43,39 @@ model BlogPost {
   @@index([slug])
 }
 
-// PROJEKT
-model Project {
-  id              String    @id @default(cuid())
-  slug            String    @unique
-  name            String
-  description     String    @db.Text
-  images          String[]  
-  client          String?
-  category        String?
-  result          String?   @db.Text
-  ctaText         String?
-  ctaLink         String?
-  published       Boolean   @default(true)
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+// PRODUKTER (Products)
+model Product {
+  id                    String    @id @default(cuid())
+  slug                  String    @unique
+  artNr                 String?
+  title                 String    // Benämning
+  ean                   String?
+  countPerBag           String?   // Antal/påse
+  weightPerBag          String?   // Vikt/påse
+  description           String?   @db.Text
+  productInfo           String?   @db.Text // Produktinformation
+  nutritionInfo         String?   @db.Text // Näringsvärde
+  ingredients           String?   @db.Text // Innehållsförteckning
+  storage               String?   @db.Text // Förvaring
+  cookingInstructions   String?   @db.Text // Tillagningsanvisningar
+  featuredImage         String?
+  published             Boolean   @default(true)
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
 
   @@index([slug])
 }
 
-// FAQ
-model FAQ {
-  id          String    @id @default(cuid())
-  question    String
-  answer      String    @db.Text
-  category    String?
-  order       Int       @default(0)
-  published   Boolean   @default(true)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-}
-
-// JOBBA HOS OSS (JOBS)
-model JobOpening {
+// RECEPT (Recipes)
+model Recipe {
   id              String    @id @default(cuid())
   slug            String    @unique
   title           String
-  location        String
-  type            String    
-  description     String    @db.Text
-  requirements    String    @db.Text
-  applyLink       String?
-  deadline        DateTime?
+  description     String?   @db.Text
+  ingredients     String?   @db.Text // Can be HTML or structured JSON, keeping Text for flexibility
+  instructions    String?   @db.Text
+  prepTime        String?
+  featuredImage   String?
   published       Boolean   @default(true)
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
@@ -93,11 +83,15 @@ model JobOpening {
   @@index([slug])
 }
 
-// NYHETSBREV (NEWSLETTER SUBSCRIBERS)
-model Subscriber {
-  id          String    @id @default(cuid())
-  email       String    @unique
-  active      Boolean   @default(true)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+// BUTIKER / HITTA OSS (Stores)
+model Store {
+  id              String    @id @default(cuid())
+  name            String
+  address         String?
+  lat             Float?
+  lng             Float?
+  googlePlaceId   String?
+  published       Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 }

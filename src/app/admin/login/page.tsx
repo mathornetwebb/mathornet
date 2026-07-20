@@ -41,11 +41,11 @@ export default function AdminLoginPage() {
       <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-2xl shadow-2xl">
         <div className="text-center">
           <Image
-            src="/logo.png"
-            alt="Global Construction"
+            src="/img/mathornet_logo_ny_transparent.png"
+            alt="Mathörnet"
             width={180}
             height={50}
-            className="mx-auto brightness-0"
+            className="mx-auto"
           />
           <h2 className="mt-6 text-3xl font-extrabold text-gray-900 font-outfit">
             Admin Portal

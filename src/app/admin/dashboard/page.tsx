@@ -1,8 +1,8 @@
 import { 
   BookOpen, 
-  FolderKanban, 
-  HelpCircle, 
-  Briefcase,
+  Package, 
+  ChefHat, 
+  MapPin,
   ArrowUpRight
 } from "lucide-react";
 import Link from "next/link";
@@ -11,18 +11,18 @@ import prisma from "@/lib/prisma";
 export const dynamic = "force-dynamic";
 
 export default async function AdminDashboard() {
-  const [blogCount, projectCount, faqCount, jobCount] = await Promise.all([
-    prisma.blogPost.count(),
-    prisma.project.count(),
-    prisma.fAQ.count(),
-    prisma.jobOpening.count(),
+  const [newsCount, productCount, recipeCount, storeCount] = await Promise.all([
+    prisma.news.count(),
+    prisma.product.count(),
+    prisma.recipe.count(),
+    prisma.store.count(),
   ]);
 
   const stats = [
-    { name: "Blogginlägg", value: blogCount.toString(), icon: BookOpen, href: "/admin/content/blog", color: "bg-blue-500" },
-    { name: "Projekt", value: projectCount.toString(), icon: FolderKanban, href: "/admin/content/projects", color: "bg-emerald-500" },
-    { name: "FAQ", value: faqCount.toString(), icon: HelpCircle, href: "/admin/content/faq", color: "bg-amber-500" },
-    { name: "Lediga Tjänster", value: jobCount.toString(), icon: Briefcase, href: "/admin/content/jobs", color: "bg-purple-500" },
+    { name: "Nyheter", value: newsCount.toString(), icon: BookOpen, href: "/admin/content/news", color: "bg-blue-500" },
+    { name: "Produkter", value: productCount.toString(), icon: Package, href: "/admin/content/products", color: "bg-emerald-500" },
+    { name: "Recept", value: recipeCount.toString(), icon: ChefHat, href: "/admin/content/recipes", color: "bg-amber-500" },
+    { name: "Butiker", value: storeCount.toString(), icon: MapPin, href: "/admin/content/stores", color: "bg-purple-500" },
   ];
 
   return (
@@ -58,17 +58,17 @@ export default async function AdminDashboard() {
         <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
           <h3 className="text-xl font-bold text-slate-900 font-outfit mb-6">Snabba åtgärder</h3>
           <div className="grid grid-cols-2 gap-4">
-            <Link href="/admin/content/blog/new" className="p-4 bg-slate-50 rounded-xl hover:bg-blue-50 transition-colors text-center border border-slate-100">
-              <span className="block font-bold text-slate-900">Nytt Blogginlägg</span>
+            <Link href="/admin/content/news/new" className="p-4 bg-slate-50 rounded-xl hover:bg-blue-50 transition-colors text-center border border-slate-100">
+              <span className="block font-bold text-slate-900">Ny Nyhet</span>
             </Link>
-            <Link href="/admin/content/projects/new" className="p-4 bg-slate-50 rounded-xl hover:bg-emerald-50 transition-colors text-center border border-slate-100">
-              <span className="block font-bold text-slate-900">Nytt Projekt</span>
+            <Link href="/admin/content/products/new" className="p-4 bg-slate-50 rounded-xl hover:bg-emerald-50 transition-colors text-center border border-slate-100">
+              <span className="block font-bold text-slate-900">Ny Produkt</span>
             </Link>
-            <Link href="/admin/content/faq/new" className="p-4 bg-slate-50 rounded-xl hover:bg-amber-50 transition-colors text-center border border-slate-100">
-              <span className="block font-bold text-slate-900">Ny FAQ</span>
+            <Link href="/admin/content/recipes/new" className="p-4 bg-slate-50 rounded-xl hover:bg-amber-50 transition-colors text-center border border-slate-100">
+              <span className="block font-bold text-slate-900">Nytt Recept</span>
             </Link>
-            <Link href="/admin/content/jobs/new" className="p-4 bg-slate-50 rounded-xl hover:bg-purple-50 transition-colors text-center border border-slate-100">
-              <span className="block font-bold text-slate-900">Ny Tjänst</span>
+            <Link href="/admin/content/stores/new" className="p-4 bg-slate-50 rounded-xl hover:bg-purple-50 transition-colors text-center border border-slate-100">
+              <span className="block font-bold text-slate-900">Ny Butik</span>
             </Link>
           </div>
         </div>
@@ -85,11 +85,19 @@ export default async function AdminDashboard() {
             <span className="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-bold uppercase tracking-wider">Online</span>
             <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold uppercase tracking-wider">v1.0.0</span>
           </div>
+          
+          <div className="w-full pt-4 mt-2 border-t border-slate-100">
+            <h4 className="text-sm font-bold text-slate-700 mb-2">Publicera ändringar</h4>
+            <p className="text-xs text-slate-500 mb-4">När du har lagt till eller ändrat innehåll måste du publicera för att det ska synas på live-sidan.</p>
+            <PublishButton />
+          </div>
         </div>
       </div>
     </div>
   );
 }
+
+import { PublishButton } from "./PublishButton";
 
 function SettingsIcon() {
   return (

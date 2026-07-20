@@ -5,9 +5,9 @@ import { usePathname } from "next/navigation";
 import { 
   LayoutDashboard, 
   BookOpen, 
-  Briefcase, 
-  HelpCircle, 
-  FolderKanban, 
+  Package, 
+  ChefHat, 
+  MapPin, 
   LogOut,
   Settings
 } from "lucide-react";
@@ -16,10 +16,10 @@ import { cn } from "@/lib/utils";
 
 const menuItems = [
   { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
-  { name: "Kunskapsbank", href: "/admin/content/blog", icon: BookOpen },
-  { name: "Projekt", href: "/admin/content/projects", icon: FolderKanban },
-  { name: "FAQ", href: "/admin/content/faq", icon: HelpCircle },
-  { name: "Jobba hos oss", href: "/admin/content/jobs", icon: Briefcase },
+  { name: "Nyheter", href: "/admin/content/news", icon: BookOpen },
+  { name: "Produkter", href: "/admin/content/products", icon: Package },
+  { name: "Recept", href: "/admin/content/recipes", icon: ChefHat },
+  { name: "Butiker", href: "/admin/content/stores", icon: MapPin },
 ];
 
 export function Sidebar() {
@@ -29,7 +29,7 @@ export function Sidebar() {
     <aside className="w-64 bg-[#1B263B] text-white flex flex-col h-screen fixed left-0 top-0 z-40 shadow-xl">
       <div className="p-6 border-b border-white/10 flex flex-col gap-4">
         <Link href="/">
-          <img src="/logo.png" alt="Global Construction" className="h-8 w-auto" />
+          <img src="/img/mathornet_logo_ny_transparent.png" alt="Mathörnet" className="h-12 w-auto" />
         </Link>
       </div>
 
