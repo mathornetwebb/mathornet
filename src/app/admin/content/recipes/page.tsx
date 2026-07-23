@@ -38,7 +38,7 @@ export default async function ReceptListPage() {
           <tbody className="divide-y divide-slate-100">
             {items.map((item) => (
               <tr key={item.id} className="hover:bg-slate-50/50 transition-colors">
-                <td className="py-4 px-6 font-medium text-slate-900">{item.title || item.name}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">{item.title}</td>
                 <td className="py-4 px-6 text-slate-500">{new Date(item.createdAt).toLocaleDateString('sv-SE')}</td>
                 <td className="py-4 px-6 text-right">
                   <div className="flex justify-end gap-2">
