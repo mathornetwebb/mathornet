@@ -1,9 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Plus, Type, Image as ImageIcon, Heading2, Heading3, ArrowLeft, Save, Trash2, Settings2, Calendar } from 'lucide-react';
+import { Save, ArrowLeft, Image as ImageIcon, Plus, GripVertical, Settings2, Eye, Type, Heading2, Heading3, Calendar, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import RichTextBlock from './RichTextBlock';
+import ImageUpload from './ImageUpload';
 
 export type Block = {
   id: string;
@@ -115,27 +116,16 @@ export default function NewsVisualEditor({
               type="text" 
               value={slug} 
               onChange={e => setSlug(e.target.value)} 
-              className="w-full rounded-lg bg-slate-50 border border-slate-200 px-3 py-2 text-sm text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors" 
+              className="w-full rounded-lg bg-slate-50 border border-slate-200 px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors" 
             />
           </div>
 
-          <div>
-            <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">Huvudbild (Omslag URL)</label>
-            <div className="relative group rounded-lg border-2 border-dashed border-slate-200 hover:border-blue-400 transition-colors bg-slate-50">
-              <input 
-                type="text" 
-                value={featuredImage} 
-                onChange={e => setFeaturedImage(e.target.value)} 
-                placeholder="https://..." 
-                className="w-full bg-transparent px-3 py-4 text-sm text-center focus:outline-none" 
-              />
-              {!featuredImage && (
-                <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-center text-slate-400 group-hover:text-blue-500 transition-colors">
-                  <ImageIcon className="w-6 h-6 mb-1" />
-                  <span className="text-xs font-medium">Klistra in bild-URL</span>
-                </div>
-              )}
-            </div>
+          <div className="mb-4">
+            <ImageUpload 
+              value={featuredImage} 
+              onChange={setFeaturedImage} 
+              label="Huvudbild (Omslag)" 
+            />
           </div>
         </div>
 

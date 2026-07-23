@@ -4,7 +4,7 @@ import NewsVisualEditor from '@/components/admin/NewsVisualEditor';
 
 export const dynamic = 'force-dynamic';
 
-export default async function NyheterEditPage({ params }: { params: { id: string } }) {
+export default async function NyheterEditPage({ params }: { params: Promise<{ id: string }> }) {
   const p = await params; const id = p.id; const isNew = id === 'new';
   let item = null;
   

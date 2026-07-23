@@ -4,7 +4,7 @@ import ProductVisualEditor from '@/components/admin/ProductVisualEditor';
 
 export const dynamic = 'force-dynamic';
 
-export default async function ProdukterEditPage({ params }: { params: { id: string } }) {
+export default async function ProdukterEditPage({ params }: { params: Promise<{ id: string }> }) {
   const p = await params; const id = p.id; const isNew = id === 'new';
   let item = null;
   

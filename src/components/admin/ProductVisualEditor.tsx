@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { ArrowLeft, Save, Trash2, Image as ImageIcon, Box, Layers, Package, Plus, X } from 'lucide-react';
 import Link from 'next/link';
 import RichTextBlock from './RichTextBlock';
+import ImageUpload from './ImageUpload';
 
 export default function ProductVisualEditor({ 
   initialData, 
@@ -113,21 +114,11 @@ export default function ProductVisualEditor({
         {/* LEFT COLUMN - MAIN INFO & IMAGE */}
         <div className="lg:col-span-5 space-y-6">
           <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
-            <div className="relative group w-full aspect-[4/3] rounded-2xl border-2 border-dashed border-slate-200 hover:border-blue-400 transition-colors bg-slate-50 mb-6 flex flex-col items-center justify-center overflow-hidden">
-              {featuredImage ? (
-                <img src={featuredImage} alt="Produkt" className="w-full h-full object-cover" />
-              ) : (
-                <div className="flex flex-col items-center text-slate-400 group-hover:text-blue-500">
-                  <ImageIcon className="w-10 h-10 mb-2" />
-                  <span className="text-sm font-medium">Klistra in bild-URL</span>
-                </div>
-              )}
-              <input 
-                type="text" 
+            <div className="mb-6">
+              <ImageUpload 
                 value={featuredImage} 
-                onChange={e => setFeaturedImage(e.target.value)} 
-                placeholder="https://..." 
-                className="absolute inset-x-4 bottom-4 bg-white/90 backdrop-blur px-3 py-2 text-sm text-center focus:outline-none rounded-lg shadow-sm border border-slate-200" 
+                onChange={setFeaturedImage} 
+                label="Produktbild" 
               />
             </div>
 
@@ -142,7 +133,7 @@ export default function ProductVisualEditor({
                   <input type="text" value={artNr} onChange={e => setArtNr(e.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-blue-500 bg-slate-50" />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">EAN13</label>
+                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">EAN</label>
                   <input type="text" value={ean} onChange={e => setEan(e.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-blue-500 bg-slate-50" />
                 </div>
               </div>
@@ -160,11 +151,11 @@ export default function ProductVisualEditor({
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Antal / Påse</label>
-                  <input type="text" value={productInfo.packaging.bag.count} onChange={e => updatePackaging('bag', 'count', e.target.value)} placeholder="12 st á 37.5g" className="w-full rounded-lg border border-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:border-orange-400 shadow-sm" />
+                  <input type="text" value={productInfo.packaging.bag.count} onChange={e => updatePackaging('bag', 'count', e.target.value)} placeholder="12 st á 37.5g" className="w-full rounded-lg border border-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-orange-400 shadow-sm" />
                 </div>
                 <div>
                   <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Vikt / Påse</label>
-                  <input type="text" value={productInfo.packaging.bag.weight} onChange={e => updatePackaging('bag', 'weight', e.target.value)} placeholder="450 g" className="w-full rounded-lg border border-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:border-orange-400 shadow-sm" />
+                  <input type="text" value={productInfo.packaging.bag.weight} onChange={e => updatePackaging('bag', 'weight', e.target.value)} placeholder="450 g" className="w-full rounded-lg border border-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-orange-400 shadow-sm" />
                 </div>
               </div>
             </div>
@@ -175,11 +166,11 @@ export default function ProductVisualEditor({
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Antal / Kartong</label>
-                  <input type="text" value={productInfo.packaging.box.count} onChange={e => updatePackaging('box', 'count', e.target.value)} placeholder="T.ex. 10 påsar" className="w-full rounded-lg border border-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:border-blue-400 shadow-sm" />
+                  <input type="text" value={productInfo.packaging.box.count} onChange={e => updatePackaging('box', 'count', e.target.value)} placeholder="T.ex. 10 påsar" className="w-full rounded-lg border border-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-blue-400 shadow-sm" />
                 </div>
                 <div>
                   <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Vikt / Kartong</label>
-                  <input type="text" value={productInfo.packaging.box.weight} onChange={e => updatePackaging('box', 'weight', e.target.value)} placeholder="T.ex. 4.5 kg" className="w-full rounded-lg border border-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:border-blue-400 shadow-sm" />
+                  <input type="text" value={productInfo.packaging.box.weight} onChange={e => updatePackaging('box', 'weight', e.target.value)} placeholder="T.ex. 4.5 kg" className="w-full rounded-lg border border-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-blue-400 shadow-sm" />
                 </div>
               </div>
             </div>
@@ -190,11 +181,11 @@ export default function ProductVisualEditor({
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Antal / Pall</label>
-                  <input type="text" value={productInfo.packaging.pallet.count} onChange={e => updatePackaging('pallet', 'count', e.target.value)} placeholder="T.ex. 50 kartonger" className="w-full rounded-lg border border-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:border-emerald-400 shadow-sm" />
+                  <input type="text" value={productInfo.packaging.pallet.count} onChange={e => updatePackaging('pallet', 'count', e.target.value)} placeholder="T.ex. 50 kartonger" className="w-full rounded-lg border border-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-emerald-400 shadow-sm" />
                 </div>
                 <div>
                   <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Vikt / Pall</label>
-                  <input type="text" value={productInfo.packaging.pallet.weight} onChange={e => updatePackaging('pallet', 'weight', e.target.value)} placeholder="T.ex. 225 kg" className="w-full rounded-lg border border-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:border-emerald-400 shadow-sm" />
+                  <input type="text" value={productInfo.packaging.pallet.weight} onChange={e => updatePackaging('pallet', 'weight', e.target.value)} placeholder="T.ex. 225 kg" className="w-full rounded-lg border border-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-emerald-400 shadow-sm" />
                 </div>
               </div>
             </div>
@@ -214,19 +205,19 @@ export default function ProductVisualEditor({
             <div className="grid grid-cols-2 gap-6">
               <div>
                 <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">Tillverkningsland</label>
-                <input type="text" value={productInfo.manufacturingCountry} onChange={e => updateProductInfo('manufacturingCountry', e.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm bg-slate-50 focus:outline-none focus:border-blue-500" />
+                <input type="text" value={productInfo.manufacturingCountry} onChange={e => updateProductInfo('manufacturingCountry', e.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm text-slate-900 bg-slate-50 focus:outline-none focus:border-blue-500" />
               </div>
               <div>
                 <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">Tillagas av</label>
-                <input type="text" value={productInfo.manufacturer} onChange={e => updateProductInfo('manufacturer', e.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm bg-slate-50 focus:outline-none focus:border-blue-500" />
+                <input type="text" value={productInfo.manufacturer} onChange={e => updateProductInfo('manufacturer', e.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm text-slate-900 bg-slate-50 focus:outline-none focus:border-blue-500" />
               </div>
               <div>
                 <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">Specialanpassningar</label>
-                <input type="text" value={productInfo.specialDiets} onChange={e => updateProductInfo('specialDiets', e.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm bg-slate-50 focus:outline-none focus:border-blue-500" />
+                <input type="text" value={productInfo.specialDiets} onChange={e => updateProductInfo('specialDiets', e.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm text-slate-900 bg-slate-50 focus:outline-none focus:border-blue-500" />
               </div>
               <div>
                 <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">Ledtid</label>
-                <input type="text" value={productInfo.leadTime} onChange={e => updateProductInfo('leadTime', e.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm bg-slate-50 focus:outline-none focus:border-blue-500" />
+                <input type="text" value={productInfo.leadTime} onChange={e => updateProductInfo('leadTime', e.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm text-slate-900 bg-slate-50 focus:outline-none focus:border-blue-500" />
               </div>
             </div>
             <div className="pt-4">
@@ -234,7 +225,7 @@ export default function ProductVisualEditor({
               <div className="space-y-2">
                 {productInfo.properties.map((prop: string, i: number) => (
                   <div key={i} className="flex gap-2">
-                    <input type="text" value={prop} onChange={e => updateProperty(i, e.target.value)} className="flex-1 rounded-lg border border-slate-200 px-3 py-1.5 text-sm bg-slate-50 focus:outline-none focus:border-blue-500" />
+                    <input type="text" value={prop} onChange={e => updateProperty(i, e.target.value)} className="flex-1 rounded-lg border border-slate-200 px-3 py-1.5 text-sm text-slate-900 bg-slate-50 focus:outline-none focus:border-blue-500" />
                     <button type="button" onClick={() => removeProperty(i)} className="p-2 text-slate-400 hover:text-red-500"><X className="w-4 h-4"/></button>
                   </div>
                 ))}
@@ -257,7 +248,7 @@ export default function ProductVisualEditor({
               ].map(field => (
                 <div key={field.key} className="flex flex-col">
                   <label className="text-[11px] font-bold text-slate-500 uppercase mb-1">{field.label}</label>
-                  <input type="text" value={(nutrition as any)[field.key]} onChange={e => updateNutrition(field.key, e.target.value)} className="rounded-xl border border-slate-200 px-4 py-2 text-sm bg-slate-50 focus:outline-none focus:border-blue-500" />
+                  <input type="text" value={(nutrition as any)[field.key]} onChange={e => updateNutrition(field.key, e.target.value)} className="rounded-xl border border-slate-200 px-4 py-2 text-sm text-slate-900 bg-slate-50 focus:outline-none focus:border-blue-500" />
                 </div>
               ))}
             </div>
@@ -268,15 +259,15 @@ export default function ProductVisualEditor({
             <div className="space-y-4">
               <div>
                 <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">Deg</label>
-                <textarea value={ingredients.dough} onChange={e => updateIngredients('dough', e.target.value)} rows={2} className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm bg-slate-50 focus:outline-none focus:border-blue-500" />
+                <textarea value={ingredients.dough} onChange={e => updateIngredients('dough', e.target.value)} rows={2} className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm text-slate-900 bg-slate-50 focus:outline-none focus:border-blue-500" />
               </div>
               <div>
                 <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">Fyllning</label>
-                <textarea value={ingredients.filling} onChange={e => updateIngredients('filling', e.target.value)} rows={2} className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm bg-slate-50 focus:outline-none focus:border-blue-500" />
+                <textarea value={ingredients.filling} onChange={e => updateIngredients('filling', e.target.value)} rows={2} className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm text-slate-900 bg-slate-50 focus:outline-none focus:border-blue-500" />
               </div>
               <div>
                 <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">Allergener</label>
-                <input type="text" value={ingredients.allergens} onChange={e => updateIngredients('allergens', e.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm bg-slate-50 focus:outline-none focus:border-blue-500" />
+                <input type="text" value={ingredients.allergens} onChange={e => updateIngredients('allergens', e.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm text-slate-900 bg-slate-50 focus:outline-none focus:border-blue-500" />
               </div>
             </div>
           </div>
@@ -291,7 +282,7 @@ export default function ProductVisualEditor({
             <div className="space-y-4">
               <div>
                 <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">Allmän text</label>
-                <input type="text" value={cooking.general} onChange={e => updateCooking('general', e.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm bg-slate-50 focus:outline-none focus:border-blue-500" />
+                <input type="text" value={cooking.general} onChange={e => updateCooking('general', e.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm text-slate-900 bg-slate-50 focus:outline-none focus:border-blue-500" />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
