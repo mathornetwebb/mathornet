@@ -52,7 +52,7 @@ export async function POST() {
                     <a href="${p.slug}.html" class="product-card">
                         ${badgeHtml}
                         <div class="product-img-wrapper">
-                            <img src="${p.featuredImage || 'img/placeholder.png'}" alt="${p.title}">
+                            <img src="${p.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${p.title}">
                         </div>
                         <div class="product-info">
                             <h3>${p.title}</h3>
@@ -97,7 +97,7 @@ export async function POST() {
                     <!-- Dynamisk Produkt: ${p.title} -->
                     <div class="swiper-slide teza-slide">
                         <a href="${p.slug}.html" class="teza-product-link">
-                            <img src="${p.featuredImage || 'img/placeholder.png'}" alt="${p.title}" class="teza-product-img">
+                            <img src="${p.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${p.title}" class="teza-product-img">
                             <div class="teza-product-info">
                                 <h3>${p.title}</h3>
                             </div>
@@ -137,9 +137,9 @@ export async function POST() {
                     <!-- Dynamisk Nyhet: ${n.title} -->
                     <a href="${n.slug}.html" class="news-card-v2" style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
                         <div class="news-img" style="height: 250px; overflow: hidden;">
-                            <img src="${n.featuredImage || 'img/placeholder.png'}" alt="${n.title}" style="width: 100%; height: 100%; object-fit: cover;">
+                            <img src="${n.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${n.title}" style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
-                        <div class="news-content" style="padding: 2rem; display: flex; flex-direction: column; flex-grow: 1;">
+                        <div class="news-content" style="padding: 2rem; padding-bottom: 2rem !important; display: flex; flex-direction: column; flex-grow: 1;">
                             <div class="news-meta" style="font-size: 0.85rem; color: #666; margin-bottom: 1rem; display: flex; gap: 0.5rem; align-items: center;">
                                 <span class="date">${dateStr}</span>
                                 <span class="divider">|</span>
@@ -147,7 +147,7 @@ export async function POST() {
                             </div>
                             <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #000;">${n.title}</h3>
                             <p style="color: #555; margin-bottom: 2rem; flex-grow: 1; line-height: 1.6;">${n.excerpt || ''}</p>
-                            <span class="btn btn-navy" style="text-align: center; width: 100%; margin-bottom: 1rem;">Läs inlägg</span>
+                            <span class="btn btn-navy" style="text-align: center; width: 100%; margin-bottom: 1.5rem; display: block;">Läs inlägg</span>
                         </div>
                     </a>\n`;
       }
@@ -216,7 +216,7 @@ export async function POST() {
             </div>
 
             <div class="product-detail-img">
-                <img src="${p.featuredImage || 'img/placeholder.png'}" alt="${p.title}">
+                <img src="${p.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${p.title}">
             </div>
             
             <div class="product-detail-info">
@@ -481,7 +481,7 @@ export async function POST() {
       
       const featuredHtml = `
             <a href="${featuredRecipe.slug}.html" class="featured-post">
-                <img src="${featuredRecipe.featuredImage || 'img/placeholder.png'}" class="featured-bg" alt="${featuredRecipe.title}">
+                <img src="${featuredRecipe.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" class="featured-bg" alt="${featuredRecipe.title}">
                 <div class="featured-overlay"></div>
                 <div class="featured-content">
                     <div class="featured-meta">
@@ -508,13 +508,13 @@ export async function POST() {
           newRecipesList += `
             <a href="${r.slug}.html" class="news-card-v2" style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
                 <div class="news-img" style="height: 250px; overflow: hidden; position: relative;">
-                    <img src="${r.featuredImage || 'img/placeholder.png'}" alt="${r.title}" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img src="${r.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${r.title}" style="width: 100%; height: 100%; object-fit: cover;">
                     <span style="position: absolute; bottom: 10px; right: 10px; background: var(--navy-bg); color: white; padding: 4px 10px; border-radius: 5px; font-weight: 600; font-size: 0.85rem;">⏱️ ${r.prepTime || ''}</span>
                 </div>
-                <div class="news-content" style="padding: 2rem; display: flex; flex-direction: column; flex-grow: 1;">
+                <div class="news-content" style="padding: 2rem; padding-bottom: 2rem !important; display: flex; flex-direction: column; flex-grow: 1;">
                     <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #000;">${r.title}</h3>
                     <p style="color: #555; margin-bottom: 2rem; flex-grow: 1; line-height: 1.6;">${r.description || ''}</p>
-                    <span class="btn btn-primary" style="text-align: center; width: 100%; background: var(--navy-bg); color: #fff; border: none;">Till receptet</span>
+                    <span class="btn btn-primary" style="text-align: center; width: 100%; background: var(--navy-bg); color: #fff; border: none; display: block; margin-bottom: 1.5rem;">Till receptet</span>
                 </div>
             </a>\n`;
         }

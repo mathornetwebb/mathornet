@@ -9,6 +9,7 @@ export async function POST(req: Request) {
     });
     return NextResponse.json(recipe);
   } catch (error) {
+    console.error("Error creating recipe:", error);
     return NextResponse.json({ error: "Failed to create recipe" }, { status: 500 });
   }
 }
