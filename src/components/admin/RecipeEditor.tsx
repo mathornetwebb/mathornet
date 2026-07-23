@@ -19,6 +19,8 @@ export default function RecipeEditor({ initialData }: RecipeEditorProps) {
     slug: initialData?.slug || "",
     description: initialData?.description || "",
     prepTime: initialData?.prepTime || "",
+    portions: initialData?.portions || "",
+    difficulty: initialData?.difficulty || "",
     featuredImage: initialData?.featuredImage || "",
     published: initialData?.published ?? true,
   });
@@ -238,14 +240,34 @@ export default function RecipeEditor({ initialData }: RecipeEditorProps) {
 
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-6">
             <h3 className="font-bold text-gray-900">Receptdetaljer</h3>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Tillagningstid (t.ex. 15 min)</label>
-              <input
-                type="text"
-                value={formData.prepTime}
-                onChange={(e) => setFormData({ ...formData, prepTime: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-slate-900"
-              />
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Tillagningstid (t.ex. 15 min)</label>
+                <input
+                  type="text"
+                  value={formData.prepTime}
+                  onChange={(e) => setFormData({ ...formData, prepTime: e.target.value })}
+                  className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-slate-900"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Portioner (t.ex. 4 portioner)</label>
+                <input
+                  type="text"
+                  value={formData.portions || ""}
+                  onChange={(e) => setFormData({ ...formData, portions: e.target.value })}
+                  className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-slate-900"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Svårighetsgrad (t.ex. Enkel)</label>
+                <input
+                  type="text"
+                  value={formData.difficulty || ""}
+                  onChange={(e) => setFormData({ ...formData, difficulty: e.target.value })}
+                  className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-slate-900"
+                />
+              </div>
             </div>
           </div>
 

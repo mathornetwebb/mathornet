@@ -75,6 +75,8 @@ model Recipe {
   ingredients     String?   @db.Text // Can be HTML or structured JSON, keeping Text for flexibility
   instructions    String?   @db.Text
   prepTime        String?
+  portions        String?
+  difficulty      String?
   featuredImage   String?
   published       Boolean   @default(true)
   createdAt       DateTime  @default(now())
@@ -91,6 +93,7 @@ model Store {
   lat             Float?
   lng             Float?
   googlePlaceId   String?
+  openingHours    String?
   published       Boolean   @default(true)
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt

@@ -120,6 +120,31 @@ export async function POST() {
     const nyheterPath = path.join(publicDir, 'nyheter.html');
     let nyheterHtml = fs.readFileSync(nyheterPath, 'utf8');
     
+    if (news.length > 0) {
+      const featuredNews = news[0];
+      const featuredRegex = /<a [^>]*class="featured-post"[^>]*>[\s\S]*?<\/a>/i;
+      
+      const dObj = featuredNews.createdAt || new Date();
+      const mNames = ['jan', 'feb', 'mar', 'apr', 'maj', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+      const dStr = `${dObj.getDate().toString().padStart(2, '0')} ${mNames[dObj.getMonth()]} ${dObj.getFullYear()}`;
+      
+      const featuredHtml = `
+            <a href="${featuredNews.slug}.html" class="featured-post">
+                <img src="${featuredNews.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" class="featured-bg" alt="${featuredNews.title}">
+                <div class="featured-overlay"></div>
+                <div class="featured-content">
+                    <div class="featured-meta">
+                        <span class="category" style="background: var(--navy-bg); color: #fff; padding: 6px 16px; border-radius: 50px; font-size: 0.95rem;">Nyhet</span>
+                        <span style="color: #fff; font-weight: 500;">${dStr}</span>
+                    </div>
+                    <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5); line-height: 1.2;">${featuredNews.title}</h2>
+                    <p style="font-size: 1.15rem; margin-bottom: 1rem; opacity: 0.95; text-shadow: 0 1px 5px rgba(0,0,0,0.5); max-width: 600px;">${featuredNews.excerpt || ''}</p>
+                    <span class="btn" style="background: #64b000; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; width: fit-content; margin-top: 1.5rem;">Läs inlägg</span>
+                </div>
+            </a>`;
+      nyheterHtml = nyheterHtml.replace(featuredRegex, featuredHtml);
+    }
+    
     const newsGridStartStr = '<div class="news-grid-layout">';
     const newsGridStartIdx = nyheterHtml.indexOf(newsGridStartStr);
     if (newsGridStartIdx !== -1) {
@@ -139,15 +164,15 @@ export async function POST() {
                         <div class="news-img" style="height: 250px; overflow: hidden;">
                             <img src="${n.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${n.title}" style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
-                        <div class="news-content" style="padding: 2rem; padding-bottom: 2rem !important; display: flex; flex-direction: column; flex-grow: 1;">
+                        <div class="news-content" style="padding: 2rem; display: flex; flex-direction: column; flex-grow: 1;">
                             <div class="news-meta" style="font-size: 0.85rem; color: #666; margin-bottom: 1rem; display: flex; gap: 0.5rem; align-items: center;">
                                 <span class="date">${dateStr}</span>
                                 <span class="divider">|</span>
-                                <span class="category" style="color: var(--navy-bg); font-weight: 600;">Nyhet</span>
+                                <span class="category" style="color: #666; font-weight: 600;">Nyhet</span>
                             </div>
                             <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #000;">${n.title}</h3>
                             <p style="color: #555; margin-bottom: 2rem; flex-grow: 1; line-height: 1.6;">${n.excerpt || ''}</p>
-                            <span class="btn btn-navy" style="text-align: center; width: 100%; margin-bottom: 1.5rem; display: block;">Läs inlägg</span>
+                            <span class="btn" style="background: #64b000; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; width: 100%; text-align: center; font-weight: bold; margin-top: auto;">Läs inlägg</span>
                         </div>
                     </a>\n`;
       }
@@ -357,6 +382,59 @@ export async function POST() {
                 </div>
             </div>
         </section>
+
+        <!-- Fler produkter Karusell -->
+        <section class="products-section carousel-section" style="background-color: #fcfcfc; padding: 5rem 0;">
+            <div class="container">
+                <div class="section-header" style="text-align: center; margin-bottom: 3rem; display: block;">
+                    <h2 style="font-size: 2.5rem; font-weight: 800; color: #111;">Fler produkter</h2>
+                </div>
+                
+                <div class="carousel-wrapper">
+                    <div class="carousel-viewport">
+                        <div class="carousel-track">
+${(() => {
+    const otherProducts = products.filter(op => op.id !== p.id).slice(0, 8);
+    return otherProducts.map(op => {
+        let pWeight = '500 gram';
+        try {
+            const info = JSON.parse(op.productInfo || '{}');
+            if (info.packaging?.bag?.weight) pWeight = info.packaging.bag.weight;
+        } catch(e) {}
+        
+        return `
+                            <a href="${op.slug}.html" class="product-card carousel-card" style="text-decoration: none;">
+                                <div class="product-img-wrapper">
+                                    <img src="${op.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${op.title}">
+                                </div>
+                                <div class="product-info" style="text-align: center;">
+                                    <h3>${op.title}</h3>
+                                    <div class="product-meta" style="justify-content: center;">
+                                        <span class="weight">${pWeight}</span>
+                                    </div>
+                                </div>
+                            </a>`;
+    }).join('');
+})()}
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-controls" style="margin-top: 2.5rem;">
+                        <button class="carousel-btn prev-btn" aria-label="Föregående">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        </button>
+                        <div class="carousel-dots"></div>
+                        <button class="carousel-btn next-btn" aria-label="Nästa">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 3rem;">
+                    <a href="produkter.html" class="btn btn-primary" style="background: #64b000; color: white; padding: 1rem 2.5rem; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block;">Se alla produkter &rarr;</a>
+                </div>
+            </div>
+        </section>
     </main>
 
     ${footerStr}
@@ -469,7 +547,7 @@ export async function POST() {
       let receptHtml = fs.readFileSync(receptPath, 'utf8');
       
       const featuredRecipe = recipes[0];
-      const otherRecipes = recipes.slice(1);
+      const otherRecipes = recipes;
       
       // Replace featured post
       const featuredStartStr = '<a href="recept-libanesisk-toum.html" class="featured-post">';
@@ -488,9 +566,9 @@ export async function POST() {
                         <span class="category" style="background: var(--navy-bg); color: #fff; padding: 6px 16px; border-radius: 50px; font-size: 0.95rem;">Veckans utvalda</span>
                         <span>⏱️ ${featuredRecipe.prepTime || ''}</span>
                     </div>
-                    <h2>${featuredRecipe.title}</h2>
-                    <p>${featuredRecipe.description || ''}</p>
-                    <span class="btn btn-primary" style="border: none; padding: 0.8rem 2rem;">Till receptet</span>
+                    <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5); line-height: 1.2;">${featuredRecipe.title}</h2>
+                    <p style="font-size: 1.15rem; margin-bottom: 1rem; opacity: 0.95; text-shadow: 0 1px 5px rgba(0,0,0,0.5); max-width: 600px;">${featuredRecipe.description || ''}</p>
+                    <span class="btn" style="background: #64b000; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; width: fit-content; margin-top: 1.5rem;">Till receptet</span>
                 </div>
             </a>`;
       
@@ -511,10 +589,10 @@ export async function POST() {
                     <img src="${r.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${r.title}" style="width: 100%; height: 100%; object-fit: cover;">
                     <span style="position: absolute; bottom: 10px; right: 10px; background: var(--navy-bg); color: white; padding: 4px 10px; border-radius: 5px; font-weight: 600; font-size: 0.85rem;">⏱️ ${r.prepTime || ''}</span>
                 </div>
-                <div class="news-content" style="padding: 2rem; padding-bottom: 2rem !important; display: flex; flex-direction: column; flex-grow: 1;">
+                <div class="news-content" style="padding: 2rem; display: flex; flex-direction: column; flex-grow: 1;">
                     <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #000;">${r.title}</h3>
                     <p style="color: #555; margin-bottom: 2rem; flex-grow: 1; line-height: 1.6;">${r.description || ''}</p>
-                    <span class="btn btn-primary" style="text-align: center; width: 100%; background: var(--navy-bg); color: #fff; border: none; display: block; margin-bottom: 1.5rem;">Till receptet</span>
+                    <span class="btn" style="background: #64b000; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; width: 100%; text-align: center; font-weight: bold; margin-top: auto;">Till receptet</span>
                 </div>
             </a>\n`;
         }
@@ -591,22 +669,31 @@ export async function POST() {
                 <a href="mathornet.html" style="color: #666; text-decoration: none;">Hemsida</a> &gt; <a href="recept.html" style="color: #666; text-decoration: none;">Recept</a> &gt; ${r.title}
             </div>
 
-            <header style="text-align: center; margin-bottom: 3rem;">
-                <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; color: #111; line-height: 1.1; margin-bottom: 1rem;">${r.title}</h1>
-                <p style="font-size: 1.2rem; color: #555; max-width: 600px; margin: 0 auto 2rem;">${r.description || ''}</p>
-                <div style="display: inline-flex; align-items: center; gap: 2rem; background: #fff; padding: 1rem 2rem; border-radius: 50px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; color: #444; font-weight: 500;">
-                        <span>⏱️</span>
-                        <span>${r.prepTime || '-'}</span>
+            <header style="position: relative; width: 100%; border-radius: 24px; overflow: hidden; margin-bottom: 4rem; box-shadow: 0 15px 30px rgba(0,0,0,0.08);">
+                <div style="position: absolute; inset: 0; background: url('${r.featuredImage || ''}') center/cover no-repeat;"></div>
+                
+                <div style="position: relative; padding: 6rem 2rem; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.15); min-height: 500px;">
+                    <div style="background: #fff; padding: 3rem 4rem; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); max-width: 800px; width: 100%; text-align: center;">
+                        <h1 style="font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 800; color: #111; line-height: 1.2; margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">${r.title}</h1>
+                        <p style="font-size: 1.15rem; color: #555; max-width: 600px; margin: 0 auto 2rem; line-height: 1.6;">${r.description || ''}</p>
+                        
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 2.5rem; flex-wrap: wrap;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; color: #333; font-weight: 600; font-size: 1.05rem;">
+                                <span>⏱️</span>
+                                <span>${r.prepTime || '-'}</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.5rem; color: #333; font-weight: 600; font-size: 1.05rem;">
+                                <span>🍽️</span>
+                                <span>${r.portions || '-'}</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.5rem; color: #333; font-weight: 600; font-size: 1.05rem;">
+                                <span>👨‍🍳</span>
+                                <span>${r.difficulty || '-'}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </header>
-
-            ${r.featuredImage ? `
-            <div style="margin-bottom: 4rem; border-radius: 24px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); aspect-video: 16/9;">
-                <img src="${r.featuredImage}" alt="${r.title}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-            </div>
-            ` : ''}
 
             <div style="display: grid; grid-template-columns: 1fr; gap: 4rem;">
                 <!-- Try a 2-column layout on larger screens: 1/3 and 2/3 -->
@@ -624,11 +711,12 @@ ${ingBlocksHtml}
                     <section style="flex: 2; min-width: 300px;">
                         <h2 style="font-family: 'Outfit', sans-serif; font-size: 2.5rem; font-weight: 800; color: #111; margin-bottom: 2.5rem;">Gör så här</h2>
 ${instBlocksHtml}
-                        <div style="margin-top: 4rem; text-align: center;">
-                            <a href="recept.html" class="btn btn-primary" style="background: #64b000; color: white; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: bold;">&larr; Tillbaka till alla recept</a>
-                        </div>
                     </section>
 
+                </div>
+                
+                <div style="margin-top: 1rem; text-align: center; width: 100%;">
+                    <a href="recept.html" class="btn btn-primary" style="background: #64b000; color: white; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: bold;">&larr; Tillbaka till alla recept</a>
                 </div>
             </div>
         </article>
@@ -662,14 +750,14 @@ ${instBlocksHtml}
                     const afterArray = jsContent.substring(arrayEndIdx + 2); // skip ];
                     
                     const jsArray = stores.map(s => {
+                        const hoursStr = s.openingHours ? JSON.stringify(s.openingHours) : 'null';
                         return `{
             id: "${s.id}",
             name: "${s.name.replace(/"/g, '\\"')}",
             address: "${(s.address || '').replace(/"/g, '\\"')}",
             lat: ${s.lat || 0},
             lng: ${s.lng || 0},
-            statusText: "Öppet",
-            statusClass: "open",
+            openingHours: ${hoursStr},
             phone: "",
             website: ""
         }`;

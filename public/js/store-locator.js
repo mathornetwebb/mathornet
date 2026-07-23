@@ -1,7 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Mock Data for Stores
     const stores = [
-        
+        {
+            id: "cmry3r3jh0000gi7gd027n2wr",
+            name: "ICA Maxi Södertälje Moraberg",
+            address: "Morabergsvägen 26, 152 42 Södertälje",
+            lat: 59.1996243,
+            lng: 17.6693395,
+            openingHours: "[{\"day\":\"Måndag\",\"open\":\"08:00\",\"close\":\"20:00\",\"isClosed\":false},{\"day\":\"Tisdag\",\"open\":\"08:00\",\"close\":\"20:00\",\"isClosed\":false},{\"day\":\"Onsdag\",\"open\":\"08:00\",\"close\":\"20:00\",\"isClosed\":false},{\"day\":\"Torsdag\",\"open\":\"08:00\",\"close\":\"20:00\",\"isClosed\":false},{\"day\":\"Fredag\",\"open\":\"08:00\",\"close\":\"20:00\",\"isClosed\":false},{\"day\":\"Lördag\",\"open\":\"10:00\",\"close\":\"18:00\",\"isClosed\":false},{\"day\":\"Söndag\",\"open\":\"10:00\",\"close\":\"18:00\",\"isClosed\":false}]",
+            phone: "",
+            website: ""
+        }
     ];
 
     // 2. Initialize Leaflet Map
@@ -65,13 +74,67 @@ document.addEventListener('DOMContentLoaded', () => {
             li.className = 'store-card';
             li.dataset.id = store.id;
             
+            let statusText = store.statusText || "Öppet";
+            let statusClass = store.statusClass || "open";
+            let scheduleHtml = "";
+            let parsedHours = store.openingHours;
+
+            if (typeof parsedHours === 'string') {
+                try {
+                    parsedHours = JSON.parse(parsedHours);
+                } catch(e) {}
+            }
+
+            if (parsedHours && Array.isArray(parsedHours) && parsedHours.length === 7) {
+                const now = new Date();
+                let dayIndex = now.getDay() - 1;
+                if (dayIndex < 0) dayIndex = 6; // Sunday is 0 in getDay(), but index 6 in our array
+
+                const todaySchedule = parsedHours[dayIndex];
+                
+                const currentHour = now.getHours();
+                const currentMinute = now.getMinutes();
+                const currentTimeStr = `${currentHour.toString().padStart(2, '0')}:${currentMinute.toString().padStart(2, '0')}`;
+
+                if (todaySchedule.isClosed) {
+                    statusText = "Stängt idag";
+                    statusClass = "closed";
+                } else {
+                    const openTime = todaySchedule.open || "00:00";
+                    const closeTime = todaySchedule.close || "23:59";
+                    if (currentTimeStr >= openTime && currentTimeStr <= closeTime) {
+                        statusText = `Öppet (stänger ${closeTime})`;
+                        statusClass = "open";
+                    } else {
+                        statusText = "Stängt nu";
+                        statusClass = "closed";
+                    }
+                }
+
+                scheduleHtml = '<div style="margin-top: 10px; font-size: 0.9em; border-top: 1px solid #eee; padding-top: 10px;">';
+                scheduleHtml += '<strong style="display:block; margin-bottom: 5px;">Öppettider:</strong>';
+                scheduleHtml += '<table style="width: 100%; border-collapse: collapse;">';
+                parsedHours.forEach(day => {
+                    const isToday = day.day === todaySchedule.day;
+                    const rowStyle = isToday ? 'font-weight: bold; background: #f9f9f9;' : '';
+                    const timeText = day.isClosed ? '<span style="color:#d32f2f">Stängt</span>' : `${day.open} - ${day.close}`;
+                    scheduleHtml += `<tr style="${rowStyle}">
+                        <td style="padding: 2px 0;">${day.day}</td>
+                        <td style="text-align: right; padding: 2px 0;">${timeText}</td>
+                    </tr>`;
+                });
+                scheduleHtml += '</table></div>';
+            } else if (store.openingHours && typeof store.openingHours === 'string') {
+                scheduleHtml = `<div style="margin-top: 10px; font-size: 0.9em; color: #666;">${store.openingHours}</div>`;
+            }
+
             li.innerHTML = `
                 <div class="store-name">${store.name}</div>
-                <div class="store-status ${store.statusClass}">${store.statusText}</div>
+                <div class="store-status ${statusClass}">${statusText}</div>
                 <div class="store-address">
                     ${store.address}<br>
-                    ${store.phone}<br>
-                    ${store.website}
+                    ${store.phone || ''}<br>
+                    ${store.website || ''}
                 </div>
             `;
 
@@ -81,10 +144,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const marker = L.marker([store.lat, store.lng], { icon: mathornetIcon }).addTo(map);
             
             // Popup content
-            marker.bindPopup(`
-                <strong>${store.name}</strong><br>
-                ${store.address}
-            `);
+            let popupContent = `<strong>${store.name}</strong><br>${store.address}`;
+            if (scheduleHtml) {
+                popupContent += scheduleHtml;
+            }
+
+            marker.bindPopup(popupContent);
 
             bounds.addLayer(marker);
 

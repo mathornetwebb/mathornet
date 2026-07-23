@@ -27,12 +27,15 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
         address: data.address,
         lat: parseFloat(data.lat),
         lng: parseFloat(data.lng),
+        googlePlaceId: data.googlePlaceId,
+        openingHours: data.openingHours,
         published: data.published,
       },
     });
     return NextResponse.json(store);
   } catch (error) {
-    return NextResponse.json({ error: "Failed to update store" }, { status: 500 });
+    console.error("Store PUT error:", error);
+    return NextResponse.json({ error: "Failed to update store", details: String(error) }, { status: 500 });
   }
 }
 

@@ -10,12 +10,15 @@ export async function POST(req: Request) {
         address: data.address,
         lat: parseFloat(data.lat),
         lng: parseFloat(data.lng),
+        googlePlaceId: data.googlePlaceId,
+        openingHours: data.openingHours,
         published: data.published,
       },
     });
     return NextResponse.json(store);
   } catch (error) {
-    return NextResponse.json({ error: "Failed to create store" }, { status: 500 });
+    console.error("Store POST error:", error);
+    return NextResponse.json({ error: "Failed to create store", details: String(error) }, { status: 500 });
   }
 }
 

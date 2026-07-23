@@ -9,6 +9,16 @@ type StoreEditorProps = {
   initialData?: any;
 };
 
+const DEFAULT_HOURS = [
+  { day: "Måndag", open: "08:00", close: "20:00", isClosed: false },
+  { day: "Tisdag", open: "08:00", close: "20:00", isClosed: false },
+  { day: "Onsdag", open: "08:00", close: "20:00", isClosed: false },
+  { day: "Torsdag", open: "08:00", close: "20:00", isClosed: false },
+  { day: "Fredag", open: "08:00", close: "20:00", isClosed: false },
+  { day: "Lördag", open: "10:00", close: "18:00", isClosed: false },
+  { day: "Söndag", open: "10:00", close: "18:00", isClosed: true },
+];
+
 export default function StoreEditor({ initialData }: StoreEditorProps) {
   const router = useRouter();
   const [isSaving, setIsSaving] = useState(false);
@@ -20,16 +30,37 @@ export default function StoreEditor({ initialData }: StoreEditorProps) {
     published: initialData?.published ?? true,
   });
 
+  const [openingHours, setOpeningHours] = useState(() => {
+    try {
+      if (initialData?.openingHours) {
+        const parsed = JSON.parse(initialData.openingHours);
+        if (Array.isArray(parsed) && parsed.length === 7) return parsed;
+      }
+    } catch(e) {}
+    return DEFAULT_HOURS;
+  });
+
+  const handleDayChange = (index: number, field: string, value: any) => {
+    const newHours = [...openingHours];
+    newHours[index] = { ...newHours[index], [field]: value };
+    setOpeningHours(newHours);
+  };
+
   const handleSave = async () => {
     setIsSaving(true);
     try {
       const url = initialData?.id ? `/api/stores/${initialData.id}` : "/api/stores";
       const method = initialData?.id ? "PUT" : "POST";
 
+      const dataToSave = {
+        ...formData,
+        openingHours: JSON.stringify(openingHours)
+      };
+
       const res = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(dataToSave),
       });
 
       if (!res.ok) throw new Error("Kunde inte spara butiken");
@@ -90,7 +121,50 @@ export default function StoreEditor({ initialData }: StoreEditorProps) {
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-3">Öppettider</label>
+          <div className="space-y-3">
+            {openingHours.map((dayData: any, index: number) => (
+              <div key={dayData.day} className="flex items-center gap-4 bg-gray-50 p-3 rounded-xl border border-gray-100">
+                <div className="w-24 font-medium text-gray-800">{dayData.day}</div>
+                
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={dayData.isClosed}
+                    onChange={(e) => handleDayChange(index, "isClosed", e.target.checked)}
+                    className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+                  />
+                  <span className="text-sm text-gray-600">Stängt</span>
+                </label>
+
+                {!dayData.isClosed ? (
+                  <div className="flex items-center gap-2 ml-auto">
+                    <input
+                      type="time"
+                      value={dayData.open}
+                      onChange={(e) => handleDayChange(index, "open", e.target.value)}
+                      className="px-3 py-1.5 border border-gray-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-sm text-slate-900 font-medium"
+                    />
+                    <span className="text-gray-500">-</span>
+                    <input
+                      type="time"
+                      value={dayData.close}
+                      onChange={(e) => handleDayChange(index, "close", e.target.value)}
+                      className="px-3 py-1.5 border border-gray-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-sm text-slate-900 font-medium"
+                    />
+                  </div>
+                ) : (
+                  <div className="ml-auto text-sm font-medium text-red-500 bg-red-50 px-3 py-1.5 rounded-lg border border-red-100">
+                    Stängt hela dagen
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 pt-4 border-t border-gray-100">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Latitud *</label>
             <input
@@ -120,7 +194,7 @@ export default function StoreEditor({ initialData }: StoreEditorProps) {
         </p>
 
         <div className="pt-4 border-t border-gray-100">
-          <label className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer w-fit">
+          <label className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer w-fit border border-gray-100">
             <input
               type="checkbox"
               checked={formData.published}

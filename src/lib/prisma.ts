@@ -12,7 +12,9 @@ declare global {
   var prisma: undefined | ReturnType<typeof prismaClientSingleton>
 }
 
-const prisma = globalThis.prisma ?? prismaClientSingleton()
+// Force reload
+const prisma = prismaClientSingleton()
+globalThis.prisma = prisma
 
 export default prisma
 
