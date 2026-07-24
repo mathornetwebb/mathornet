@@ -12,6 +12,8 @@ export default function RichTextBlock({
   initialContent: string; 
   onChange: (content: string) => void; 
   onRemove: () => void;
+  onMoveUp?: () => void;
+  onMoveDown?: () => void;
   type: 'h2' | 'h3' | 'text';
 }) {
   const editorRef = useRef<HTMLDivElement>(null);
@@ -76,10 +78,20 @@ export default function RichTextBlock({
         
         <div className="flex items-center gap-2">
           <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-2">{type}</span>
+          {onMoveUp && (
+            <button type="button" onClick={onMoveUp} className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors" title="Flytta upp">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+            </button>
+          )}
+          {onMoveDown && (
+            <button type="button" onClick={onMoveDown} className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors" title="Flytta ner">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+          )}
           <button 
             type="button" 
             onClick={onRemove} 
-            className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded transition-colors"
+            className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded transition-colors ml-1"
             title="Ta bort block"
           >
             <Trash2 className="w-4 h-4" />

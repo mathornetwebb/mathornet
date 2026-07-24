@@ -55,6 +55,24 @@ export default function NewsVisualEditor({
     setBlocks(blocks.filter(b => b.id !== id));
   };
 
+  const moveBlockUp = (index: number) => {
+    if (index === 0) return;
+    const newBlocks = [...blocks];
+    const temp = newBlocks[index];
+    newBlocks[index] = newBlocks[index - 1];
+    newBlocks[index - 1] = temp;
+    setBlocks(newBlocks);
+  };
+
+  const moveBlockDown = (index: number) => {
+    if (index === blocks.length - 1) return;
+    const newBlocks = [...blocks];
+    const temp = newBlocks[index];
+    newBlocks[index] = newBlocks[index + 1];
+    newBlocks[index + 1] = temp;
+    setBlocks(newBlocks);
+  };
+
   // Auto-generate slug from title if new
   useEffect(() => {
     if (isNew && title) {
@@ -158,7 +176,7 @@ export default function NewsVisualEditor({
       {/* MAIN EDITOR AREA */}
       <div className="flex-1 flex flex-col">
         {/* Top Action Bar */}
-        <div className="sticky top-4 z-10 flex justify-between items-center bg-slate-900 text-white rounded-2xl px-2 py-2 mb-6 shadow-xl shadow-slate-900/10">
+        <div className="sticky top-4 z-50 flex justify-between items-center bg-slate-900 text-white rounded-2xl px-2 py-2 mb-6 shadow-xl shadow-slate-900/10">
           <div className="flex items-center gap-1 px-2">
             <button type="button" onClick={() => addBlock('h2')} className="flex items-center gap-1 hover:bg-slate-800 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors">
               <Heading2 className="w-4 h-4 text-slate-400" /> H2 Rubrik
@@ -212,7 +230,17 @@ export default function NewsVisualEditor({
                   <div className="absolute -top-3 left-4 flex items-center bg-white border border-slate-200 rounded-lg shadow-sm px-1 py-0.5 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity z-10">
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-2">image</span>
                     <div className="w-px h-3 bg-slate-200 mx-1"></div>
-                    <button type="button" onClick={() => removeBlock(block.id)} className="p-1 text-slate-400 hover:text-red-500 rounded">
+                    {index > 0 && (
+                      <button type="button" onClick={() => moveBlockUp(index)} className="p-1 text-slate-400 hover:text-blue-600 rounded" title="Flytta upp">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+                      </button>
+                    )}
+                    {index < blocks.length - 1 && (
+                      <button type="button" onClick={() => moveBlockDown(index)} className="p-1 text-slate-400 hover:text-blue-600 rounded" title="Flytta ner">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                      </button>
+                    )}
+                    <button type="button" onClick={() => removeBlock(block.id)} className="p-1 text-slate-400 hover:text-red-500 rounded ml-1">
                       <Trash2 className="w-3 h-3" />
                     </button>
                   </div>
@@ -239,6 +267,8 @@ export default function NewsVisualEditor({
                   initialContent={block.content} 
                   onChange={(content) => updateBlock(block.id, content)} 
                   onRemove={() => removeBlock(block.id)} 
+                  onMoveUp={index > 0 ? () => moveBlockUp(index) : undefined}
+                  onMoveDown={index < blocks.length - 1 ? () => moveBlockDown(index) : undefined}
                 />
               )}
             </div>
