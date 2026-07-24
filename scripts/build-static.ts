@@ -50,8 +50,8 @@ async function main() {
                     <!-- Dynamisk Produkt: ${p.title} -->
                     <a href="${p.slug}.html" class="product-card">
                         ${badgeHtml}
-                        <div class="product-img-wrapper" style="aspect-ratio: 1/1; overflow: hidden; display: flex; align-items: center; justify-content: center; width: 100%;">
-                            <img src="${p.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${p.title}" style="width: 100%; height: 100%; object-fit: cover; object-position: center;">
+                        <div class="product-img-wrapper">
+                            <img src="${p.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${p.title}">
                         </div>
                         <div class="product-info">
                             <h3>${p.title}</h3>
