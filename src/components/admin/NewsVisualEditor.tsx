@@ -200,20 +200,22 @@ export default function NewsVisualEditor({
         </div>
 
         {/* Hero Preview */}
-        <div className="relative bg-slate-900 rounded-3xl overflow-hidden mb-12 shadow-2xl aspect-[2/1] flex flex-col justify-end p-12">
+        <div className="relative bg-slate-900 rounded-3xl overflow-hidden mb-12 shadow-2xl aspect-[2/1] flex flex-col justify-center items-center text-center p-12">
           {featuredImage && (
-            <img src={featuredImage} alt="Omslag" className="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay" />
+            <img src={featuredImage} alt="Omslag" className="absolute inset-0 w-full h-full object-cover" />
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
+          <div className="absolute inset-0 bg-black/50"></div>
           
-          <div className="relative z-10 max-w-3xl">
-            <div className="inline-block px-3 py-1 bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold uppercase tracking-wider rounded-full mb-4">
-              Nyheter
-            </div>
-            <h1 className="text-4xl md:text-5xl font-extrabold text-white font-outfit mb-4 leading-tight">
+          <div className="relative z-10 max-w-3xl flex flex-col items-center">
+            <h1 className="text-4xl md:text-5xl font-extrabold text-white font-outfit mb-4 leading-tight drop-shadow-lg">
               {title || 'Din Huvudtitel'}
             </h1>
-            <p className="text-lg md:text-xl text-slate-300 font-light leading-relaxed max-w-2xl">
+            <div className="flex items-center justify-center gap-3 text-white/90 font-medium mb-4 drop-shadow-md">
+               <span className="uppercase tracking-wider text-sm">Nyhet</span>
+               <span className="text-white/50">|</span>
+               <span>{new Date().toLocaleDateString('sv-SE', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+            </div>
+            <p className="text-lg md:text-xl text-slate-200 font-light leading-relaxed max-w-2xl drop-shadow-md">
               {excerpt || 'Din ingress/introtext kommer att visas här med snygg vit färg över bakgrundsbilden.'}
             </p>
           </div>
