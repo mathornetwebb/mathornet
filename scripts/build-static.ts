@@ -773,6 +773,8 @@ ${instBlocksHtml}
   } catch (error) {
     console.error('Failed to rebuild website:', error);
     process.exit(1);
+  } finally {
+    await prisma.$disconnect();
   }
 }
 

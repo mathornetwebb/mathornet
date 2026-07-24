@@ -3,41 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recept | Mathörnet - Autentisk mat från Mellanöstern</title>
+    <title>17.5865468 | Mathörnet</title>
+    <meta name="description" content="17.5865468">
     <link rel="stylesheet" href="style_v5.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        .page-header { padding: 60px 0 20px; }
-        .page-header h1 { font-size: 3.5rem; font-weight: 800; color: #000; margin-bottom: 1rem; }
-        .page-header p { font-size: 1.25rem; color: #555; }
-        
-        .featured-post { position: relative; border-radius: 24px; overflow: hidden; height: 500px; margin-bottom: 4rem; display: flex; align-items: center; text-align: left; }
-        .featured-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
-        .featured-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%); z-index: 1; }
-        .featured-content { position: relative; z-index: 2; padding: 4rem; color: #fff; max-width: 800px; text-align: left; display: flex; flex-direction: column; align-items: flex-start; }
-        .featured-content h2 { font-size: 3rem; font-weight: 800; margin-bottom: 1rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5); line-height: 1.2; }
-        .featured-content p { font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.9; text-shadow: 0 1px 5px rgba(0,0,0,0.5); }
-        .featured-meta { display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem; font-weight: 600; justify-content: flex-start; width: 100%; margin-left: -16px; }
-        
-        .news-grid-layout { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; margin-bottom: 6rem; }
-
-        @media (max-width: 768px) {
-            .featured-post { height: auto; min-height: 450px; border-radius: 16px; margin-bottom: 2rem; }
-            .featured-content { padding: 2rem; }
-            .featured-content h2 { font-size: 2rem; }
-            .featured-content p { font-size: 1.1rem; margin-bottom: 1.5rem; }
-            .featured-meta { flex-wrap: wrap; gap: 0.5rem; }
-            .page-header { padding: 40px 0 20px; }
-            .page-header h1 { font-size: 2.5rem; }
-            .news-grid-layout { grid-template-columns: 1fr; }
-        }
-    </style>
 </head>
 <body>
-    <!-- Preloader -->
-    <div id="page-preloader" class="preloader">
-        <div class="loader"></div>
-    </div>
     <header class="main-header">
         <div class="header-inner container">
             <a href="mathornet.html" class="logo">
@@ -62,6 +35,7 @@
                     <li><a href="kontakt.html">Kontakt</a></li>
                 </ul>
             </nav>
+
             <div class="header-actions" style="display: flex; align-items: center; gap: 1rem;">
                 <div class="custom-lang-picker">
                     <button class="lang-toggle-btn" aria-label="Välj språk">
@@ -80,102 +54,52 @@
                     </div>
                 </div>
                 <div class="search-container">
-                    <button class="search-btn" aria-label="Sök">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                    </button>
-                    <div class="search-dropdown">
-                        <input type="text" id="search-input" placeholder="Sök, t.ex. falafel...">
-                        <div class="search-results" id="search-results">
-                            <!-- JS injected results -->
-                        </div>
+                <button class="search-btn" aria-label="Sök">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
+                <div class="search-dropdown">
+                    <input type="text" id="search-input" placeholder="Sök, t.ex. falafel...">
+                    <div class="search-results" id="search-results">
+                        <!-- JS injected results -->
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     </header>
-    
-    <main>
-        <div class="container">
-            <div class="page-header">
-                <h1>Våra Recept</h1>
-                <p>Upptäck hjärtat i Mellanösterns matkultur. Här har vi samlat våra absolut bästa och mest autentiska recept – från fluffig toum till perfekt hummus. Perfekta tillbehör till våra produkter!</p>
+
+    <main style="padding-top: 8rem; padding-bottom: 6rem; background-color: #fcfcfc;">
+        <article class="container" style="max-width: 850px; margin: 0 auto; background: #fff; padding: 3.5rem; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.03);">
+            <div class="breadcrumbs" style="font-size: 0.9rem; color: #888; margin-bottom: 2.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                <a href="mathornet.html" style="color: #666; text-decoration: none; font-weight: 500;">Hemsida</a> <span style="color: #ccc;">/</span> 
+                <a href="nyheter.html" style="color: #666; text-decoration: none; font-weight: 500;">Nyheter</a> <span style="color: #ccc;">/</span> 
+                <span style="color: #111; font-weight: 600;">17.5865468</span>
+            </div>
+
+            <header style="margin-bottom: 3.5rem; text-align: center;">
+                <div class="news-meta" style="font-size: 0.95rem; color: #666; margin-bottom: 1.5rem; display: flex; gap: 0.5rem; align-items: center; justify-content: center;">
+                    <span class="category" style="background: #eef2ff; color: #4338ca; padding: 0.3rem 0.8rem; border-radius: 99px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px;">Nyhet</span>
+                    <span class="divider" style="color: #ddd;">•</span>
+                    <span class="date" style="font-weight: 500;">24 jul 2026</span>
+                </div>
+                <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; color: #111; line-height: 1.15; margin-bottom: 1.5rem; letter-spacing: -0.5px;">17.5865468</h1>
+                <p style="font-size: 1.25rem; color: #555; line-height: 1.7; font-weight: 400; max-width: 650px; margin: 0 auto;">17.5865468</p>
+            </header>
+
+            
+            <div class="article-hero-img" style="margin-bottom: 4rem; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.08);">
+                <img src="https://zgylvcwzwfqmligweato.supabase.co/storage/v1/object/public/images/upload_1784891422534_de762c0f16c647c03f10d201ac7f5ccc.png" alt="17.5865468" style="width: 100%; max-height: 450px; object-fit: cover; display: block;">
             </div>
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            <a href="hummua.html" class="featured-post">
-                <img src="https://zgylvcwzwfqmligweato.supabase.co/storage/v1/object/public/images/upload_1784891845291_Gemini_Generated_Image_nb9snrnb9snrnb9s.png" class="featured-bg" alt="Hummua">
-                <div class="featured-overlay"></div>
-                <div class="featured-content">
-                    <div class="featured-meta">
-                        <span class="category" style="background: var(--navy-bg); color: #fff; padding: 6px 16px; border-radius: 50px; font-size: 0.95rem;">Veckans utvalda</span>
-                        <span>⏱️ 10 min</span>
-                    </div>
-                    <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5); line-height: 1.2;">Hummua</h2>
-                    <p style="font-size: 1.15rem; margin-bottom: 1rem; opacity: 0.95; text-shadow: 0 1px 5px rgba(0,0,0,0.5); max-width: 600px;">Hummoa är gott</p>
-                    <span class="btn" style="background: #64b000; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; width: fit-content; margin-top: 1.5rem;">Till receptet</span>
-                </div>
-            </a>
-            
-            <div class="news-grid-layout">
 
-            <a href="hummua.html" class="news-card-v2" style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
-                <div class="news-img" style="height: 250px; overflow: hidden; position: relative;">
-                    <img src="https://zgylvcwzwfqmligweato.supabase.co/storage/v1/object/public/images/upload_1784891845291_Gemini_Generated_Image_nb9snrnb9snrnb9s.png" alt="Hummua" style="width: 100%; height: 100%; object-fit: cover;">
-                    <span style="position: absolute; bottom: 10px; right: 10px; background: var(--navy-bg); color: white; padding: 4px 10px; border-radius: 5px; font-weight: 600; font-size: 0.85rem;">⏱️ 10 min</span>
-                </div>
-                <div class="news-content" style="padding: 2rem; display: flex; flex-direction: column; flex-grow: 1;">
-                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #000;">Hummua</h3>
-                    <p style="color: #555; margin-bottom: 2rem; flex-grow: 1; line-height: 1.6;">Hummoa är gott</p>
-                    <span class="btn" style="background: #64b000; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; width: 100%; text-align: center; font-weight: bold; margin-top: auto;">Till receptet</span>
-                </div>
-            </a>
-
-            <a href="oxhj-rta.html" class="news-card-v2" style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
-                <div class="news-img" style="height: 250px; overflow: hidden; position: relative;">
-                    <img src="img/upload_1784843983767_realistic-transparent-plastic-bottle-twophase-260nw-1099845197.png" alt="OXHJÄRTA" style="width: 100%; height: 100%; object-fit: cover;">
-                    <span style="position: absolute; bottom: 10px; right: 10px; background: var(--navy-bg); color: white; padding: 4px 10px; border-radius: 5px; font-weight: 600; font-size: 0.85rem;">⏱️ </span>
-                </div>
-                <div class="news-content" style="padding: 2rem; display: flex; flex-direction: column; flex-grow: 1;">
-                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #000;">OXHJÄRTA</h3>
-                    <p style="color: #555; margin-bottom: 2rem; flex-grow: 1; line-height: 1.6;">DIN SHAWURMA</p>
-                    <span class="btn" style="background: #64b000; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; width: 100%; text-align: center; font-weight: bold; margin-top: auto;">Till receptet</span>
-                </div>
-            </a>
-</div>
-        </div>
+            <div class="article-content" style="font-size: 1.15rem; color: #333; line-height: 1.8;">
+                <div style="font-size: 1.15rem; color: #444; line-height: 1.8; margin-bottom: 1.5rem;">17.586546817.5865468f</div>
+<div style="font-size: 1.15rem; color: #444; line-height: 1.8; margin-bottom: 1.5rem;">17.586546817.5865468</div>
+<h3 style="font-size: 1.5rem; font-weight: 700; color: #111; margin-top: 2rem; margin-bottom: 1rem;">17.586546817.5865468</h3>
+            </div>
+        </article>
     </main>
-    
+
     <footer class="site-footer">
         <div class="container footer-grid">
             <div class="footer-col">
@@ -235,9 +159,5 @@
         </div>
     </footer>
     <script src="main_v5.js"></script>
-    <!-- Google Translate Script & Custom Logic -->
-    <div id="google_translate_element" style="display:none;"></div>
-    <script src="js/translate.js"></script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
