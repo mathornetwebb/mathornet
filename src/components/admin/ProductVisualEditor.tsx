@@ -287,15 +287,15 @@ export default function ProductVisualEditor({
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">Varmluftsugn</label>
-                  <textarea value={cooking.oven} onChange={e => updateCooking('oven', e.target.value)} placeholder="225°C, 7-9 min" rows={2} className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm bg-slate-50 focus:outline-none focus:border-blue-500" />
+                  <textarea value={cooking.oven} onChange={e => updateCooking('oven', e.target.value)} placeholder="225°C, 7-9 min" rows={2} className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-900 bg-slate-50 focus:outline-none focus:border-blue-500" />
                 </div>
                 <div>
                   <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">Airfryer</label>
-                  <textarea value={cooking.airfryer} onChange={e => updateCooking('airfryer', e.target.value)} placeholder="200°C, 9-10 min" rows={2} className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm bg-slate-50 focus:outline-none focus:border-blue-500" />
+                  <textarea value={cooking.airfryer} onChange={e => updateCooking('airfryer', e.target.value)} placeholder="200°C, 9-10 min" rows={2} className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-900 bg-slate-50 focus:outline-none focus:border-blue-500" />
                 </div>
                 <div>
                   <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">Stekpanna</label>
-                  <textarea value={cooking.pan} onChange={e => updateCooking('pan', e.target.value)} placeholder="8-10 min" rows={2} className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm bg-slate-50 focus:outline-none focus:border-blue-500" />
+                  <textarea value={cooking.pan} onChange={e => updateCooking('pan', e.target.value)} placeholder="8-10 min" rows={2} className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-900 bg-slate-50 focus:outline-none focus:border-blue-500" />
                 </div>
               </div>
             </div>

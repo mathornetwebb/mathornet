@@ -16,6 +16,8 @@ export default function RichTextBlock({
 }) {
   const editorRef = useRef<HTMLDivElement>(null);
   
+  const initialContentRef = useRef(initialContent);
+
   // Format commands
   const execCommand = (command: string, value: string | undefined = undefined) => {
     document.execCommand(command, false, value);
@@ -112,7 +114,7 @@ export default function RichTextBlock({
                onChange(editorRef.current.innerHTML);
              }
           }}
-          dangerouslySetInnerHTML={{ __html: initialContent }}
+          dangerouslySetInnerHTML={{ __html: initialContentRef.current }}
         />
       </div>
       
