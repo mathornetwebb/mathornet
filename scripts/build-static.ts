@@ -95,10 +95,8 @@ async function main() {
                 newSliderList += `
                     <!-- Dynamisk Produkt: ${p.title} -->
                     <div class="swiper-slide teza-slide">
-                        <a href="${p.slug}.html" class="teza-product-link" style="display: flex; flex-direction: column; height: 100%;">
-                            <div style="aspect-ratio: 1/1; overflow: hidden; width: 100%;">
-                                <img src="${p.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${p.title}" class="teza-product-img" style="width: 100%; height: 100%; object-fit: cover;">
-                            </div>
+                        <a href="${p.slug}.html" class="teza-product-link">
+                            <img src="${p.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${p.title}" class="teza-product-img">
                             <div class="teza-product-info">
                                 <h3>${p.title}</h3>
                             </div>
