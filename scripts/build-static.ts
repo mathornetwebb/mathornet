@@ -502,33 +502,33 @@ ${(() => {
 <body>
     ${headerStr}
 
-    <main style="padding-top: 8rem; padding-bottom: 6rem; background-color: #fcfcfc;">
-        <article class="container" style="max-width: 850px; margin: 0 auto; background: #fff; padding: 3.5rem; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.03);">
+    <main style="background-color: #fcfcfc; padding-bottom: 6rem;">
+        <!-- NEW FULL-WIDTH HERO SECTION -->
+        <header style="position: relative; width: 100%; min-height: 55vh; display: flex; align-items: center; justify-content: center; background: url('${n.featuredImage || ''}') center/cover no-repeat; padding: 6rem 2rem; margin-bottom: 4rem;">
+            <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.5);"></div>
+            <div style="position: relative; text-align: center; color: #fff; z-index: 1; max-width: 900px; width: 100%; margin-top: 4rem;">
+                <h1 style="font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; line-height: 1.15; margin-bottom: 1.5rem; text-shadow: 0 2px 10px rgba(0,0,0,0.3); font-family: 'Outfit', sans-serif;">${n.title}</h1>
+                <div class="news-meta" style="font-size: 1.1rem; font-weight: 500; display: flex; gap: 0.8rem; align-items: center; justify-content: center; text-shadow: 0 1px 5px rgba(0,0,0,0.5);">
+                    <span class="category">Nyhet</span>
+                    <span class="divider" style="color: rgba(255,255,255,0.7);">|</span>
+                    <span class="date">${dateStr}</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="container" style="max-width: 850px; margin: 0 auto; padding: 0 1.5rem;">
             <div class="breadcrumbs" style="font-size: 0.9rem; color: #888; margin-bottom: 2.5rem; display: flex; align-items: center; gap: 0.5rem;">
                 <a href="mathornet.html" style="color: #666; text-decoration: none; font-weight: 500;">Hemsida</a> <span style="color: #ccc;">/</span> 
                 <a href="nyheter.html" style="color: #666; text-decoration: none; font-weight: 500;">Nyheter</a> <span style="color: #ccc;">/</span> 
                 <span style="color: #111; font-weight: 600;">${n.title}</span>
             </div>
 
-            <header style="margin-bottom: 3.5rem; text-align: center;">
-                <div class="news-meta" style="font-size: 0.95rem; color: #666; margin-bottom: 1.5rem; display: flex; gap: 0.5rem; align-items: center; justify-content: center;">
-                    <span class="category" style="background: #eef2ff; color: #4338ca; padding: 0.3rem 0.8rem; border-radius: 99px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px;">Nyhet</span>
-                    <span class="divider" style="color: #ddd;">•</span>
-                    <span class="date" style="font-weight: 500;">${dateStr}</span>
+            <article style="background: #fff; padding: clamp(2rem, 5vw, 4rem); border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.03);">
+                ${n.excerpt ? `<p style="font-size: 1.35rem; color: #444; line-height: 1.7; font-weight: 500; margin-bottom: 3rem; font-family: 'Outfit', sans-serif;">${n.excerpt}</p>` : ''}
+                
+                <div class="article-content" style="font-size: 1.15rem; color: #333; line-height: 1.8;">
+                    ${blocksHtml}
                 </div>
-                <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; color: #111; line-height: 1.15; margin-bottom: 1.5rem; letter-spacing: -0.5px;">${n.title}</h1>
-                ${n.excerpt ? `<p style="font-size: 1.25rem; color: #555; line-height: 1.7; font-weight: 400; max-width: 650px; margin: 0 auto;">${n.excerpt}</p>` : ''}
-            </header>
-
-            ${n.featuredImage ? `
-            <div class="article-hero-img" style="margin-bottom: 4rem; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.08);">
-                <img src="${n.featuredImage}" alt="${n.title}" style="width: 100%; max-height: 450px; object-fit: cover; display: block;">
-            </div>
-            ` : ''}
-
-            <div class="article-content" style="font-size: 1.15rem; color: #333; line-height: 1.8;">
-                ${blocksHtml}
-            </div>
         </article>
     </main>
 
@@ -662,37 +662,36 @@ ${(() => {
 <body>
     ${headerStr}
 
-    <main style="padding-top: 6rem; padding-bottom: 6rem; background-color: #fcfcfc;">
-        <article class="container" style="max-width: 1000px; margin: 0 auto;">
-            <div class="breadcrumbs" style="font-size: 0.9rem; color: #666; margin-bottom: 2rem;">
-                <a href="mathornet.html" style="color: #666; text-decoration: none;">Hemsida</a> &gt; <a href="recept.html" style="color: #666; text-decoration: none;">Recept</a> &gt; ${r.title}
-            </div>
-
-            <header style="position: relative; width: 100%; border-radius: 24px; overflow: hidden; margin-bottom: 4rem; box-shadow: 0 15px 30px rgba(0,0,0,0.08);">
-                <div style="position: absolute; inset: 0; background: url('${r.featuredImage || ''}') center/cover no-repeat;"></div>
+    <main style="background-color: #fcfcfc; padding-bottom: 6rem;">
+        <!-- NEW FULL-WIDTH HERO SECTION -->
+        <header style="position: relative; width: 100%; min-height: 60vh; display: flex; align-items: center; justify-content: center; background: url('${r.featuredImage || ''}') center/cover no-repeat; padding: 10rem 2rem 4rem 2rem; margin-bottom: 4rem;">
+            <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.2);"></div>
+            
+            <div style="position: relative; background: #fff; padding: clamp(2.5rem, 5vw, 4rem) clamp(2rem, 5vw, 5rem); border-radius: 16px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); max-width: 900px; width: 100%; text-align: center; z-index: 1;">
+                <h1 style="font-size: clamp(2rem, 4.5vw, 3.8rem); font-weight: 800; color: #111; line-height: 1.15; margin-bottom: 1.5rem; font-family: 'Outfit', sans-serif;">${r.title}</h1>
+                <p style="font-size: 1.2rem; color: #555; max-width: 650px; margin: 0 auto 2.5rem; line-height: 1.6;">${r.description || ''}</p>
                 
-                <div style="position: relative; padding: 6rem 2rem; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.15); min-height: 500px;">
-                    <div style="background: #fff; padding: 3rem 4rem; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); max-width: 800px; width: 100%; text-align: center;">
-                        <h1 style="font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 800; color: #111; line-height: 1.2; margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">${r.title}</h1>
-                        <p style="font-size: 1.15rem; color: #555; max-width: 600px; margin: 0 auto 2rem; line-height: 1.6;">${r.description || ''}</p>
-                        
-                        <div style="display: flex; align-items: center; justify-content: center; gap: 2.5rem; flex-wrap: wrap;">
-                            <div style="display: flex; align-items: center; gap: 0.5rem; color: #333; font-weight: 600; font-size: 1.05rem;">
-                                <span>⏱️</span>
-                                <span>${r.prepTime || '-'}</span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 0.5rem; color: #333; font-weight: 600; font-size: 1.05rem;">
-                                <span>🍽️</span>
-                                <span>${r.portions || '-'}</span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 0.5rem; color: #333; font-weight: 600; font-size: 1.05rem;">
-                                <span>👨‍🍳</span>
-                                <span>${r.difficulty || '-'}</span>
-                            </div>
-                        </div>
+                <div style="display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; color: #222; font-weight: 700; font-size: 1.1rem;">
+                        <span>⏱️</span>
+                        <span>${r.prepTime || '-'}</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; color: #222; font-weight: 700; font-size: 1.1rem;">
+                        <span>🍽️</span>
+                        <span>${r.portions || '-'} portioner</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; color: #222; font-weight: 700; font-size: 1.1rem;">
+                        <span>👨‍🍳</span>
+                        <span>${r.difficulty || '-'}</span>
                     </div>
                 </div>
-            </header>
+            </div>
+        </header>
+
+        <article class="container" style="max-width: 1000px; margin: 0 auto; padding: 0 1.5rem;">
+            <div class="breadcrumbs" style="font-size: 0.9rem; color: #666; margin-bottom: 3rem;">
+                <a href="mathornet.html" style="color: #666; text-decoration: none;">Hemsida</a> &gt; <a href="recept.html" style="color: #666; text-decoration: none;">Recept</a> &gt; <span style="color: #111; font-weight: 600;">${r.title}</span>
+            </div>
 
             <div style="display: grid; grid-template-columns: 1fr; gap: 4rem;">
                 <!-- Try a 2-column layout on larger screens: 1/3 and 2/3 -->
