@@ -1,4 +1,5 @@
 import prisma from '@/lib/prisma';
+import { triggerRebuild } from '@/lib/triggerRebuild';
 import { redirect } from 'next/navigation';
 import NewsVisualEditor from '@/components/admin/NewsVisualEditor';
 
@@ -33,7 +34,7 @@ export default async function NyheterEditPage({ params }: { params: Promise<{ id
     }
     
     // Trigger build silently
-    try { await fetch(process.env.NEXT_PUBLIC_SITE_URL + '/api/rebuild', { method: 'POST' }) } catch(e) {}
+    await triggerRebuild();
     
     redirect('/admin/content/news');
   }

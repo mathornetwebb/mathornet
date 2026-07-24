@@ -1,4 +1,5 @@
 import prisma from '@/lib/prisma';
+import { triggerRebuild } from '@/lib/triggerRebuild';
 import { redirect } from 'next/navigation';
 import ProductVisualEditor from '@/components/admin/ProductVisualEditor';
 
@@ -46,8 +47,8 @@ export default async function ProdukterEditPage({ params }: { params: Promise<{ 
       await prisma.product.update({ where: { id: id }, data });
     }
     
-    // Trigger build
-    try { await fetch(process.env.NEXT_PUBLIC_SITE_URL + '/api/rebuild', { method: 'POST' }) } catch(e) {}
+    // Trigger build silently
+    await triggerRebuild();
     
     redirect('/admin/content/products');
   }
