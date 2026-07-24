@@ -26,7 +26,7 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 bg-[#1B263B] text-white flex flex-col h-screen fixed left-0 top-0 z-40 shadow-xl">
+    <aside className="w-64 bg-[#64b000] text-white flex flex-col h-screen fixed left-0 top-0 z-40 shadow-xl">
       <div className="p-6 border-b border-white/10 flex flex-col gap-4">
         <Link href="/">
           <img src="/img/mathornet_logo_ny_transparent.png" alt="Mathörnet" className="h-12 w-auto" />

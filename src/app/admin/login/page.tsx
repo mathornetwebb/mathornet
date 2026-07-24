@@ -37,7 +37,7 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#1B263B] px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#64b000] px-4">
       <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-2xl shadow-2xl">
         <div className="text-center">
           <Image
@@ -97,7 +97,7 @@ export default function AdminLoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-lg text-white bg-[#1B263B] hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all disabled:opacity-50"
+              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-lg text-white bg-[#64b000] hover:bg-[#529000] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#64b000] transition-all disabled:opacity-50"
             >
               {loading ? "Loggar in..." : "LOGGA IN"}
             </button>

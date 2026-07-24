@@ -88,15 +88,15 @@ export default function ResetPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#1B263B] px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#64b000] px-4">
       <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-2xl shadow-2xl">
         <div className="text-center">
           <Image
-            src="/logo.png"
-            alt="Global Construction"
+            src="/img/mathornet_logo_ny_transparent.png"
+            alt="Mathörnet"
             width={180}
             height={50}
-            className="mx-auto brightness-0"
+            className="mx-auto"
           />
           <h2 className="mt-6 text-3xl font-extrabold text-gray-900 font-outfit">
             Välj lösenord
@@ -121,7 +121,7 @@ export default function ResetPasswordPage() {
             </div>
             <button
               onClick={() => router.push("/admin/login")}
-              className="w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-lg text-white bg-[#1B263B] hover:bg-blue-700 transition-all"
+              className="w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-lg text-white bg-[#64b000] hover:bg-[#529000] transition-all"
             >
               TILL INLOGGNINGEN
             </button>
@@ -136,7 +136,7 @@ export default function ResetPasswordPage() {
             </div>
             <button
               onClick={() => router.push("/admin/login")}
-              className="w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-lg text-white bg-[#1B263B] hover:bg-blue-700 transition-all font-outfit"
+              className="w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-lg text-white bg-[#64b000] hover:bg-[#529000] transition-all font-outfit"
             >
               LOGGA IN PÅ ADMINPANELEN
             </button>
@@ -187,7 +187,7 @@ export default function ResetPasswordPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-lg text-white bg-[#1B263B] hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all disabled:opacity-50 font-outfit"
+                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-lg text-white bg-[#64b000] hover:bg-[#529000] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#64b000] transition-all disabled:opacity-50 font-outfit"
               >
                 {loading ? "Sparar..." : "AKTIVERA KONTO"}
               </button>

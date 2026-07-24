@@ -7,8 +7,8 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
 export const metadata: Metadata = {
-  title: "Global Construction – Certifierad Totalentreprenad",
-  description: "Bygg framtiden med oss. Vi levererar säkra och optimerade lösningar för konstruktion och skyddsrum.",
+  title: "Mathörnet CMS",
+  description: "CMS för Mathörnet",
 };
 
 export default function RootLayout({
