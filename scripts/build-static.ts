@@ -50,8 +50,8 @@ async function main() {
                     <!-- Dynamisk Produkt: ${p.title} -->
                     <a href="${p.slug}.html" class="product-card">
                         ${badgeHtml}
-                        <div class="product-img-wrapper">
-                            <img src="${p.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${p.title}">
+                        <div class="product-img-wrapper" style="aspect-ratio: 1/1; overflow: hidden; display: flex; align-items: center; justify-content: center; width: 100%;">
+                            <img src="${p.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${p.title}" style="width: 100%; height: 100%; object-fit: cover; object-position: center;">
                         </div>
                         <div class="product-info">
                             <h3>${p.title}</h3>
@@ -95,8 +95,10 @@ async function main() {
                 newSliderList += `
                     <!-- Dynamisk Produkt: ${p.title} -->
                     <div class="swiper-slide teza-slide">
-                        <a href="${p.slug}.html" class="teza-product-link">
-                            <img src="${p.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${p.title}" class="teza-product-img">
+                        <a href="${p.slug}.html" class="teza-product-link" style="display: flex; flex-direction: column; height: 100%;">
+                            <div style="aspect-ratio: 1/1; overflow: hidden; width: 100%;">
+                                <img src="${p.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${p.title}" class="teza-product-img" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
                             <div class="teza-product-info">
                                 <h3>${p.title}</h3>
                             </div>
@@ -239,8 +241,8 @@ async function main() {
                 <h1 style="font-size: 1.8rem; font-weight: 800; color: #111; margin-bottom: 1rem; line-height: 1.2;">${p.title}</h1>
             </div>
 
-            <div class="product-detail-img">
-                <img src="${p.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${p.title}">
+            <div class="product-detail-img" style="overflow: hidden; display: flex; align-items: center; justify-content: center; max-height: 600px; border-radius: 16px;">
+                <img src="${p.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${p.title}" style="width: 100%; height: 100%; max-height: 600px; object-fit: cover;">
             </div>
             
             <div class="product-detail-info">
@@ -482,7 +484,7 @@ ${(() => {
                 if (b.type === 'h2') return `<h2 style="font-size: 2rem; font-weight: 800; color: #111; margin-top: 3rem; margin-bottom: 1rem;">${b.content}</h2>`;
                 if (b.type === 'h3') return `<h3 style="font-size: 1.5rem; font-weight: 700; color: #111; margin-top: 2rem; margin-bottom: 1rem;">${b.content}</h3>`;
                 if (b.type === 'text') return `<div style="font-size: 1.15rem; color: #444; line-height: 1.8; margin-bottom: 1.5rem;">${b.content}</div>`;
-                if (b.type === 'image') return `<figure style="margin: 3rem 0;"><img src="${b.content}" alt="" style="width: 100%; border-radius: 12px;"><figcaption style="font-size: 0.9rem; color: #666; margin-top: 0.5rem; text-align: center;">${b.caption || ''}</figcaption></figure>`;
+                if (b.type === 'image') return `<figure style="margin: 3rem 0; text-align: center;"><img src="${b.content}" alt="" style="width: 100%; max-height: 600px; object-fit: cover; border-radius: 12px;"><figcaption style="font-size: 0.9rem; color: #666; margin-top: 0.5rem; text-align: center;">${b.caption || ''}</figcaption></figure>`;
                 return '';
             }).join('\n');
         } catch(e) {}
@@ -558,7 +560,7 @@ ${(() => {
       
       const featuredHtml = `
             <a href="${featuredRecipe.slug}.html" class="featured-post">
-                <img src="${featuredRecipe.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" class="featured-bg" alt="${featuredRecipe.title}">
+                <img src="${featuredRecipe.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" class="featured-bg" alt="${featuredRecipe.title}" style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; z-index: -1;">
                 <div class="featured-overlay"></div>
                 <div class="featured-content">
                     <div class="featured-meta">
