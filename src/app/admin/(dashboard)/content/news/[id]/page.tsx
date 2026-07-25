@@ -2,6 +2,7 @@ import prisma from '@/lib/prisma';
 import { triggerRebuild } from '@/lib/triggerRebuild';
 import { redirect } from 'next/navigation';
 import NewsVisualEditor from '@/components/admin/NewsVisualEditor';
+import DeleteButton from '@/components/admin/DeleteButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -48,6 +49,8 @@ export default async function NyheterEditPage({ params }: { params: Promise<{ id
   return (
     <form action={saveAction} className="relative">
       <NewsVisualEditor initialData={item} isNew={isNew} />
+      
+      {!isNew && <DeleteButton action={deleteAction} />}
     </form>
   );
 }

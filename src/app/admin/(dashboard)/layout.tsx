@@ -1,4 +1,5 @@
 import { Sidebar } from "@/components/admin/Sidebar";
+import DirtyStateTracker from "@/components/admin/DirtyStateTracker";
 
 export default function AdminLayout({
   children,
@@ -7,6 +8,7 @@ export default function AdminLayout({
 }) {
   return (
     <div className="flex min-h-screen bg-slate-50">
+      <DirtyStateTracker />
       <Sidebar />
       <main className="flex-1 ml-64 p-8 min-w-0">
         <div className="w-full h-full">

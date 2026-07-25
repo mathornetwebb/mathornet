@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Save, ArrowLeft } from "lucide-react";
+import { Save, ArrowLeft, Trash2 } from "lucide-react";
 import Link from "next/link";
 
 type StoreEditorProps = {
@@ -78,8 +78,27 @@ export default function StoreEditor({ initialData }: StoreEditorProps) {
     }
   };
 
+  const handleDelete = async () => {
+    if (!initialData?.id) return;
+    if (!window.confirm('Är du säker på att du vill radera detta inlägg? Det går inte att ångra.')) return;
+    
+    setIsSaving(true);
+    try {
+      const res = await fetch(`/api/stores/${initialData.id}`, { method: 'DELETE' });
+      if (!res.ok) throw new Error("Kunde inte radera butiken");
+      
+      await fetch('/api/rebuild', { method: 'POST' }).catch(() => {});
+      router.push("/admin/content/stores");
+      router.refresh();
+    } catch (error) {
+      console.error(error);
+      alert("Ett fel uppstod vid radering.");
+      setIsSaving(false);
+    }
+  };
+
   return (
-    <div className="max-w-3xl mx-auto space-y-8 pb-20">
+    <div className="max-w-3xl mx-auto space-y-8 pb-20 relative">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Link href="/admin/content/stores" className="p-2 bg-white rounded-full hover:bg-gray-50 transition-colors">
@@ -205,6 +224,19 @@ export default function StoreEditor({ initialData }: StoreEditorProps) {
           </label>
         </div>
       </div>
+      
+      {initialData?.id && (
+        <div className="fixed bottom-6 right-6 z-50">
+          <button 
+            onClick={handleDelete}
+            disabled={isSaving}
+            className="flex items-center gap-2 bg-red-100 text-red-600 hover:text-red-700 hover:bg-red-200 font-medium px-4 py-3 rounded-xl transition-colors shadow-sm disabled:opacity-50"
+          >
+            <Trash2 className="w-5 h-5" />
+            Ta bort inlägg
+          </button>
+        </div>
+      )}
     </div>
   );
 }

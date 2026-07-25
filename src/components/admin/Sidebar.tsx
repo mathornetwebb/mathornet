@@ -45,6 +45,15 @@ export function Sidebar() {
             <Link
               key={item.name}
               href={item.href}
+              onClick={(e) => {
+                if (typeof window !== 'undefined' && (window as any).__isFormDirty) {
+                  if (!window.confirm('Du har osparade ändringar. Vill du verkligen lämna sidan?')) {
+                    e.preventDefault();
+                  } else {
+                    (window as any).__isFormDirty = false;
+                  }
+                }
+              }}
               className={cn(
                 "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group",
                 isActive 

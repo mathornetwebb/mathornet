@@ -108,11 +108,58 @@ async function main() {
               const afterSlider = mathornetHtml.substring(wrapperEndIdx);
               
               mathornetHtml = beforeSlider + '\n' + newSliderList + '                ' + afterSlider;
-              fs.writeFileSync(mathornetPath, mathornetHtml);
             }
           }
         }
       }
+      
+      // Update News Carousel on start page (latest 6)
+      const carouselTrackStr = '<div class="carousel-track" style="display: flex; transition: transform 0.5s ease-in-out;">';
+      const carouselTrackIdx = mathornetHtml.indexOf(carouselTrackStr);
+      if (carouselTrackIdx !== -1) {
+        const carouselTrackEndIdx = mathornetHtml.indexOf('</div>\n                    </div>\n                    <div class="carousel-controls"', carouselTrackIdx);
+        // Sometimes the html formatting differs slightly, let's use a more robust search
+        const nextDivIdx = mathornetHtml.indexOf('</div>\n                    </div>', carouselTrackIdx);
+        
+        if (nextDivIdx !== -1) {
+          let newNewsSliderList = '';
+          // We want the 6 latest news
+          // Note: we should ensure `news` is sorted by date descending, but let's sort a copy just in case
+          const sortedNews = [...news].sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime());
+          const top6News = sortedNews.slice(0, 6);
+          
+          for (const n of top6News) {
+            const dateObj = n.createdAt || new Date();
+            const months = ['jan', 'feb', 'mar', 'apr', 'maj', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+            const dateStr = `${dateObj.getDate().toString().padStart(2, '0')} ${months[dateObj.getMonth()]} ${dateObj.getFullYear()}`;
+            
+            newNewsSliderList += `
+                            <!-- Dynamisk Nyhet: ${n.title} -->
+                            <a href="${n.slug}.html" class="carousel-card news-card-v2" style="flex: 0 0 calc(33.333% - 22px); min-width: 300px;  background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
+                                <div class="news-img" style="height: 250px; overflow: hidden;">
+                                    <img src="${n.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${n.title}" style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                                <div class="news-content" style="padding: 2rem; display: flex; flex-direction: column; flex-grow: 1;">
+                                    <div class="news-meta" style="font-size: 0.85rem; color: #666; margin-bottom: 1rem; display: flex; gap: 0.5rem; align-items: center;">
+                                        <span class="date">${dateStr}</span>
+                                        <span class="divider">|</span>
+                                        <span class="category" style="color: var(--navy-bg); font-weight: 600;">Nyhet</span>
+                                    </div>
+                                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #000;">${n.title}</h3>
+                                    <p style="color: #555; margin-bottom: 2rem; flex-grow: 1; line-height: 1.6;">${n.excerpt || ''}</p>
+                                    <span class="btn btn-navy" style="text-align: center; width: 100%;">Läs inlägg</span>
+                                </div>
+                            </a>\n`;
+          }
+          
+          const beforeNews = mathornetHtml.substring(0, carouselTrackIdx + carouselTrackStr.length);
+          const afterNews = mathornetHtml.substring(nextDivIdx);
+          
+          mathornetHtml = beforeNews + '\n' + newNewsSliderList + '                        ' + afterNews;
+        }
+      }
+
+      fs.writeFileSync(mathornetPath, mathornetHtml);
     }
 
     // --- REBUILD NYHETER.HTML ---

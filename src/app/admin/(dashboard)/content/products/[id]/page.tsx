@@ -2,6 +2,7 @@ import prisma from '@/lib/prisma';
 import { triggerRebuild } from '@/lib/triggerRebuild';
 import { redirect } from 'next/navigation';
 import ProductVisualEditor from '@/components/admin/ProductVisualEditor';
+import DeleteButton from '@/components/admin/DeleteButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -64,13 +65,7 @@ export default async function ProdukterEditPage({ params }: { params: Promise<{ 
       <ProductVisualEditor initialData={item} isNew={isNew} />
       
       {/* Delete button (only show on existing items) */}
-      {!isNew && (
-        <div className="fixed bottom-6 right-6 z-50">
-          <button formAction={deleteAction} className="flex items-center gap-2 bg-red-100 text-red-600 hover:text-red-700 hover:bg-red-200 font-medium px-4 py-2 rounded-xl transition-colors shadow-sm">
-            Ta bort produkt
-          </button>
-        </div>
-      )}
+      {!isNew && <DeleteButton action={deleteAction} />}
     </form>
   );
 }
