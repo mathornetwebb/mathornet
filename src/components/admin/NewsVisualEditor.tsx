@@ -76,7 +76,14 @@ export default function NewsVisualEditor({
   // Auto-generate slug from title if new
   useEffect(() => {
     if (isNew && title) {
-      setSlug(title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, ''));
+      let newSlug = title
+        .toLowerCase()
+        .replace(/[åä]/g, 'a')
+        .replace(/ö/g, 'o')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)+/g, '');
+      if (!newSlug) newSlug = 'nyhet-' + Date.now();
+      setSlug(newSlug);
     }
   }, [title, isNew]);
 

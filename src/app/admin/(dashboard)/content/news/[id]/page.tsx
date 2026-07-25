@@ -15,7 +15,7 @@ export default async function NyheterEditPage({ params }: { params: Promise<{ id
     if (!item) redirect('/admin/content/news');
   }
 
-  async function saveAction(formData: FormData) {
+  async function saveAction(isNewVal: boolean, idVal: string, formData: FormData) {
     'use server';
     const data = {
       title: formData.get('title') as string || '',
@@ -28,10 +28,10 @@ export default async function NyheterEditPage({ params }: { params: Promise<{ id
     };
     
     // Auto-publish by default for this simple CMS setup, or handle it via a boolean
-    if (isNew) {
+    if (isNewVal) {
       await prisma.news.create({ data: { ...data, published: true } });
     } else {
-      await prisma.news.update({ where: { id: id }, data });
+      await prisma.news.update({ where: { id: idVal }, data });
     }
     
     // Trigger build silently
@@ -40,17 +40,17 @@ export default async function NyheterEditPage({ params }: { params: Promise<{ id
     redirect('/admin/content/news');
   }
 
-  async function deleteAction() {
+  async function deleteAction(idVal: string) {
     'use server';
-    await prisma.news.delete({ where: { id: id } });
+    await prisma.news.delete({ where: { id: idVal } });
     redirect('/admin/content/news');
   }
 
   return (
-    <form action={saveAction} className="relative">
+    <form action={saveAction.bind(null, isNew, id)} className="relative">
       <NewsVisualEditor initialData={item} isNew={isNew} />
       
-      {!isNew && <DeleteButton action={deleteAction} />}
+      {!isNew && <DeleteButton action={deleteAction.bind(null, id)} />}
     </form>
   );
 }

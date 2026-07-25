@@ -15,7 +15,7 @@ export default async function ProdukterEditPage({ params }: { params: Promise<{ 
     if (!item) redirect('/admin/content/products');
   }
 
-  async function saveAction(formData: FormData) {
+  async function saveAction(isNewVal: boolean, idVal: string, formData: FormData) {
     'use server';
     const data = {
       title: formData.get('title') as string || '',
@@ -42,10 +42,10 @@ export default async function ProdukterEditPage({ params }: { params: Promise<{ 
        }
     } catch(e) {}
     
-    if (isNew) {
+    if (isNewVal) {
       await prisma.product.create({ data: { ...data, published: true } });
     } else {
-      await prisma.product.update({ where: { id: id }, data });
+      await prisma.product.update({ where: { id: idVal }, data });
     }
     
     // Trigger build silently
@@ -54,18 +54,18 @@ export default async function ProdukterEditPage({ params }: { params: Promise<{ 
     redirect('/admin/content/products');
   }
 
-  async function deleteAction() {
+  async function deleteAction(idVal: string) {
     'use server';
-    await prisma.product.delete({ where: { id: id } });
+    await prisma.product.delete({ where: { id: idVal } });
     redirect('/admin/content/products');
   }
 
   return (
-    <form action={saveAction} className="relative">
+    <form action={saveAction.bind(null, isNew, id)} className="relative">
       <ProductVisualEditor initialData={item} isNew={isNew} />
       
       {/* Delete button (only show on existing items) */}
-      {!isNew && <DeleteButton action={deleteAction} />}
+      {!isNew && <DeleteButton action={deleteAction.bind(null, id)} />}
     </form>
   );
 }
