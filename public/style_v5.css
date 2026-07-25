@@ -414,19 +414,17 @@ ul {
 .product-img-wrapper {
     width: 100%;
     height: 300px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
     background: transparent;
-    border-radius: 50%;
 }
 
 .product-img-wrapper img {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
-    border-radius: 24px; /* Slight rounding on image itself just in case */
     transition: transform 0.4s ease;
 }
 
@@ -1800,19 +1798,8 @@ main {
     background-color: var(--theme-green) !important;
     position: relative;
     margin-top: -120px;
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' fill='black' /%3E%3C/svg%3E"), linear-gradient(black, black);
-    -webkit-mask-size: 100% 120px, 100% calc(100% - 120px);
-    -webkit-mask-position: top left, bottom left;
-    -webkit-mask-repeat: no-repeat, no-repeat;
-    mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' fill='black' /%3E%3C/svg%3E"), linear-gradient(black, black);
-    mask-size: 100% 120px, 100% calc(100% - 120px);
-    mask-position: top left, bottom left;
-    mask-repeat: no-repeat, no-repeat;
 }
 
-.cta-bottom-section .custom-shape-divider-top {
-    display: none;
-}
 
 .cta-bottom-card {
     background-color: transparent !important;
@@ -2393,9 +2380,6 @@ body {
     width: 100%;
     height: auto;
     object-fit: contain;
-    /* Mjukar upp de hårda rektangulära kanterna så det inte ser "blockigt" ut */
-    -webkit-mask-image: radial-gradient(ellipse at center, black 65%, transparent 95%);
-    mask-image: radial-gradient(ellipse at center, black 65%, transparent 95%);
     transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     transform: scale(0.9);
 }
@@ -2735,4 +2719,13 @@ body {
     transform: scale(1.2);
 }
 
+/* Fix for white stripe between colored sections and footer */
+body.page-green-footer main,
+body.page-sand-footer main {
+    box-shadow: none !important;
+}
 
+body.page-green-footer .site-footer,
+body.page-sand-footer .site-footer {
+    padding-top: 0 !important;
+}

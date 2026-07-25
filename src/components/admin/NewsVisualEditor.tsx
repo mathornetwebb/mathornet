@@ -200,11 +200,10 @@ export default function NewsVisualEditor({
         </div>
 
         {/* Hero Preview */}
-        <div className="relative bg-slate-900 rounded-3xl overflow-hidden mb-12 shadow-2xl aspect-[2/1] flex flex-col justify-center items-center text-center p-12">
+        <div className="relative bg-slate-200 rounded-3xl overflow-hidden mb-12 shadow-2xl aspect-[2/1] flex flex-col justify-center items-center text-center p-12">
           {featuredImage && (
             <img src={featuredImage} alt="Omslag" className="absolute inset-0 w-full h-full object-cover" />
           )}
-          <div className="absolute inset-0 bg-black/50"></div>
           
           <div className="relative z-10 max-w-3xl flex flex-col items-center">
             <h1 className="text-4xl md:text-5xl font-extrabold text-white font-outfit mb-4 leading-tight drop-shadow-lg">
