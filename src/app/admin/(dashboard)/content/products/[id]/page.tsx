@@ -1,5 +1,4 @@
 import prisma from '@/lib/prisma';
-import { triggerRebuild } from '@/lib/triggerRebuild';
 import { redirect } from 'next/navigation';
 import ProductVisualEditor from '@/components/admin/ProductVisualEditor';
 import DeleteButton from '@/components/admin/DeleteButton';
@@ -8,8 +7,9 @@ import { saveProductAction, deleteProductAction } from '../actions';
 
 export const dynamic = 'force-dynamic';
 
-export default async function ProdukterEditPage({ params }: { params: Promise<{ id: string }> }) {
-  const p = await params; const id = p.id; const isNew = id === 'new';
+export default async function ProdukterEditPage({ params }: { params: any }) {
+  const id = params.id;
+  const isNew = id === 'new';
   let item = null;
   
   if (!isNew) {
