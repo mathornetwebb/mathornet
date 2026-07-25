@@ -4,39 +4,9 @@ import { redirect } from 'next/navigation';
 import NewsVisualEditor from '@/components/admin/NewsVisualEditor';
 import DeleteButton from '@/components/admin/DeleteButton';
 
+import { saveNewsAction, deleteNewsAction } from '../actions';
+
 export const dynamic = 'force-dynamic';
-
-// Server actions defined outside to prevent async component closure issues in Next.js 15
-async function saveAction(isNewVal: boolean, idVal: string, formData: FormData) {
-  'use server';
-  const data = {
-    title: formData.get('title') as string || '',
-    slug: formData.get('slug') as string || '',
-    excerpt: formData.get('excerpt') as string || null,
-    content: formData.get('content') as string || '', // Now JSON string
-    featuredImage: formData.get('featuredImage') as string || null,
-    seoTitle: formData.get('seoTitle') as string || null,
-    metaDescription: formData.get('metaDescription') as string || null,
-  };
-  
-  // Auto-publish by default for this simple CMS setup, or handle it via a boolean
-  if (isNewVal) {
-    await prisma.news.create({ data: { ...data, published: true } });
-  } else {
-    await prisma.news.update({ where: { id: idVal }, data });
-  }
-  
-  // Trigger build silently
-  await triggerRebuild();
-  
-  redirect('/admin/content/news');
-}
-
-async function deleteAction(idVal: string) {
-  'use server';
-  await prisma.news.delete({ where: { id: idVal } });
-  redirect('/admin/content/news');
-}
 
 export default async function NyheterEditPage({ params }: { params: Promise<{ id: string }> }) {
   const p = await params; const id = p.id; const isNew = id === 'new';
@@ -48,10 +18,10 @@ export default async function NyheterEditPage({ params }: { params: Promise<{ id
   }
 
   return (
-    <form action={saveAction.bind(null, isNew, id)} className="relative">
+    <form action={saveNewsAction.bind(null, isNew, id)} className="relative">
       <NewsVisualEditor initialData={item} isNew={isNew} />
       
-      {!isNew && <DeleteButton action={deleteAction.bind(null, id)} />}
+      {!isNew && <DeleteButton action={deleteNewsAction.bind(null, id)} />}
     </form>
   );
 }
