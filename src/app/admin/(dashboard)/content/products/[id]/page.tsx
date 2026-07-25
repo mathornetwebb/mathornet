@@ -7,8 +7,8 @@ import { saveProductAction, deleteProductAction } from '../actions';
 
 export const dynamic = 'force-dynamic';
 
-export default async function ProdukterEditPage({ params }: { params: any }) {
-  const id = params.id;
+export default async function ProdukterEditPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const isNew = id === 'new';
   let item = null;
   

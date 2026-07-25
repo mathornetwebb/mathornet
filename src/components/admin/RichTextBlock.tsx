@@ -7,6 +7,8 @@ export default function RichTextBlock({
   initialContent, 
   onChange, 
   onRemove,
+  onMoveUp,
+  onMoveDown,
   type
 }: { 
   initialContent: string; 

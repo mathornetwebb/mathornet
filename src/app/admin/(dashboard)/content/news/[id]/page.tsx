@@ -7,8 +7,8 @@ import { saveNewsAction, deleteNewsAction } from '../actions';
 
 export const dynamic = 'force-dynamic';
 
-export default async function NyheterEditPage({ params }: { params: any }) {
-  const id = params.id;
+export default async function NyheterEditPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const isNew = id === 'new';
   let item = null;
   
