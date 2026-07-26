@@ -117,7 +117,7 @@ export default function RichTextBlock({
             type === 'h3' ? 'Skriv H3 rubrik här...' : 
             'Skriv din brödtext här...'
           }
-          onBlur={() => {
+          onInput={() => {
             if (editorRef.current) {
               onChange(editorRef.current.innerHTML);
             }

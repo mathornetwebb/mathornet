@@ -43,34 +43,37 @@ export default function NewsVisualEditor({
   });
 
   const addBlock = (type: Block['type']) => {
-    setBlocks([...blocks, { id: Math.random().toString(36).substr(2, 9), type, content: '' }]);
+    setBlocks(prev => [...prev, { id: Math.random().toString(36).substr(2, 9), type, content: '' }]);
   };
 
   const updateBlock = (id: string, content: string) => {
-    setBlocks(blocks.map(b => b.id === id ? { ...b, content } : b));
+    setBlocks(prev => prev.map(b => b.id === id ? { ...b, content } : b));
   };
 
   const removeBlock = (id: string) => {
-    if (blocks.length === 1) return;
-    setBlocks(blocks.filter(b => b.id !== id));
+    setBlocks(prev => prev.length === 1 ? prev : prev.filter(b => b.id !== id));
   };
 
   const moveBlockUp = (index: number) => {
     if (index === 0) return;
-    const newBlocks = [...blocks];
-    const temp = newBlocks[index];
-    newBlocks[index] = newBlocks[index - 1];
-    newBlocks[index - 1] = temp;
-    setBlocks(newBlocks);
+    setBlocks(prev => {
+      const newBlocks = [...prev];
+      const temp = newBlocks[index];
+      newBlocks[index] = newBlocks[index - 1];
+      newBlocks[index - 1] = temp;
+      return newBlocks;
+    });
   };
 
   const moveBlockDown = (index: number) => {
-    if (index === blocks.length - 1) return;
-    const newBlocks = [...blocks];
-    const temp = newBlocks[index];
-    newBlocks[index] = newBlocks[index + 1];
-    newBlocks[index + 1] = temp;
-    setBlocks(newBlocks);
+    setBlocks(prev => {
+      if (index === prev.length - 1) return prev;
+      const newBlocks = [...prev];
+      const temp = newBlocks[index];
+      newBlocks[index] = newBlocks[index + 1];
+      newBlocks[index + 1] = temp;
+      return newBlocks;
+    });
   };
 
   // Auto-generate slug from title if new
