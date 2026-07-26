@@ -10,7 +10,7 @@ async function main() {
     
     // Fetch data from DB
     const products = await prisma.product.findMany();
-    const news = await prisma.news.findMany();
+    const news = await prisma.news.findMany({ orderBy: { createdAt: 'desc' } });
     
     // Safety check - if db is totally empty, don't wipe out the site
     if (products.length === 0 && news.length === 0) {
@@ -553,7 +553,7 @@ ${(() => {
         <!-- NEW FULL-WIDTH HERO SECTION -->
         <header style="position: relative; width: 100%; min-height: 55vh; display: flex; align-items: center; justify-content: center; background: url('${n.featuredImage || ''}') center/cover no-repeat; padding: 6rem 2rem; margin-bottom: 4rem;">
             <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.5);"></div>
-            <div style="position: relative; text-align: center; color: #fff; z-index: 1; max-width: 900px; width: 100%; margin-top: 4rem;">
+            <div style="position: relative; text-align: center; color: #fff; z-index: 1; max-width: 1400px; width: 100%; margin-top: 4rem; padding: 0 1rem;">
                 <h1 style="font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; line-height: 1.15; margin-bottom: 1.5rem; text-shadow: 0 2px 10px rgba(0,0,0,0.3); font-family: 'Outfit', sans-serif;">${n.title}</h1>
                 <div class="news-meta" style="font-size: 1.1rem; font-weight: 500; display: flex; gap: 0.8rem; align-items: center; justify-content: center; text-shadow: 0 1px 5px rgba(0,0,0,0.5);">
                     <span class="category">Nyhet</span>
