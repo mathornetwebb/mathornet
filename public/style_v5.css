@@ -2723,6 +2723,7 @@ body {
 body.page-green-footer main,
 body.page-sand-footer main {
     box-shadow: none !important;
+    padding-bottom: 0 !important;
 }
 
 body.page-green-footer .site-footer,

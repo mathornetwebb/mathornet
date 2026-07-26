@@ -29,6 +29,24 @@ export default function DirtyStateTracker() {
     // We can clear dirty state globally when any submit button is clicked, or any specific save button
     const handleClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
+      
+      // Intercept link clicks for client-side navigation
+      const anchor = target.closest('a');
+      if (anchor && anchor.href && (window as any).__isFormDirty) {
+        // Ignore hash links or new tabs
+        if (anchor.getAttribute('href')?.startsWith('#')) return;
+        if (anchor.target === '_blank') return;
+        
+        const confirmed = window.confirm('Du har osparade ändringar. Är du säker på att du vill lämna sidan?');
+        if (!confirmed) {
+          e.preventDefault();
+          e.stopPropagation();
+          return; // Stop event propagation
+        } else {
+          (window as any).__isFormDirty = false;
+        }
+      }
+
       const button = target.closest('button');
       if (button) {
         // If the button has "Spara" in its text or is a submit button
