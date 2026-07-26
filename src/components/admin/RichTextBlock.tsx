@@ -52,6 +52,12 @@ export default function RichTextBlock({
     </button>
   );
 
+  useEffect(() => {
+    if (editorRef.current && editorRef.current.innerHTML === '') {
+      editorRef.current.innerHTML = initialContentRef.current;
+    }
+  }, []);
+
   return (
     <div className="group relative bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition-shadow focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-blue-500/10 overflow-hidden">
       
@@ -122,7 +128,6 @@ export default function RichTextBlock({
               onChange(editorRef.current.innerHTML);
             }
           }}
-          dangerouslySetInnerHTML={{ __html: initialContentRef.current }}
         />
       </div>
       
