@@ -24,7 +24,18 @@ export default function ProductVisualEditor({
   // Parse JSON fields
   const parseJson = (str: string, fallback: any) => {
     if (!str) return fallback;
-    try { return JSON.parse(str); } catch { return fallback; }
+    try { 
+      const parsed = JSON.parse(str);
+      // Simple shallow merge is usually enough, but let's ensure nested objects exist
+      if (parsed && typeof parsed === 'object') {
+        const result = { ...fallback, ...parsed };
+        if (fallback.packaging) {
+          result.packaging = { ...fallback.packaging, ...(parsed.packaging || {}) };
+        }
+        return result;
+      }
+      return parsed;
+    } catch { return fallback; }
   };
 
   const [productInfo, setProductInfo] = useState(parseJson(initialData?.productInfo, {

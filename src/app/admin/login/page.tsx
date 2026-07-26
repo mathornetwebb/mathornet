@@ -24,6 +24,8 @@ export default function AdminLoginPage() {
         redirect: false,
       });
 
+      console.log("Login result:", res);
+
       if (res?.error) {
         setError("Felaktig e-postadress eller lösenord.");
       } else {

@@ -105,7 +105,7 @@ export default function RichTextBlock({
       <div className="p-5">
         <div
           ref={editorRef}
-          contentEditable
+          contentEditable={true}
           suppressContentEditableWarning
           className={`w-full focus:outline-none min-h-[40px] empty:before:content-[attr(data-placeholder)] empty:before:text-slate-300 ${
             type === 'h2' ? 'text-3xl font-extrabold font-outfit text-slate-900' :
@@ -122,22 +122,10 @@ export default function RichTextBlock({
               onChange(editorRef.current.innerHTML);
             }
           }}
-          onInput={() => {
-             // Let react know on every input so it saves properly
-             if (editorRef.current) {
-               onChange(editorRef.current.innerHTML);
-             }
-          }}
           dangerouslySetInnerHTML={{ __html: initialContentRef.current }}
         />
       </div>
       
-      {/* Minimal CSS for generated lists since Tailwind resets them */}
-      <style jsx global>{`
-        div[contenteditable] ul { list-style-type: disc; padding-left: 1.5rem; margin-top: 0.5rem; margin-bottom: 0.5rem; }
-        div[contenteditable] ol { list-style-type: decimal; padding-left: 1.5rem; margin-top: 0.5rem; margin-bottom: 0.5rem; }
-        div[contenteditable] a { color: #2563eb; text-decoration: underline; }
-      `}</style>
     </div>
   );
 }
