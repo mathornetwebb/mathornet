@@ -3,8 +3,16 @@ import prisma from "@/lib/prisma";
 import fs from "fs";
 import path from "path";
 
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
 export async function GET() {
   try {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return NextResponse.json({ error: 'Obehörig (Unauthorized)' }, { status: 401 });
+    }
+
     const dataPath = path.join(process.cwd(), "products_data.json");
     const data = JSON.parse(fs.readFileSync(dataPath, "utf8"));
 

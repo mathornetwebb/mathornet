@@ -6,8 +6,16 @@ const execAsync = util.promisify(exec);
 
 export const dynamic = 'force-dynamic';
 
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
 export async function POST() {
   try {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return NextResponse.json({ error: 'Obehörig (Unauthorized)' }, { status: 401 });
+    }
+
     const deployHookUrl = process.env.VERCEL_DEPLOY_HOOK_URL;
 
     if (deployHookUrl) {

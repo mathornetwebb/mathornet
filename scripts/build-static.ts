@@ -48,10 +48,10 @@ async function main() {
         
         newProductsList += `
                     <!-- Dynamisk Produkt: ${p.title} -->
-                    <a href="${p.slug}.html" class="product-card">
+                    <a href="${p.slug}" class="product-card">
                         ${badgeHtml}
                         <div class="product-img-wrapper">
-                            <img src="${p.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${p.title}">
+                            <img src="${p.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${p.title}" loading="lazy">
                         </div>
                         <div class="product-info">
                             <h3>${p.title}</h3>
@@ -95,8 +95,8 @@ async function main() {
                 newSliderList += `
                     <!-- Dynamisk Produkt: ${p.title} -->
                     <div class="swiper-slide teza-slide">
-                        <a href="${p.slug}.html" class="teza-product-link">
-                            <img src="${p.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${p.title}" class="teza-product-img">
+                        <a href="${p.slug}" class="teza-product-link">
+                            <img src="${p.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${p.title}" class="teza-product-img" loading="lazy">
                             <div class="teza-product-info">
                                 <h3>${p.title}</h3>
                             </div>
@@ -135,9 +135,9 @@ async function main() {
             
             newNewsSliderList += `
                             <!-- Dynamisk Nyhet: ${n.title} -->
-                            <a href="${n.slug}.html" class="carousel-card news-card-v2" style="flex: 0 0 calc(33.333% - 22px); min-width: 300px;  background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
+                            <a href="${n.slug}" class="carousel-card news-card-v2" style="flex: 0 0 calc(33.333% - 22px); min-width: 300px;  background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
                                 <div class="news-img" style="height: 250px; overflow: hidden;">
-                                    <img src="${n.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${n.title}" style="width: 100%; height: 100%; object-fit: cover;">
+                                    <img src="${n.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${n.title}" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
                                 </div>
                                 <div class="news-content" style="padding: 2rem; display: flex; flex-direction: column; flex-grow: 1;">
                                     <div class="news-meta" style="font-size: 0.85rem; color: #666; margin-bottom: 1rem; display: flex; gap: 0.5rem; align-items: center;">
@@ -175,7 +175,7 @@ async function main() {
       const dStr = `${dObj.getDate().toString().padStart(2, '0')} ${mNames[dObj.getMonth()]} ${dObj.getFullYear()}`;
       
       const featuredHtml = `
-            <a href="${featuredNews.slug}.html" class="featured-post">
+            <a href="${featuredNews.slug}" class="featured-post">
                 <img src="${featuredNews.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" class="featured-bg" alt="${featuredNews.title}">
                 <div class="featured-overlay"></div>
                 <div class="featured-content">
@@ -206,9 +206,9 @@ async function main() {
         
         newNewsList += `
                     <!-- Dynamisk Nyhet: ${n.title} -->
-                    <a href="${n.slug}.html" class="news-card-v2" style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
+                    <a href="${n.slug}" class="news-card-v2" style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
                         <div class="news-img" style="height: 250px; overflow: hidden;">
-                            <img src="${n.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${n.title}" style="width: 100%; height: 100%; object-fit: cover;">
+                            <img src="${n.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${n.title}" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
                         </div>
                         <div class="news-content" style="padding: 2rem; display: flex; flex-direction: column; flex-grow: 1;">
                             <div class="news-meta" style="font-size: 0.85rem; color: #666; margin-bottom: 1rem; display: flex; gap: 0.5rem; align-items: center;">
@@ -269,6 +269,10 @@ async function main() {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${p.title} | Mathörnet</title>
     <meta name="description" content="Köp ${p.title} från Mathörnet.">
+    <meta property="og:title" content="${p.title} | Mathörnet">
+    <meta property="og:description" content="Köp ${p.title} från Mathörnet.">
+    <meta property="og:image" content="${p.featuredImage || 'img/mathornet_logo_ny_transparent.png'}">
+    <meta property="og:type" content="product">
     <link rel="stylesheet" href="style_v5.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -281,7 +285,7 @@ async function main() {
         <section class="product-detail-layout container" style="margin-top: 4rem; padding-bottom: 4rem;">
             <div class="mobile-product-header">
                 <div class="breadcrumbs" style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">
-                    <a href="mathornet.html" style="color: #666; text-decoration: none;">Hemsida</a> &gt; <a href="produkter.html" style="color: #666; text-decoration: none;">Produkter</a> &gt; ${p.title}
+                    <a href="mathornet" style="color: #666; text-decoration: none;">Hemsida</a> &gt; <a href="produkter" style="color: #666; text-decoration: none;">Produkter</a> &gt; ${p.title}
                 </div>
                 <h1 style="font-size: 1.8rem; font-weight: 800; color: #111; margin-bottom: 1rem; line-height: 1.2;">${p.title}</h1>
             </div>
@@ -292,7 +296,7 @@ async function main() {
             
             <div class="product-detail-info">
                 <div class="breadcrumbs desktop-only" style="margin-bottom: 1.5rem; font-size: 0.9rem; color: #666;">
-                    <a href="mathornet.html" style="color: #666; text-decoration: none;">Hemsida</a> &gt; <a href="produkter.html" style="color: #666; text-decoration: none;">Produkter</a> &gt; ${p.title}
+                    <a href="mathornet" style="color: #666; text-decoration: none;">Hemsida</a> &gt; <a href="produkter" style="color: #666; text-decoration: none;">Produkter</a> &gt; ${p.title}
                 </div>
                 
                 <h1 class="desktop-only">${p.title}</h1>
@@ -449,9 +453,9 @@ ${(() => {
         } catch(e) {}
         
         return `
-                            <a href="${op.slug}.html" class="product-card carousel-card" style="text-decoration: none;">
+                            <a href="${op.slug}" class="product-card carousel-card" style="text-decoration: none;">
                                 <div class="product-img-wrapper">
-                                    <img src="${op.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${op.title}">
+                                    <img src="${op.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${op.title}" loading="lazy">
                                 </div>
                                 <div class="product-info" style="text-align: center;">
                                     <h3>${op.title}</h3>
@@ -477,7 +481,7 @@ ${(() => {
                 </div>
                 
                 <div style="text-align: center; margin-top: 3rem;">
-                    <a href="produkter.html" class="btn btn-primary" style="background: #64b000; color: white; padding: 1rem 2.5rem; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block;">Se alla produkter &rarr;</a>
+                    <a href="produkter" class="btn btn-primary" style="background: #64b000; color: white; padding: 1rem 2.5rem; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block;">Se alla produkter &rarr;</a>
                 </div>
             </div>
         </section>
@@ -529,7 +533,7 @@ ${(() => {
                 if (b.type === 'h2') return `<h2 style="font-size: 2rem; font-weight: 800; color: #111; margin-top: 3rem; margin-bottom: 1rem;">${b.content}</h2>`;
                 if (b.type === 'h3') return `<h3 style="font-size: 1.5rem; font-weight: 700; color: #111; margin-top: 2rem; margin-bottom: 1rem;">${b.content}</h3>`;
                 if (b.type === 'text') return `<div style="font-size: 1.15rem; color: #444; line-height: 1.8; margin-bottom: 1.5rem;">${b.content}</div>`;
-                if (b.type === 'image') return `<figure style="margin: 3rem 0; text-align: center;"><img src="${b.content}" alt="" style="width: 100%; max-height: 600px; object-fit: cover; border-radius: 12px;"><figcaption style="font-size: 0.9rem; color: #666; margin-top: 0.5rem; text-align: center;">${b.caption || ''}</figcaption></figure>`;
+                if (b.type === 'image') return `<figure style="margin: 3rem 0; text-align: center;"><img src="${b.content}" alt="" loading="lazy" style="width: 100%; max-height: 600px; object-fit: cover; border-radius: 12px;"><figcaption style="font-size: 0.9rem; color: #666; margin-top: 0.5rem; text-align: center;">${b.caption || ''}</figcaption></figure>`;
                 return '';
             }).join('\n');
         } catch(e) {}
@@ -541,6 +545,10 @@ ${(() => {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${n.title} | Mathörnet</title>
     <meta name="description" content="${n.metaDescription || ''}">
+    <meta property="og:title" content="${n.title} | Mathörnet">
+    <meta property="og:description" content="${n.metaDescription || ''}">
+    <meta property="og:image" content="${n.featuredImage || 'img/mathornet_logo_ny_transparent.png'}">
+    <meta property="og:type" content="article">
     <link rel="stylesheet" href="style_v5.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -565,8 +573,8 @@ ${(() => {
 
         <div class="container" style="max-width: 850px; margin: 0 auto; padding: 0 1.5rem;">
             <div class="breadcrumbs" style="font-size: 0.9rem; color: #888; margin-bottom: 2.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                <a href="mathornet.html" style="color: #666; text-decoration: none; font-weight: 500;">Hemsida</a> <span style="color: #ccc;">/</span> 
-                <a href="nyheter.html" style="color: #666; text-decoration: none; font-weight: 500;">Nyheter</a> <span style="color: #ccc;">/</span> 
+                <a href="mathornet" style="color: #666; text-decoration: none; font-weight: 500;">Hemsida</a> <span style="color: #ccc;">/</span> 
+                <a href="nyheter" style="color: #666; text-decoration: none; font-weight: 500;">Nyheter</a> <span style="color: #ccc;">/</span> 
                 <span style="color: #111; font-weight: 600;">${n.title}</span>
             </div>
 
@@ -596,7 +604,7 @@ ${(() => {
       const otherRecipes = recipes;
       
       // Replace featured post
-      const featuredStartStr = '<a href="recept-libanesisk-toum.html" class="featured-post">';
+      const featuredStartStr = '<a href="recept-libanesisk-toum" class="featured-post">';
       // We will just find the first <a ... class="featured-post"> and replace until </a>
       const fStartIdx = receptHtml.indexOf('<a ');
       // We need to be careful, let's use a regex to replace the featured-post block
@@ -604,7 +612,7 @@ ${(() => {
       const featuredRegex = /<a [^>]*class="featured-post"[^>]*>[\s\S]*?<\/a>/i;
       
       const featuredHtml = `
-            <a href="${featuredRecipe.slug}.html" class="featured-post">
+            <a href="${featuredRecipe.slug}" class="featured-post">
                 <img src="${featuredRecipe.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" class="featured-bg" alt="${featuredRecipe.title}" style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; z-index: -1;">
                 <div class="featured-overlay"></div>
                 <div class="featured-content">
@@ -630,9 +638,9 @@ ${(() => {
         let newRecipesList = '';
         for (const r of otherRecipes) {
           newRecipesList += `
-            <a href="${r.slug}.html" class="news-card-v2" style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
+            <a href="${r.slug}" class="news-card-v2" style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
                 <div class="news-img" style="height: 250px; overflow: hidden; position: relative;">
-                    <img src="${r.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${r.title}" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img src="${r.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${r.title}" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
                     <span style="position: absolute; bottom: 10px; right: 10px; background: var(--navy-bg); color: white; padding: 4px 10px; border-radius: 5px; font-weight: 600; font-size: 0.85rem;">⏱️ ${r.prepTime || ''}</span>
                 </div>
                 <div class="news-content" style="padding: 2rem; display: flex; flex-direction: column; flex-grow: 1;">
@@ -684,6 +692,11 @@ ${(() => {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${r.title} | Mathörnet Recept</title>
+    <meta name="description" content="Laga ${r.title}. ${r.prepTime ? 'Tid: ' + r.prepTime : ''}">
+    <meta property="og:title" content="${r.title} | Mathörnet Recept">
+    <meta property="og:description" content="Laga ${r.title}. ${r.prepTime ? 'Tid: ' + r.prepTime : ''}">
+    <meta property="og:image" content="${r.featuredImage || 'img/mathornet_logo_ny_transparent.png'}">
+    <meta property="og:type" content="article">
     <link rel="stylesheet" href="style_v5.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -737,7 +750,7 @@ ${(() => {
 
         <article class="container" style="max-width: 1000px; margin: 0 auto; padding: 0 1.5rem;">
             <div class="breadcrumbs" style="font-size: 0.9rem; color: #666; margin-bottom: 3rem;">
-                <a href="mathornet.html" style="color: #666; text-decoration: none;">Hemsida</a> &gt; <a href="recept.html" style="color: #666; text-decoration: none;">Recept</a> &gt; <span style="color: #111; font-weight: 600;">${r.title}</span>
+                <a href="mathornet" style="color: #666; text-decoration: none;">Hemsida</a> &gt; <a href="recept" style="color: #666; text-decoration: none;">Recept</a> &gt; <span style="color: #111; font-weight: 600;">${r.title}</span>
             </div>
 
             <div style="display: grid; grid-template-columns: 1fr; gap: 4rem;">
@@ -761,7 +774,7 @@ ${instBlocksHtml}
                 </div>
                 
                 <div style="margin-top: 1rem; text-align: center; width: 100%;">
-                    <a href="recept.html" class="btn btn-primary" style="background: #64b000; color: white; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: bold;">&larr; Tillbaka till alla recept</a>
+                    <a href="recept" class="btn btn-primary" style="background: #64b000; color: white; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: bold;">&larr; Tillbaka till alla recept</a>
                 </div>
             </div>
         </article>
@@ -814,6 +827,30 @@ ${instBlocksHtml}
             }
         }
     }
+
+    // --- BUILD SITEMAP & ROBOTS.TXT ---
+    const siteUrl = 'https://www.mathornet.se'; // Change to actual production URL
+    const sitemapUrls = [
+        '/', '/mathornet', '/produkter', '/nyheter', '/recept', '/om-oss', '/aterforsaljare', '/hitta-oss', '/kontakt', '/jobba-hos-oss', '/faq', '/kopvillkor'
+    ];
+    products.forEach(p => sitemapUrls.push(`/${p.slug}`));
+    news.forEach(n => sitemapUrls.push(`/${n.slug}`));
+    recipes.forEach(r => sitemapUrls.push(`/${r.slug}`));
+
+    const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemapUrls.map(url => `  <url>\n    <loc>${siteUrl}${url}</loc>\n    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>`).join('\n')}
+</urlset>`;
+
+    fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), sitemapXml);
+    
+    const robotsTxt = `User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+Sitemap: ${siteUrl}/sitemap.xml`;
+    fs.writeFileSync(path.join(publicDir, 'robots.txt'), robotsTxt);
 
     console.log('Website rebuilt successfully');
   } catch (error) {
