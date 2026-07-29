@@ -488,6 +488,11 @@ ${(() => {
     </main>
 
     ${footerStr}
+    <!-- Google Translate Script & Custom Logic -->
+    <div id="google_translate_element" style="display:none;"></div>
+    <script src="js/translate.js"></script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <script src="main_v5.js"></script>
     <script>
       // Pack button logic
@@ -588,6 +593,11 @@ ${(() => {
     </main>
 
     ${footerStr}
+    <!-- Google Translate Script & Custom Logic -->
+    <div id="google_translate_element" style="display:none;"></div>
+    <script src="js/translate.js"></script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <script src="main_v5.js"></script>
 </body>
 </html>`;
@@ -781,6 +791,11 @@ ${instBlocksHtml}
     </main>
 
     ${footerStr}
+    <!-- Google Translate Script & Custom Logic -->
+    <div id="google_translate_element" style="display:none;"></div>
+    <script src="js/translate.js"></script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <script src="main_v5.js"></script>
 </body>
 </html>`;

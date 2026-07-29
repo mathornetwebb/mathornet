@@ -114,8 +114,8 @@ export default function RichTextBlock({
           contentEditable={true}
           suppressContentEditableWarning
           className={`w-full focus:outline-none min-h-[40px] empty:before:content-[attr(data-placeholder)] empty:before:text-slate-300 ${
-            type === 'h2' ? 'text-3xl font-extrabold font-outfit text-slate-900' :
-            type === 'h3' ? 'text-xl font-bold font-outfit text-slate-900' :
+            type === 'h2' ? 'text-3xl font-extrabold font-outfit !text-slate-900' :
+            type === 'h3' ? 'text-2xl font-bold font-outfit !text-slate-900' :
             'text-base text-slate-600 leading-relaxed'
           }`}
           data-placeholder={
