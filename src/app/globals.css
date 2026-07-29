@@ -35,14 +35,14 @@ body {
 
 /* CMS Editor Heading Overrides */
 .editor-content h2, [contenteditable="true"] h2 {
-  font-size: 1.875rem !important; /* 30px */
+  font-size: 2.25rem !important; /* 36px */
   font-weight: 800 !important;
   color: #0f172a !important; /* text-slate-900 */
   margin-top: 1.5rem !important;
   margin-bottom: 1rem !important;
 }
 .editor-content h3, [contenteditable="true"] h3 {
-  font-size: 1.5rem !important; /* 24px */
+  font-size: 1.25rem !important; /* 20px */
   font-weight: 700 !important;
   color: #0f172a !important;
   margin-top: 1.25rem !important;
