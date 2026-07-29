@@ -535,9 +535,9 @@ ${(() => {
         try {
             const blocks = JSON.parse(n.content || '[]');
             blocksHtml = blocks.map((b: any) => {
-                if (b.type === 'h2') return `<h2 style="font-size: 2rem; font-weight: 800; color: #111; margin-top: 3rem; margin-bottom: 1rem;">${b.content}</h2>`;
-                if (b.type === 'h3') return `<h3 style="font-size: 1.5rem; font-weight: 700; color: #111; margin-top: 2rem; margin-bottom: 1rem;">${b.content}</h3>`;
-                if (b.type === 'text') return `<div style="font-size: 1.15rem; color: #444; line-height: 1.8; margin-bottom: 1.5rem;">${b.content}</div>`;
+                if (b.type === 'h2') return `<h2 style="font-size: 2.25rem; font-weight: 800; color: #111; margin-top: 3rem; margin-bottom: 1rem; overflow-wrap: break-word; word-break: break-word;">${b.content}</h2>`;
+                if (b.type === 'h3') return `<h3 style="font-size: 1.5rem; font-weight: 700; color: #111; margin-top: 2rem; margin-bottom: 1rem; overflow-wrap: break-word; word-break: break-word;">${b.content}</h3>`;
+                if (b.type === 'text') return `<div style="font-size: 1.15rem; color: #444; line-height: 1.8; margin-bottom: 1.5rem; overflow-wrap: break-word; word-break: break-word;">${b.content}</div>`;
                 if (b.type === 'image') return `<figure style="margin: 3rem 0; text-align: center;"><img src="${b.content}" alt="" loading="lazy" style="width: 100%; max-height: 600px; object-fit: cover; border-radius: 12px;"><figcaption style="font-size: 0.9rem; color: #666; margin-top: 0.5rem; text-align: center;">${b.caption || ''}</figcaption></figure>`;
                 return '';
             }).join('\n');
