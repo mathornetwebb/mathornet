@@ -1267,7 +1267,7 @@ main {
     margin: 0 auto;
 }
 .zigzag-section {
-    padding: 60px 0;
+    padding: 20px 0;
     background-color: #fff;
 }
 .zigzag-row {
@@ -2458,7 +2458,7 @@ body {
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
     gap: 6rem;
-    padding: 60px 0;
+    padding: 20px 0;
     align-items: start;
 }
 
@@ -2735,30 +2735,34 @@ html[dir="rtl"], html[dir="rtl"] body {
 }
 
 html[dir="rtl"] .product-detail-layout {
-    gap: 4rem; /* Reduce gap to avoid overflow on smaller desktops */
-    direction: ltr; /* Keeps Image on Left, Text on Right */
+    gap: 6rem; /* Same as Swedish */
+    direction: ltr !important; 
+    text-align: left !important;
 }
 
-html[dir="rtl"] .product-data-table td:last-child {
-    text-align: left; /* Values align left towards the edge */
-}
-
-html[dir="rtl"] .accordion-header {
-    text-align: right;
-}
-
-html[dir="rtl"] .pack-type-selector > span {
-    margin-right: 0;
-    margin-left: 0.5rem;
+html[dir="rtl"] .product-detail-layout * {
+    direction: ltr !important;
 }
 
 html[dir="rtl"] .product-detail-info {
-    max-width: 100%; /* Ensure it can shrink if needed */
-    direction: rtl; /* Keeps text flowing right-to-left */
+    max-width: 540px; /* Same as Swedish */
 }
 
-html[dir="rtl"] .mobile-product-header {
-    direction: rtl;
+html[dir="rtl"] .product-data-table td {
+    text-align: left !important;
+}
+
+html[dir="rtl"] .product-data-table td:last-child {
+    text-align: right !important; /* Values align right, same as Swedish */
+}
+
+html[dir="rtl"] .accordion-header {
+    text-align: left !important;
+}
+
+html[dir="rtl"] .pack-type-selector > span {
+    margin-right: 0.5rem !important;
+    margin-left: 0 !important;
 }
 
 
