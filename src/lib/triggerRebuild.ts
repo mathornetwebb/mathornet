@@ -1,3 +1,7 @@
+import { exec } from 'child_process';
+import util from 'util';
+const execAsync = util.promisify(exec);
+
 export async function triggerRebuild() {
   const hookUrl = process.env.VERCEL_DEPLOY_HOOK_URL;
   if (hookUrl) {
@@ -8,9 +12,11 @@ export async function triggerRebuild() {
       console.error('Failed to trigger hook:', e);
     }
   } else {
-    console.log('Triggering local rebuild from Server Action...');
+    console.log('Triggering local rebuild from Server Action directly...');
     try { 
-      await fetch('http://localhost:3000/api/rebuild', { method: 'POST' }); 
+      const { stdout, stderr } = await execAsync('npx tsx scripts/build-static.ts');
+      if (stderr) console.warn('Build script stderr:', stderr);
+      console.log('Build script stdout:', stdout);
     } catch(e) {
       console.error('Failed to trigger local rebuild:', e);
     }
