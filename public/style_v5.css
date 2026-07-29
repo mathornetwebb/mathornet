@@ -2736,6 +2736,7 @@ html[dir="rtl"], html[dir="rtl"] body {
 
 html[dir="rtl"] .product-detail-layout {
     gap: 4rem; /* Reduce gap to avoid overflow on smaller desktops */
+    direction: ltr; /* Keeps Image on Left, Text on Right */
 }
 
 html[dir="rtl"] .product-data-table td:last-child {
@@ -2753,6 +2754,11 @@ html[dir="rtl"] .pack-type-selector > span {
 
 html[dir="rtl"] .product-detail-info {
     max-width: 100%; /* Ensure it can shrink if needed */
+    direction: rtl; /* Keeps text flowing right-to-left */
+}
+
+html[dir="rtl"] .mobile-product-header {
+    direction: rtl;
 }
 
 
