@@ -282,7 +282,7 @@ async function main() {
     ${headerStr}
 
     <main>
-        <section class="product-detail-layout container" style="margin-top: 1rem; padding-bottom: 4rem;">
+        <section class="product-detail-layout container" style="margin-top: 0; padding-bottom: 4rem;">
             <div class="mobile-product-header">
                 <div class="breadcrumbs" style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">
                     <a href="mathornet" style="color: #666; text-decoration: none;">Hemsida</a> &gt; <a href="produkter" style="color: #666; text-decoration: none;">Produkter</a> &gt; ${p.title}
