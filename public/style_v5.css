@@ -1267,7 +1267,7 @@ main {
     margin: 0 auto;
 }
 .zigzag-section {
-    padding-top: 40px; padding-bottom: 60px;
+    padding-top: 60px; padding-bottom: 60px;
     background-color: #fff;
 }
 .zigzag-row {
@@ -2458,7 +2458,7 @@ body {
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
     gap: 6rem;
-    padding-top: 40px; padding-bottom: 60px;
+    padding-top: 60px; padding-bottom: 60px;
     align-items: start;
 }
 
@@ -2687,7 +2687,7 @@ body {
         display: flex;
         flex-direction: column;
         gap: 1.5rem;
-        padding-top: 40px; padding-bottom: 60px;
+        padding-top: 60px; padding-bottom: 60px;
     }
     .product-detail-img {
         position: static !important;
