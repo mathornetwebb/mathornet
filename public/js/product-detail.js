@@ -23,16 +23,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.classList.add('active');
                 
                 const artnr = btn.getAttribute('data-artnr');
+                const ean = btn.getAttribute('data-ean');
                 const antalLabel = btn.getAttribute('data-antal-label');
                 const antalValue = btn.getAttribute('data-antal-value');
                 const viktLabel = btn.getAttribute('data-vikt-label');
                 const viktValue = btn.getAttribute('data-vikt-value');
                 
-                if (artnr) document.getElementById('td-artnr').textContent = artnr;
-                if (antalLabel) document.getElementById('td-antal-label').textContent = antalLabel;
-                if (antalValue) document.getElementById('td-antal-value').textContent = antalValue;
-                if (viktLabel) document.getElementById('td-vikt-label').textContent = viktLabel;
-                if (viktValue) document.getElementById('td-vikt-value').textContent = viktValue;
+                const tdArtnr = document.getElementById('td-artnr');
+                if (tdArtnr) tdArtnr.textContent = artnr || '';
+                const tdEan = document.getElementById('td-ean');
+                if (tdEan) tdEan.textContent = ean || '';
+                const tdAntalLabel = document.getElementById('td-antal-label');
+                if (tdAntalLabel) tdAntalLabel.textContent = antalLabel || '';
+                const tdAntalValue = document.getElementById('td-antal-value');
+                if (tdAntalValue) tdAntalValue.textContent = antalValue || '';
+                const tdViktLabel = document.getElementById('td-vikt-label');
+                if (tdViktLabel) tdViktLabel.textContent = viktLabel || '';
+                const tdViktValue = document.getElementById('td-vikt-value');
+                if (tdViktValue) tdViktValue.textContent = viktValue || '';
             });
         });
     }

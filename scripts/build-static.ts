@@ -17,36 +17,30 @@ async function main() {
       console.log('Database empty, skipping build to protect files.');
       process.exit(0);
     }
-    // --- REBUILD PRODUKTER.HTML ---
+    // --- REBUILD PRODUKTER.HTML (BRAND ASSORTMENT SELECTION) ---
     const produkterPath = path.join(publicDir, 'produkter.html');
     let produkterHtml = fs.readFileSync(produkterPath, 'utf8');
     
-    // We want to replace everything inside <div class="products-grid-large">...</div>
-    // Let's find the start and end of that div contents
-    const gridStartStr = '<div class="products-grid-large">';
-    const gridStartIdx = produkterHtml.indexOf(gridStartStr);
-    if (gridStartIdx !== -1) {
-      // Find the closing div for products-grid-large
-      // Instead of perfect HTML parsing, we can just find the start of the next section
-      const sectionEndIdx = produkterHtml.indexOf('</section>', gridStartIdx);
-      // Actually, we'll just isolate the grid div
-      const afterGridStart = produkterHtml.substring(gridStartIdx + gridStartStr.length);
-      const gridEndIdx = gridStartIdx + gridStartStr.length + afterGridStart.indexOf('</div>\n            </div>\n        </section>');
-      
-      let newProductsList = '';
+    const mainStartIdx = produkterHtml.indexOf('<main>');
+    const mainEndIdx = produkterHtml.indexOf('</main>');
+    
+    if (mainStartIdx !== -1 && mainEndIdx !== -1) {
+      const mathornetProducts: string[] = [];
+      const ahalnaProducts: string[] = [];
+
       for (const p of products) {
-        // Try to parse product info to get weight
+        let brand = 'mathornet';
         let weight = '-';
-        let isNyhet = false; // We can add a featured/nyhet toggle later if needed
+        let isNyhet = false;
         try {
           const info = JSON.parse(p.productInfo || '{}');
+          if (info.brand) brand = info.brand;
           if (info.packaging?.bag?.weight) weight = info.packaging.bag.weight;
           else if (info.packaging?.box?.weight) weight = info.packaging.box.weight;
         } catch(e) {}
         
-        let badgeHtml = isNyhet ? '<span class="product-badge">Nyhet</span>' : '';
-        
-        newProductsList += `
+        const badgeHtml = isNyhet ? '<span class="product-badge">Nyhet</span>' : '';
+        const cardHtml = `
                     <!-- Dynamisk Produkt: ${p.title} -->
                     <a href="${p.slug}" class="product-card">
                         ${badgeHtml}
@@ -60,13 +54,195 @@ async function main() {
                                 <span class="read-more">Tryck för att läsa mer &rarr;</span>
                             </div>
                         </div>
-                    </a>\n`;
+                    </a>`;
+
+        if (brand === 'ahalna') {
+          ahalnaProducts.push(cardHtml);
+        } else {
+          mathornetProducts.push(cardHtml);
+        }
       }
-      
-      const beforeGrid = produkterHtml.substring(0, gridStartIdx + gridStartStr.length);
-      const afterGrid = produkterHtml.substring(gridEndIdx);
-      
-      produkterHtml = beforeGrid + '\n' + newProductsList + afterGrid;
+
+      const mathornetGridHtml = mathornetProducts.join('\n');
+      const ahalnaGridHtml = ahalnaProducts.length > 0 ? ahalnaProducts.join('\n') : `
+                    <div class="empty-brand-state">
+                        <div class="empty-brand-icon">✨</div>
+                        <h3>Ahalna sortimentet lanseras inom kort</h3>
+                        <p>Vi arbetar just nu för fullt med att ta fram spännande nya produkter under varumärket Ahalna. Håll utkik här för lanseringen!</p>
+                        <button type="button" onclick="selectBrand('mathornet')" class="btn-switch-mathornet">Se Mathörnets sortiment istället &rarr;</button>
+                    </div>`;
+
+      const newMainHtml = `<main>
+        <section class="page-header" style="background-color: #fcfcfc; padding: 5rem 0 3.5rem 0; text-align: center; border-bottom: 1px solid #eee;">
+            <div class="container">
+                <h1 style="font-size: 3.5rem; font-weight: 800; color: #000; margin-bottom: 1.25rem;">Våra Produkter</h1>
+                <p style="font-size: 1.25rem; color: #555; max-width: 700px; margin: 0 auto; line-height: 1.6;">Välj varumärke för att upptäcka respektive sortiment av autentiska mellanösternska delikatesser.</p>
+            </div>
+        </section>
+
+        <!-- STEG 1: VÄLJ VARUMÄRKE -->
+        <section id="brand-selection-view" class="brand-selection-section" style="padding: 5rem 0 7rem 0;">
+            <div class="container">
+                <div class="brand-cards-grid">
+                    <!-- Mathörnet Kort -->
+                    <div class="brand-portal-card brand-card-mathornet" onclick="selectBrand('mathornet')">
+                        <div class="brand-card-bg" style="background-image: url('img/mathörnet.png');"></div>
+                        <div class="brand-card-overlay"></div>
+                        <div class="brand-card-content">
+                            <div class="brand-card-logo-wrap">
+                                <img src="img/mathornet_logo_ny_transparent.png" alt="Mathörnet" class="brand-card-logo">
+                            </div>
+                            <span class="brand-card-badge">Original Sortiment</span>
+                            <h2 class="brand-card-title">Mathörnet</h2>
+                            <p class="brand-card-desc">Autentiska orientaliska specialiteter. Vår klassiska serie av traditionell kubbe, tillverkad i Strängnäs med omsorg och genuina smaker.</p>
+                            <div class="brand-card-meta">
+                                <span class="product-count-tag">${mathornetProducts.length} produkter</span>
+                                <span class="brand-card-btn">Utforska Mathörnet &rarr;</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ahalna Kort -->
+                    <div class="brand-portal-card brand-card-ahalna" onclick="selectBrand('ahalna')">
+                        <div class="brand-card-bg" style="background-image: url('img/hero_feast_1780604012322.png');"></div>
+                        <div class="brand-card-overlay"></div>
+                        <div class="brand-card-content">
+                            <div class="brand-card-logo-wrap">
+                                <div class="ahalna-text-logo">AHALNA</div>
+                            </div>
+                            <span class="brand-card-badge">Premium Delikatesser</span>
+                            <h2 class="brand-card-title">Ahalna</h2>
+                            <p class="brand-card-desc">En ny värld av orientaliska delikatesser och moderna smakupplevelser för både vardag och fest.</p>
+                            <div class="brand-card-meta">
+                                <span class="product-count-tag">${ahalnaProducts.length > 0 ? ahalnaProducts.length + ' produkter' : 'Kommer snart'}</span>
+                                <span class="brand-card-btn">Utforska Ahalna &rarr;</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STEG 2: PRODUKTRUTNÄT -->
+        <section id="product-grid-view" class="products-section" style="padding: 4rem 0 6rem 0; display: none;">
+            <div class="container">
+                
+                <!-- Navigering & Varumärkesväxlare -->
+                <div class="product-view-nav-bar">
+                    <button type="button" class="back-to-brands-btn" onclick="showBrandSelection()">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>Alla Varumärken</span>
+                    </button>
+
+                    <div class="brand-toggle-tabs">
+                        <button type="button" class="brand-tab-btn active" data-brand="mathornet" onclick="selectBrand('mathornet')">
+                            Mathörnet (${mathornetProducts.length})
+                        </button>
+                        <button type="button" class="brand-tab-btn" data-brand="ahalna" onclick="selectBrand('ahalna')">
+                            Ahalna (${ahalnaProducts.length})
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mathörnet Banner & Grid -->
+                <div id="brand-banner-mathornet" class="active-brand-banner mathornet-banner">
+                    <div class="brand-banner-text">
+                        <span class="banner-pill">Sortiment: Mathörnet</span>
+                        <h2>Autentiska orientaliska specialiteter</h2>
+                        <p>Klassiska recept och traditionella smaker, tillagade och förpackade med högsta kvalitet.</p>
+                    </div>
+                </div>
+
+                <div id="grid-mathornet" class="products-grid-large brand-grid">
+${mathornetGridHtml}
+                </div>
+
+                <!-- Ahalna Banner & Grid -->
+                <div id="brand-banner-ahalna" class="active-brand-banner ahalna-banner" style="display: none;">
+                    <div class="brand-banner-text">
+                        <span class="banner-pill">Sortiment: Ahalna</span>
+                        <h2>En ny värld av orientaliska delikatesser</h2>
+                        <p>Utvalda råvaror och moderna orientaliska smaker med premiumkänsla.</p>
+                    </div>
+                </div>
+
+                <div id="grid-ahalna" class="products-grid-large brand-grid" style="display: none;">
+${ahalnaGridHtml}
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Brand Assortment Logic -->
+        <script>
+            function selectBrand(brand) {
+                try { window.location.hash = brand; } catch(e) {}
+                const selectionView = document.getElementById('brand-selection-view');
+                const gridView = document.getElementById('product-grid-view');
+                if (!selectionView || !gridView) return;
+                
+                selectionView.style.display = 'none';
+                gridView.style.display = 'block';
+
+                document.querySelectorAll('.brand-tab-btn').forEach(btn => {
+                    if (btn.dataset.brand === brand) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+
+                const mathornetBanner = document.getElementById('brand-banner-mathornet');
+                const ahalnaBanner = document.getElementById('brand-banner-ahalna');
+                const mathornetGrid = document.getElementById('grid-mathornet');
+                const ahalnaGrid = document.getElementById('grid-ahalna');
+
+                if (brand === 'ahalna') {
+                    if (mathornetBanner) mathornetBanner.style.display = 'none';
+                    if (ahalnaBanner) ahalnaBanner.style.display = 'block';
+                    if (mathornetGrid) mathornetGrid.style.display = 'none';
+                    if (ahalnaGrid) ahalnaGrid.style.display = 'grid';
+                } else {
+                    if (mathornetBanner) mathornetBanner.style.display = 'block';
+                    if (ahalnaBanner) ahalnaBanner.style.display = 'none';
+                    if (mathornetGrid) mathornetGrid.style.display = 'grid';
+                    if (ahalnaGrid) ahalnaGrid.style.display = 'none';
+                }
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            function showBrandSelection() {
+                try { history.pushState("", document.title, window.location.pathname + window.location.search); } catch(e) {}
+                const selectionView = document.getElementById('brand-selection-view');
+                const gridView = document.getElementById('product-grid-view');
+                if (selectionView && gridView) {
+                    selectionView.style.display = 'block';
+                    gridView.style.display = 'none';
+                }
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            function initBrandFromHash() {
+                const hash = window.location.hash.replace('#', '');
+                if (hash === 'mathornet' || hash === 'ahalna') {
+                    selectBrand(hash);
+                } else {
+                    const selectionView = document.getElementById('brand-selection-view');
+                    const gridView = document.getElementById('product-grid-view');
+                    if (selectionView && gridView) {
+                        selectionView.style.display = 'block';
+                        gridView.style.display = 'none';
+                    }
+                }
+            }
+
+            window.addEventListener('DOMContentLoaded', initBrandFromHash);
+            window.addEventListener('hashchange', initBrandFromHash);
+        </script>
+    </main>`;
+
+      produkterHtml = produkterHtml.substring(0, mainStartIdx) + newMainHtml + produkterHtml.substring(mainEndIdx + 7);
       fs.writeFileSync(produkterPath, produkterHtml);
     }
 
@@ -160,6 +336,7 @@ async function main() {
       }
 
       fs.writeFileSync(mathornetPath, mathornetHtml);
+      fs.writeFileSync(path.join(publicDir, 'index.html'), mathornetHtml);
     }
 
     // --- REBUILD NYHETER.HTML ---
@@ -252,7 +429,7 @@ async function main() {
     } catch(e) {}
     
     for (const p of products) {
-        let pInfo = { manufacturingCountry: '', manufacturer: '', specialDiets: '', leadTime: '', properties: [], packaging: { bag: { count: '', weight: '' }, box: { count: '', weight: '' }, pallet: { count: '', weight: '' } } };
+        let pInfo: any = { manufacturingCountry: '', manufacturer: '', specialDiets: '', leadTime: '', properties: [], packaging: { bag: { count: '', weight: '', artNr: '', ean: '' }, box: { count: '', weight: '', artNr: '', ean: '' }, pallet: { count: '', weight: '', artNr: '', ean: '' } } };
         let nInfo = { energy: '', fat: '', saturatedFat: '', carbs: '', sugar: '', protein: '', salt: '' };
         let iInfo = { dough: '', filling: '', allergens: '' };
         let cInfo = { general: '', oven: '', airfryer: '', pan: '' };
@@ -261,6 +438,21 @@ async function main() {
         try { nInfo = JSON.parse(p.nutritionInfo || '{}'); } catch(e) {}
         try { iInfo = JSON.parse(p.ingredients || '{}'); } catch(e) {}
         try { cInfo = JSON.parse(p.cookingInstructions || '{}'); } catch(e) {}
+
+        const bagArtNr = pInfo.packaging?.bag?.artNr || p.artNr || '';
+        const bagEan = pInfo.packaging?.bag?.ean || p.ean || '';
+        const bagCount = pInfo.packaging?.bag?.count || '';
+        const bagWeight = pInfo.packaging?.bag?.weight || '';
+
+        const boxArtNr = pInfo.packaging?.box?.artNr || p.artNr || '';
+        const boxEan = pInfo.packaging?.box?.ean || p.ean || '';
+        const boxCount = pInfo.packaging?.box?.count || '';
+        const boxWeight = pInfo.packaging?.box?.weight || '';
+
+        const palletArtNr = pInfo.packaging?.pallet?.artNr || p.artNr || '';
+        const palletEan = pInfo.packaging?.pallet?.ean || p.ean || '';
+        const palletCount = pInfo.packaging?.pallet?.count || '';
+        const palletWeight = pInfo.packaging?.pallet?.weight || '';
 
         const productHtml = `<!DOCTYPE html>
 <html lang="sv">
@@ -290,8 +482,8 @@ async function main() {
                 <h1 style="font-size: 1.8rem; font-weight: 800; color: #111; margin-bottom: 1rem; line-height: 1.2;">${p.title}</h1>
             </div>
 
-            <div class="product-detail-img" style="overflow: hidden; display: flex; align-items: center; justify-content: center; max-height: 600px; border-radius: 16px;">
-                <img src="${p.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${p.title}" style="width: 100%; height: 100%; max-height: 600px; object-fit: cover;">
+            <div class="product-detail-img" style="overflow: hidden; display: flex; align-items: center; justify-content: center; border-radius: 16px; padding: 2.5rem 1.5rem; background: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.05); min-height: 400px;">
+                <img src="${p.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${p.title}" style="max-width: 100%; max-height: 380px; width: auto; height: auto; object-fit: contain; filter: drop-shadow(0 14px 28px rgba(0,0,0,0.12));">
             </div>
             
             <div class="product-detail-info">
@@ -304,23 +496,26 @@ async function main() {
                 <div class="pack-type-selector">
                     <span>Typ</span>
                     <button class="pack-btn active" data-type="bag" 
-                            data-artnr="${p.artNr || ''}" 
-                            data-antal-label="Antal/påse:" data-antal-value="${pInfo.packaging?.bag?.count || ''}" 
-                            data-vikt-label="Vikt/påse:" data-vikt-value="${pInfo.packaging?.bag?.weight || ''}">
+                            data-artnr="${bagArtNr}" 
+                            data-ean="${bagEan}" 
+                            data-antal-label="Antal/påse:" data-antal-value="${bagCount}" 
+                            data-vikt-label="Vikt/påse:" data-vikt-value="${bagWeight}">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><rect x="9" y="11" width="6" height="4" rx="1"></rect></svg>
                         <span class="pack-label">Påse</span>
                     </button>
                     <button class="pack-btn" data-type="box" 
-                            data-artnr="${p.artNr || ''}" 
-                            data-antal-label="Antal påsar/låda:" data-antal-value="${pInfo.packaging?.box?.count || ''}" 
-                            data-vikt-label="Nettovikt/låda:" data-vikt-value="${pInfo.packaging?.box?.weight || ''}">
+                            data-artnr="${boxArtNr}" 
+                            data-ean="${boxEan}" 
+                            data-antal-label="Antal påsar/låda:" data-antal-value="${boxCount}" 
+                            data-vikt-label="Nettovikt/låda:" data-vikt-value="${boxWeight}">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                         <span class="pack-label">Kartong</span>
                     </button>
                     <button class="pack-btn" data-type="pallet" 
-                            data-artnr="${p.artNr || ''}" 
-                            data-antal-label="Antal lådor/pall:" data-antal-value="${pInfo.packaging?.pallet?.count || ''}" 
-                            data-vikt-label="Nettovikt/pall:" data-vikt-value="${pInfo.packaging?.pallet?.weight || ''}">
+                            data-artnr="${palletArtNr}" 
+                            data-ean="${palletEan}" 
+                            data-antal-label="Antal lådor/pall:" data-antal-value="${palletCount}" 
+                            data-vikt-label="Nettovikt/pall:" data-vikt-value="${palletWeight}">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="21" x2="22" y2="21"></line><line x1="4" y1="21" x2="4" y2="18"></line><line x1="12" y1="21" x2="12" y2="18"></line><line x1="20" y1="21" x2="20" y2="18"></line><line x1="2" y1="18" x2="22" y2="18"></line><rect x="4" y="12" width="7" height="6"></rect><rect x="13" y="12" width="7" height="6"></rect><rect x="8" y="6" width="8" height="6"></rect></svg>
                         <span class="pack-label">Pall</span>
                     </button>
@@ -328,11 +523,11 @@ async function main() {
 
                 <table class="product-data-table">
                     <tbody>
-                        <tr><td>Art. nr:</td><td id="td-artnr">${p.artNr || ''}</td></tr>
+                        <tr><td>Art. nr:</td><td id="td-artnr">${bagArtNr}</td></tr>
                         <tr><td>Benämning:</td><td>${p.title}</td></tr>
-                        <tr><td>EAN:</td><td>${p.ean || ''}</td></tr>
-                        <tr><td id="td-antal-label">Antal/påse:</td><td id="td-antal-value">${pInfo.packaging?.bag?.count || ''}</td></tr>
-                        <tr><td id="td-vikt-label">Vikt/påse:</td><td id="td-vikt-value">${pInfo.packaging?.bag?.weight || ''}</td></tr>
+                        <tr><td>EAN:</td><td id="td-ean">${bagEan}</td></tr>
+                        <tr><td id="td-antal-label">Antal/påse:</td><td id="td-antal-value">${bagCount}</td></tr>
+                        <tr><td id="td-vikt-label">Vikt/påse:</td><td id="td-vikt-value">${bagWeight}</td></tr>
                     </tbody>
                 </table>
 
@@ -500,11 +695,18 @@ ${(() => {
           btn.addEventListener('click', function() {
               document.querySelectorAll('.pack-btn').forEach(b => b.classList.remove('active'));
               this.classList.add('active');
-              document.getElementById('td-artnr').innerText = this.dataset.artnr || '';
-              document.getElementById('td-antal-label').innerText = this.dataset.antalLabel || '';
-              document.getElementById('td-antal-value').innerText = this.dataset.antalValue || '';
-              document.getElementById('td-vikt-label').innerText = this.dataset.viktLabel || '';
-              document.getElementById('td-vikt-value').innerText = this.dataset.viktValue || '';
+              const tdArtnr = document.getElementById('td-artnr');
+              if (tdArtnr) tdArtnr.innerText = this.dataset.artnr || '';
+              const tdEan = document.getElementById('td-ean');
+              if (tdEan) tdEan.innerText = this.dataset.ean || '';
+              const tdAntalLabel = document.getElementById('td-antal-label');
+              if (tdAntalLabel) tdAntalLabel.innerText = this.dataset.antalLabel || '';
+              const tdAntalVal = document.getElementById('td-antal-value');
+              if (tdAntalVal) tdAntalVal.innerText = this.dataset.antalValue || '';
+              const tdViktLabel = document.getElementById('td-vikt-label');
+              if (tdViktLabel) tdViktLabel.innerText = this.dataset.viktLabel || '';
+              const tdViktVal = document.getElementById('td-vikt-value');
+              if (tdViktVal) tdViktVal.innerText = this.dataset.viktValue || '';
           });
       });
       // Accordion logic

@@ -413,7 +413,7 @@ ul {
 
 .product-img-wrapper {
     width: 100%;
-    height: 300px;
+    height: 270px;
     margin-bottom: 0.5rem;
     display: flex;
     align-items: center;
@@ -422,14 +422,18 @@ ul {
 }
 
 .product-img-wrapper img {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 90%;
+    max-height: 240px;
+    width: auto;
+    height: auto;
     object-fit: contain;
-    transition: transform 0.4s ease;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+    transition: transform 0.4s ease, filter 0.4s ease;
 }
 
 .product-card:hover .product-img-wrapper img {
-    transform: scale(1.08);
+    transform: scale(1.08) translateY(-4px);
+    filter: drop-shadow(0 15px 28px rgba(0,0,0,0.16));
 }
 
 .product-info {
@@ -2292,27 +2296,30 @@ body {
 }
 
 .teza-slide {
-    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    opacity: 0.4;
-    transform: scale(0.75) translateY(0px); /* Justerat upp de inaktiva lite för balans */
-    display: flex;
-    justify-content: center;
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.6s ease;
+    opacity: 0.45;
+    transform: scale(0.85) translateY(10px);
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center;
 }
 
 .teza-slide.swiper-slide-active {
     opacity: 1;
-    transform: scale(1.6) translateY(-20px); /* Minskade translateY något så den inte flyger upp lika mycket i rubriken */
+    transform: scale(1.15) translateY(-8px);
     z-index: 10;
 }
 
 .teza-product-link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
     text-decoration: none;
     color: inherit;
     width: 100%;
-    max-width: 600px;
+    max-width: 340px;
+    margin: 0 auto !important;
     position: relative;
 }
 
@@ -2320,7 +2327,7 @@ body {
 .teza-product-link::after {
     content: '';
     position: absolute;
-    top: 40%; /* Centered slightly lower behind the scaled image */
+    top: 40%;
     left: 50%;
     z-index: -1;
     pointer-events: none;
@@ -2329,67 +2336,75 @@ body {
 
 /* Inner Blob */
 .teza-product-link::before {
-    width: 320px; /* Minskad något från 380px */
-    height: 320px;
+    width: 300px;
+    height: 300px;
     background: #64b000; /* Theme green */
     border-radius: 43% 57% 41% 59% / 54% 47% 53% 46%;
-    transform: translate(-50%, -50%) scale(0.2) rotate(0deg);
+    transform: translate(-50%, -50%) scale(0.3) rotate(0deg);
     transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s ease;
 }
 
 /* Outer/Abstract Fluid Splash Blob */
 .teza-product-link::after {
-    width: 380px; /* Minskad något från 460px */
-    height: 380px;
-    background: rgba(100, 176, 0, 0.25); /* Lighter theme green */
+    width: 360px;
+    height: 360px;
+    background: rgba(100, 176, 0, 0.28); /* Lighter theme green */
     border-radius: 61% 39% 30% 70% / 46% 62% 38% 54%;
-    transform: translate(-50%, -50%) scale(0.2) rotate(0deg);
+    transform: translate(-50%, -50%) scale(0.3) rotate(0deg);
     transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.6s ease;
     z-index: -2;
 }
 
 /* Active State (Zoomed In) */
 .teza-slide.swiper-slide-active .teza-product-link::before {
-    transform: translate(-50%, -50%) scale(1.05) rotate(45deg); /* Mindre scale så den inte blir FÖR dominant mot titeln */
-    opacity: 0.45; /* Increased opacity for more visible splash */
+    transform: translate(-50%, -50%) scale(1.1) rotate(45deg);
+    opacity: 0.6;
 }
 
 .teza-slide.swiper-slide-active .teza-product-link::after {
-    transform: translate(-50%, -50%) scale(1.05) rotate(-25deg);
+    transform: translate(-50%, -50%) scale(1.15) rotate(-25deg);
     opacity: 1;
 }
 
 @media (max-width: 768px) {
     .teza-product-link::before {
-        width: 220px !important;
-        height: 220px !important;
+        width: 200px !important;
+        height: 200px !important;
     }
     .teza-product-link::after {
-        width: 260px !important;
-        height: 260px !important;
+        width: 240px !important;
+        height: 240px !important;
     }
     .teza-slide.swiper-slide-active .teza-product-link::before {
-        transform: translate(-50%, -50%) scale(0.9) rotate(45deg) !important;
+        transform: translate(-50%, -50%) scale(1) rotate(45deg) !important;
     }
     .teza-slide.swiper-slide-active .teza-product-link::after {
-        transform: translate(-50%, -50%) scale(0.9) rotate(-25deg) !important;
+        transform: translate(-50%, -50%) scale(1.05) rotate(-25deg) !important;
+    }
+    .teza-product-img {
+        height: 190px !important;
+        max-width: 160px !important;
     }
 }
 
 .teza-product-img {
-    width: 100%;
-    height: auto;
+    width: auto;
+    height: 240px;
+    max-height: 250px;
+    max-width: 210px;
     object-fit: contain;
-    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    transform: scale(0.9);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease;
+    transform: scale(0.92);
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.12));
 }
 
 .teza-slide.swiper-slide-active .teza-product-img {
-    transform: scale(1.2) translateY(-10px);
+    transform: scale(1.08) translateY(-6px);
+    filter: drop-shadow(0 14px 28px rgba(0,0,0,0.18));
 }
 
 .teza-slide.swiper-slide-active .teza-product-img:hover {
-    transform: scale(1.25) translateY(-15px);
+    transform: scale(1.14) translateY(-10px);
 }
 
 .teza-product-info {
@@ -2478,17 +2493,29 @@ body {
 
 .product-detail-img {
     background: #fff;
-    border-radius: 12px;
-    padding: 2rem;
+    border-radius: 16px;
+    padding: 2.5rem 1.5rem;
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: sticky;
     top: 100px;
+    min-height: 400px;
 }
 
 .product-detail-img img {
     max-width: 100%;
+    max-height: 380px;
+    width: auto;
     height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 14px 28px rgba(0,0,0,0.12));
+    transition: transform 0.4s ease;
+}
+
+.product-detail-img img:hover {
+    transform: scale(1.04);
 }
 
 .product-detail-info h1 {
@@ -2765,4 +2792,364 @@ html[dir="rtl"] .pack-type-selector > span {
     margin-left: 0 !important;
 }
 
+/* ==========================================================================
+   BRAND ASSORTMENT SELECTION (PRODUKTER.HTML)
+   ========================================================================== */
+
+.brand-selection-section {
+    background-color: #fafafa;
+    min-height: 60vh;
+}
+
+.brand-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.brand-portal-card {
+    position: relative;
+    border-radius: 28px;
+    overflow: hidden;
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 3.5rem;
+    cursor: pointer;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.brand-portal-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+}
+
+.brand-card-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1;
+}
+
+.brand-portal-card:hover .brand-card-bg {
+    transform: scale(1.06);
+}
+
+.brand-card-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    transition: opacity 0.4s ease;
+}
+
+.brand-card-mathornet .brand-card-overlay {
+    background: linear-gradient(180deg, rgba(11, 29, 58, 0.35) 0%, rgba(11, 29, 58, 0.95) 85%);
+}
+
+.brand-card-ahalna .brand-card-overlay {
+    background: linear-gradient(180deg, rgba(123, 44, 44, 0.35) 0%, rgba(123, 44, 44, 0.95) 85%);
+}
+
+.brand-card-content {
+    position: relative;
+    z-index: 3;
+    color: #ffffff;
+    text-align: left;
+}
+
+.brand-card-logo-wrap {
+    height: 90px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.brand-card-logo {
+    max-height: 80px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
+}
+
+.ahalna-text-logo {
+    font-family: 'Outfit', sans-serif;
+    font-size: 3.2rem;
+    font-weight: 800;
+    letter-spacing: 4px;
+    color: #ffffff;
+    text-transform: uppercase;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+
+.brand-card-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 0.35rem 0.85rem;
+    border-radius: 50px;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.3);
+    margin-bottom: 1rem;
+    color: #ffffff;
+}
+
+.brand-card-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    font-family: 'Outfit', sans-serif;
+    color: #ffffff;
+    line-height: 1.15;
+}
+
+.brand-card-desc {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    max-width: 520px;
+}
+
+.brand-card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.product-count-tag {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.85);
+    background: rgba(0,0,0,0.25);
+    padding: 0.45rem 1rem;
+    border-radius: 50px;
+    border: 1px solid rgba(255,255,255,0.15);
+}
+
+.brand-card-btn {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.85rem;
+    border-radius: 50px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+    border: 1.5px solid rgba(255,255,255,0.7);
+    transition: all 0.3s ease;
+}
+
+.brand-portal-card:hover .brand-card-btn {
+    background: #ffffff;
+    color: #0b1d3a;
+    border-color: #ffffff;
+    transform: translateX(4px);
+}
+
+.brand-card-ahalna:hover .brand-card-btn {
+    color: #7b2c2c;
+}
+
+/* Product View Nav Bar & Tabs */
+.product-view-nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #eaeaea;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.back-to-brands-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1e293b;
+    background: #f1f5f9;
+    padding: 0.75rem 1.35rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.back-to-brands-btn:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+    transform: translateX(-2px);
+}
+
+.brand-toggle-tabs {
+    display: inline-flex;
+    background: #f1f5f9;
+    padding: 4px;
+    border-radius: 14px;
+    gap: 4px;
+    border: 1px solid #e2e8f0;
+}
+
+.brand-tab-btn {
+    padding: 0.6rem 1.35rem;
+    border-radius: 10px;
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #64748b;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.brand-tab-btn:hover {
+    color: #0f172a;
+}
+
+.brand-tab-btn.active {
+    background: #ffffff;
+    color: #0f172a;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+/* Active Brand Banner */
+.active-brand-banner {
+    padding: 2.5rem 3rem;
+    border-radius: 20px;
+    margin-bottom: 3.5rem;
+    color: #ffffff;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+}
+
+.mathornet-banner {
+    background: linear-gradient(135deg, #0b1d3a 0%, #173663 100%);
+}
+
+.ahalna-banner {
+    background: linear-gradient(135deg, #7b2c2c 0%, #a83838 100%);
+}
+
+.banner-pill {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: rgba(255,255,255,0.2);
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    margin-bottom: 0.75rem;
+    color: #ffffff;
+}
+
+.active-brand-banner h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    color: #ffffff !important;
+}
+
+.active-brand-banner p {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.9);
+    max-width: 600px;
+    line-height: 1.5;
+}
+
+/* Empty Brand State */
+.empty-brand-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 5rem 2rem;
+    background: #ffffff;
+    border-radius: 24px;
+    border: 2px dashed #cbd5e1;
+    margin: 1rem 0 3rem 0;
+}
+
+.empty-brand-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.empty-brand-state h3 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 0.75rem;
+}
+
+.empty-brand-state p {
+    color: #64748b;
+    max-width: 520px;
+    margin: 0 auto 2rem auto;
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+.btn-switch-mathornet {
+    background: #0b1d3a;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.85rem 2rem;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.btn-switch-mathornet:hover {
+    background: #173663;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 900px) {
+    .brand-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    .brand-portal-card {
+        min-height: 420px;
+        padding: 2.5rem 1.75rem;
+    }
+    .brand-card-title {
+        font-size: 2rem;
+    }
+    .active-brand-banner {
+        padding: 1.75rem 1.5rem;
+    }
+    .active-brand-banner h2 {
+        font-size: 1.6rem !important;
+    }
+}
+
+/* RTL Support */
+html[dir="rtl"] .brand-card-content {
+    text-align: right;
+}
+
+html[dir="rtl"] .back-to-brands-btn svg {
+    transform: rotate(180deg);
+}
+
+html[dir="rtl"] .brand-portal-card:hover .brand-card-btn {
+    transform: translateX(-4px);
+}
 

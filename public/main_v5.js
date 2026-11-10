@@ -317,6 +317,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const tezaSwiper = new Swiper('.teza-swiper', {
         loop: true,
         centeredSlides: true,
+        centeredSlidesBounds: false,
+        roundLengths: true,
+        grabCursor: true,
+        slideToClickedSlide: true,
+        watchSlidesProgress: true,
+        observer: true,
+        observeParents: true,
         slidesPerView: 1.5,
         spaceBetween: 20,
         breakpoints: {

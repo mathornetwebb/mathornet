@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mathörnet | Orientaliska Delikatesser</title>
     <meta name="description" content="Upptäck Mathörnets fantastiska sortiment av orientaliska matprodukter - från Kubbe Trabolsie till Kubbe Halab.">
-    <link rel="stylesheet" href="style_v5.css?v=6">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="style_v5.css?v=7">
     <style>
         @media (max-width: 768px) {
             .desktop-only-btn { display: none !important; }
@@ -93,20 +93,10 @@
             <div class="swiper teza-swiper" style="width: 100%; padding: 2rem 0 4rem 0;">
                 <div class="swiper-wrapper">
 
-                    <!-- Dynamisk Produkt: Sandwich Kubbe -->
-                    <div class="swiper-slide teza-slide">
-                        <a href="sandwich-kubbe" class="teza-product-link">
-                            <img src="img/sandwich kubbe.png" alt="Sandwich Kubbe" class="teza-product-img" loading="lazy">
-                            <div class="teza-product-info">
-                                <h3>Sandwich Kubbe</h3>
-                            </div>
-                        </a>
-                    </div>
-
                     <!-- Dynamisk Produkt: Potatis Kubbe -->
                     <div class="swiper-slide teza-slide">
                         <a href="potatis-kubbe" class="teza-product-link">
-                            <img src="img/potatis kubbe.png" alt="Potatis Kubbe" class="teza-product-img" loading="lazy">
+                            <img src="img/products/potatis-kubbe.png" alt="Potatis Kubbe" class="teza-product-img" loading="lazy">
                             <div class="teza-product-info">
                                 <h3>Potatis Kubbe</h3>
                             </div>
@@ -116,7 +106,7 @@
                     <!-- Dynamisk Produkt: Kubbe Mosel -->
                     <div class="swiper-slide teza-slide">
                         <a href="kubbe-mosel" class="teza-product-link">
-                            <img src="img/kubbe mosel.png" alt="Kubbe Mosel" class="teza-product-img" loading="lazy">
+                            <img src="img/products/kubbe-mosel.png" alt="Kubbe Mosel" class="teza-product-img" loading="lazy">
                             <div class="teza-product-info">
                                 <h3>Kubbe Mosel</h3>
                             </div>
@@ -126,19 +116,9 @@
                     <!-- Dynamisk Produkt: Kubbe Trabolsie -->
                     <div class="swiper-slide teza-slide">
                         <a href="kubbe-trabolsie" class="teza-product-link">
-                            <img src="img/kubbe trabolsie.png" alt="Kubbe Trabolsie" class="teza-product-img" loading="lazy">
+                            <img src="img/products/kubbe-trabolsie.png" alt="Kubbe Trabolsie" class="teza-product-img" loading="lazy">
                             <div class="teza-product-info">
                                 <h3>Kubbe Trabolsie</h3>
-                            </div>
-                        </a>
-                    </div>
-
-                    <!-- Dynamisk Produkt: Kubbe Halab -->
-                    <div class="swiper-slide teza-slide">
-                        <a href="kubbe-halab" class="teza-product-link">
-                            <img src="img/kubbe halab.png" alt="Kubbe Halab" class="teza-product-img" loading="lazy">
-                            <div class="teza-product-info">
-                                <h3>Kubbe Halab</h3>
                             </div>
                         </a>
                     </div>
@@ -146,9 +126,29 @@
                     <!-- Dynamisk Produkt: Ris Kubbe -->
                     <div class="swiper-slide teza-slide">
                         <a href="ris-kubbe" class="teza-product-link">
-                            <img src="img/ris kubbe.png" alt="Ris Kubbe" class="teza-product-img" loading="lazy">
+                            <img src="img/products/ris-kubbe.png" alt="Ris Kubbe" class="teza-product-img" loading="lazy">
                             <div class="teza-product-info">
                                 <h3>Ris Kubbe</h3>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Dynamisk Produkt: Kubbe Toast -->
+                    <div class="swiper-slide teza-slide">
+                        <a href="sandwich-kubbe" class="teza-product-link">
+                            <img src="img/products/sandwich-kubbe.png" alt="Kubbe Toast" class="teza-product-img" loading="lazy">
+                            <div class="teza-product-info">
+                                <h3>Kubbe Toast</h3>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Dynamisk Produkt: Kubbe Halab -->
+                    <div class="swiper-slide teza-slide">
+                        <a href="kubbe-halab" class="teza-product-link">
+                            <img src="img/products/kubbe-halab.png" alt="Kubbe Halab" class="teza-product-img" loading="lazy">
+                            <div class="teza-product-info">
+                                <h3>Kubbe Halab</h3>
                             </div>
                         </a>
                     </div>
@@ -285,6 +285,23 @@
                 <div class="carousel-wrapper">
                     <div class="carousel-viewport" style="overflow: hidden;">
                         <div class="carousel-track" style="display: flex; transition: transform 0.5s ease-in-out;">
+
+                            <!-- Dynamisk Nyhet: Välkommen till mathörnet -->
+                            <a href="valkommen-till-mathornet" class="carousel-card news-card-v2" style="flex: 0 0 calc(33.333% - 22px); min-width: 300px;  background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
+                                <div class="news-img" style="height: 250px; overflow: hidden;">
+                                    <img src="https://zgylvcwzwfqmligweato.supabase.co/storage/v1/object/public/images/upload_1793107770234_Glansig_restauranglogotyp_med_kockm_ssa.png" alt="Välkommen till mathörnet" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+                                </div>
+                                <div class="news-content" style="padding: 2rem; display: flex; flex-direction: column; flex-grow: 1;">
+                                    <div class="news-meta" style="font-size: 0.85rem; color: #666; margin-bottom: 1rem; display: flex; gap: 0.5rem; align-items: center;">
+                                        <span class="date">29 jul 2026</span>
+                                        <span class="divider">|</span>
+                                        <span class="category" style="color: var(--navy-bg); font-weight: 600;">Nyhet</span>
+                                    </div>
+                                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #000;">Välkommen till mathörnet</h3>
+                                    <p style="color: #555; margin-bottom: 2rem; flex-grow: 1; line-height: 1.6;"></p>
+                                    <span class="btn btn-navy" style="text-align: center; width: 100%;">Läs inlägg</span>
+                                </div>
+                            </a>
 
                             <!-- Dynamisk Nyhet: Nytt samarbete med webix -->
                             <a href="nytt-samarbete-med-webix" class="carousel-card news-card-v2" style="flex: 0 0 calc(33.333% - 22px); min-width: 300px;  background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
@@ -461,7 +478,7 @@
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <!-- Main Script -->
-    <script src="main_v5.js?v=6"></script>
+    <script src="main_v5.js?v=7"></script>
     <script>
         // Skydda innehållet från att enkelt inspekteras eller laddas ner
         document.addEventListener('contextmenu', event => event.preventDefault());

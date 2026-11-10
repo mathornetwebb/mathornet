@@ -31,27 +31,49 @@ export default async function ProdukterListPage() {
           <thead>
             <tr className="bg-slate-50 border-b border-slate-100">
               <th className="py-4 px-6 text-xs font-bold text-slate-500 uppercase tracking-wider">Titel/Namn</th>
+              <th className="py-4 px-6 text-xs font-bold text-slate-500 uppercase tracking-wider">Varumärke</th>
               <th className="py-4 px-6 text-xs font-bold text-slate-500 uppercase tracking-wider">Skapad</th>
               <th className="py-4 px-6 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">Åtgärd</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {items.map((item) => (
-              <tr key={item.id} className="hover:bg-slate-50/50 transition-colors">
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">{item.title}</td>
-                <td className="py-4 px-6 text-slate-500">{new Date(item.createdAt).toLocaleDateString('sv-SE')}</td>
-                <td className="py-4 px-6 text-right">
-                  <div className="flex justify-end gap-2">
-                    <Link href={`/admin/content/products/${item.id}`} className="p-2 text-slate-400 hover:text-blue-600 bg-white hover:bg-blue-50 rounded-lg transition-colors border border-transparent hover:border-blue-100">
-                      <Edit className="w-4 h-4" />
-                    </Link>
-                  </div>
-                </td>
-              </tr>
-            ))}
+            {items.map((item) => {
+              let brand = 'mathornet';
+              try {
+                const parsed = JSON.parse(item.productInfo || '{}');
+                if (parsed.brand) brand = parsed.brand;
+              } catch(e) {}
+
+              return (
+                <tr key={item.id} className="hover:bg-slate-50/50 transition-colors">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">{item.title}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {brand === 'ahalna' ? (
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-800 border border-rose-200">
+                        <span className="w-1.5 h-1.5 rounded-full bg-rose-600"></span>
+                        Ahalna
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                        Mathörnet
+                      </span>
+                    )}
+                  </td>
+                  <td className="py-4 px-6 text-slate-500">{new Date(item.createdAt).toLocaleDateString('sv-SE')}</td>
+                  <td className="py-4 px-6 text-right">
+                    <div className="flex justify-end gap-2">
+                      <Link href={`/admin/content/products/${item.id}`} className="p-2 text-slate-400 hover:text-blue-600 bg-white hover:bg-blue-50 rounded-lg transition-colors border border-transparent hover:border-blue-100">
+                        <Edit className="w-4 h-4" />
+                      </Link>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
             {items.length === 0 && (
               <tr>
-                <td colSpan={3} className="py-12 text-center text-slate-500">
+                <td colSpan={4} className="py-12 text-center text-slate-500">
                   Inga produkter hittades.
                 </td>
               </tr>

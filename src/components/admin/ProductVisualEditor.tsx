@@ -29,8 +29,19 @@ export default function ProductVisualEditor({
       // Simple shallow merge is usually enough, but let's ensure nested objects exist
       if (parsed && typeof parsed === 'object') {
         const result = { ...fallback, ...parsed };
+        result.brand = parsed.brand || 'mathornet';
         if (fallback.packaging) {
-          result.packaging = { ...fallback.packaging, ...(parsed.packaging || {}) };
+          result.packaging = {
+            bag: { ...fallback.packaging.bag, ...(parsed.packaging?.bag || {}) },
+            box: { ...fallback.packaging.box, ...(parsed.packaging?.box || {}) },
+            pallet: { ...fallback.packaging.pallet, ...(parsed.packaging?.pallet || {}) },
+          };
+          if (!result.packaging.bag.artNr && initialData?.artNr) {
+            result.packaging.bag.artNr = initialData.artNr;
+          }
+          if (!result.packaging.bag.ean && initialData?.ean) {
+            result.packaging.bag.ean = initialData.ean;
+          }
         }
         return result;
       }
@@ -39,15 +50,16 @@ export default function ProductVisualEditor({
   };
 
   const [productInfo, setProductInfo] = useState(parseJson(initialData?.productInfo, {
+    brand: 'mathornet',
     manufacturingCountry: 'Sverige',
     manufacturer: 'Mathörnet',
     properties: ['Färdiglagat.', 'Inga konserveringsmedel.', 'Förpackningen sorteras som plastförpackning.'],
     specialDiets: 'N/A',
     leadTime: '5 dagar',
     packaging: {
-      bag: { count: initialData?.countPerBag || '', weight: initialData?.weightPerBag || '' },
-      box: { count: '', weight: '' },
-      pallet: { count: '', weight: '' }
+      bag: { count: initialData?.countPerBag || '', weight: initialData?.weightPerBag || '', artNr: initialData?.artNr || '', ean: initialData?.ean || '' },
+      box: { count: '', weight: '', artNr: '', ean: '' },
+      pallet: { count: '', weight: '', artNr: '', ean: '' }
     }
   }));
 
@@ -79,11 +91,21 @@ export default function ProductVisualEditor({
 
   // Handlers for deep state updates
   const updateProductInfo = (key: string, value: any) => setProductInfo({ ...productInfo, [key]: value });
-  const updatePackaging = (type: 'bag'|'box'|'pallet', field: 'count'|'weight', value: string) => {
-    setProductInfo({
-      ...productInfo,
-      packaging: { ...productInfo.packaging, [type]: { ...productInfo.packaging[type], [field]: value } }
-    });
+  const updatePackaging = (type: 'bag'|'box'|'pallet', field: 'count'|'weight'|'artNr'|'ean', value: string) => {
+    setProductInfo((prev: any) => ({
+      ...prev,
+      packaging: { 
+        ...prev.packaging, 
+        [type]: { 
+          ...(prev.packaging?.[type] || {}), 
+          [field]: value 
+        } 
+      }
+    }));
+    if (type === 'bag') {
+      if (field === 'artNr') setArtNr(value);
+      if (field === 'ean') setEan(value);
+    }
   };
   const updateNutrition = (key: string, value: string) => setNutrition({ ...nutrition, [key]: value });
   const updateIngredients = (key: string, value: string) => setIngredients({ ...ingredients, [key]: value });
@@ -104,8 +126,8 @@ export default function ProductVisualEditor({
       {/* Hidden inputs for Form */}
       <input type="hidden" name="title" value={title} />
       <input type="hidden" name="slug" value={slug} />
-      <input type="hidden" name="artNr" value={artNr} />
-      <input type="hidden" name="ean" value={ean} />
+      <input type="hidden" name="artNr" value={productInfo.packaging?.bag?.artNr || artNr} />
+      <input type="hidden" name="ean" value={productInfo.packaging?.bag?.ean || ean} />
       <input type="hidden" name="featuredImage" value={featuredImage} />
       <input type="hidden" name="description" value={description} />
       <input type="hidden" name="storage" value={storage} />
@@ -142,18 +164,38 @@ export default function ProductVisualEditor({
 
             <div className="space-y-4">
               <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Varumärke / Sortiment *</label>
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    type="button"
+                    onClick={() => updateProductInfo('brand', 'mathornet')}
+                    className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl border-2 font-bold text-sm transition-all cursor-pointer ${
+                      (productInfo.brand || 'mathornet') === 'mathornet'
+                        ? 'border-emerald-600 bg-emerald-50 text-emerald-900 shadow-sm ring-2 ring-emerald-600/20'
+                        : 'border-slate-200 bg-slate-50 text-slate-500 hover:border-slate-300'
+                    }`}
+                  >
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-600"></span>
+                    Mathörnet
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => updateProductInfo('brand', 'ahalna')}
+                    className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl border-2 font-bold text-sm transition-all cursor-pointer ${
+                      productInfo.brand === 'ahalna'
+                        ? 'border-rose-700 bg-rose-50 text-rose-950 shadow-sm ring-2 ring-rose-700/20'
+                        : 'border-slate-200 bg-slate-50 text-slate-500 hover:border-slate-300'
+                    }`}
+                  >
+                    <span className="w-2.5 h-2.5 rounded-full bg-rose-700"></span>
+                    Ahalna
+                  </button>
+                </div>
+              </div>
+
+              <div>
                 <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Benämning *</label>
                 <input type="text" value={title} onChange={e => setTitle(e.target.value)} placeholder="T.ex. Kubbe Mosel..." className="w-full rounded-xl border border-slate-200 px-4 py-3 text-slate-900 font-bold focus:outline-none focus:ring-2 focus:border-blue-500 bg-slate-50" required />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Art. nr</label>
-                  <input type="text" value={artNr} onChange={e => setArtNr(e.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-blue-500 bg-slate-50" />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">EAN</label>
-                  <input type="text" value={ean} onChange={e => setEan(e.target.value)} className="w-full rounded-xl border border-slate-200 px-4 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-blue-500 bg-slate-50" />
-                </div>
               </div>
             </div>
           </div>
@@ -166,14 +208,22 @@ export default function ProductVisualEditor({
             {/* PÅSE */}
             <div className="space-y-3 bg-orange-50/50 p-4 rounded-2xl border border-orange-100">
               <div className="flex items-center gap-2 font-bold text-orange-900 mb-2"><Package className="w-4 h-4"/> Påse</div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Antal / Påse</label>
-                  <input type="text" value={productInfo.packaging.bag.count} onChange={e => updatePackaging('bag', 'count', e.target.value)} placeholder="12 st á 37.5g" className="w-full rounded-lg border border-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-orange-400 shadow-sm" />
+                  <input type="text" value={productInfo.packaging?.bag?.count || ''} onChange={e => updatePackaging('bag', 'count', e.target.value)} placeholder="T.ex. 10 st á 50 g" className="w-full rounded-lg border border-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-orange-400 shadow-sm" />
                 </div>
                 <div>
                   <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Vikt / Påse</label>
-                  <input type="text" value={productInfo.packaging.bag.weight} onChange={e => updatePackaging('bag', 'weight', e.target.value)} placeholder="450 g" className="w-full rounded-lg border border-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-orange-400 shadow-sm" />
+                  <input type="text" value={productInfo.packaging?.bag?.weight || ''} onChange={e => updatePackaging('bag', 'weight', e.target.value)} placeholder="T.ex. 500 g" className="w-full rounded-lg border border-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-orange-400 shadow-sm" />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Art. nr (Påse)</label>
+                  <input type="text" value={productInfo.packaging?.bag?.artNr || ''} onChange={e => updatePackaging('bag', 'artNr', e.target.value)} placeholder="T.ex. 140438" className="w-full rounded-lg border border-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-orange-400 shadow-sm" />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">EAN (Påse)</label>
+                  <input type="text" value={productInfo.packaging?.bag?.ean || ''} onChange={e => updatePackaging('bag', 'ean', e.target.value)} placeholder="T.ex. 7350171380438" className="w-full rounded-lg border border-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-orange-400 shadow-sm" />
                 </div>
               </div>
             </div>
@@ -181,14 +231,22 @@ export default function ProductVisualEditor({
             {/* KARTONG */}
             <div className="space-y-3 bg-blue-50/50 p-4 rounded-2xl border border-blue-100">
               <div className="flex items-center gap-2 font-bold text-blue-900 mb-2"><Box className="w-4 h-4"/> Kartong</div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Antal / Kartong</label>
-                  <input type="text" value={productInfo.packaging.box.count} onChange={e => updatePackaging('box', 'count', e.target.value)} placeholder="T.ex. 10 påsar" className="w-full rounded-lg border border-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-blue-400 shadow-sm" />
+                  <input type="text" value={productInfo.packaging?.box?.count || ''} onChange={e => updatePackaging('box', 'count', e.target.value)} placeholder="T.ex. 12 st á 500g" className="w-full rounded-lg border border-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-blue-400 shadow-sm" />
                 </div>
                 <div>
                   <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Vikt / Kartong</label>
-                  <input type="text" value={productInfo.packaging.box.weight} onChange={e => updatePackaging('box', 'weight', e.target.value)} placeholder="T.ex. 4.5 kg" className="w-full rounded-lg border border-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-blue-400 shadow-sm" />
+                  <input type="text" value={productInfo.packaging?.box?.weight || ''} onChange={e => updatePackaging('box', 'weight', e.target.value)} placeholder="T.ex. 6,0 kg" className="w-full rounded-lg border border-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-blue-400 shadow-sm" />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Art. nr (Kartong)</label>
+                  <input type="text" value={productInfo.packaging?.box?.artNr || ''} onChange={e => updatePackaging('box', 'artNr', e.target.value)} placeholder="T.ex. 140438-K" className="w-full rounded-lg border border-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-blue-400 shadow-sm" />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">EAN (Kartong)</label>
+                  <input type="text" value={productInfo.packaging?.box?.ean || ''} onChange={e => updatePackaging('box', 'ean', e.target.value)} placeholder="T.ex. 7350171380439" className="w-full rounded-lg border border-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-blue-400 shadow-sm" />
                 </div>
               </div>
             </div>
@@ -196,14 +254,22 @@ export default function ProductVisualEditor({
             {/* PALL */}
             <div className="space-y-3 bg-emerald-50/50 p-4 rounded-2xl border border-emerald-100">
               <div className="flex items-center gap-2 font-bold text-emerald-900 mb-2"><Layers className="w-4 h-4"/> Pall</div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Antal / Pall</label>
-                  <input type="text" value={productInfo.packaging.pallet.count} onChange={e => updatePackaging('pallet', 'count', e.target.value)} placeholder="T.ex. 50 kartonger" className="w-full rounded-lg border border-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-emerald-400 shadow-sm" />
+                  <input type="text" value={productInfo.packaging?.pallet?.count || ''} onChange={e => updatePackaging('pallet', 'count', e.target.value)} placeholder="T.ex. 48 st á 6,0 kg" className="w-full rounded-lg border border-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-emerald-400 shadow-sm" />
                 </div>
                 <div>
                   <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Vikt / Pall</label>
-                  <input type="text" value={productInfo.packaging.pallet.weight} onChange={e => updatePackaging('pallet', 'weight', e.target.value)} placeholder="T.ex. 225 kg" className="w-full rounded-lg border border-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-emerald-400 shadow-sm" />
+                  <input type="text" value={productInfo.packaging?.pallet?.weight || ''} onChange={e => updatePackaging('pallet', 'weight', e.target.value)} placeholder="T.ex. 288 kg" className="w-full rounded-lg border border-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-emerald-400 shadow-sm" />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Art. nr (Pall)</label>
+                  <input type="text" value={productInfo.packaging?.pallet?.artNr || ''} onChange={e => updatePackaging('pallet', 'artNr', e.target.value)} placeholder="T.ex. 140438-P" className="w-full rounded-lg border border-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-emerald-400 shadow-sm" />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">EAN (Pall)</label>
+                  <input type="text" value={productInfo.packaging?.pallet?.ean || ''} onChange={e => updatePackaging('pallet', 'ean', e.target.value)} placeholder="T.ex. 7350171380440" className="w-full rounded-lg border border-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:border-emerald-400 shadow-sm" />
                 </div>
               </div>
             </div>

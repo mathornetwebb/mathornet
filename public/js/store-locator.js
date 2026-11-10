@@ -20,6 +20,16 @@ document.addEventListener('DOMContentLoaded', () => {
             openingHours: "[{\"day\":\"Måndag\",\"open\":\"09:00\",\"close\":\"20:00\",\"isClosed\":false},{\"day\":\"Tisdag\",\"open\":\"09:00\",\"close\":\"20:00\",\"isClosed\":false},{\"day\":\"Onsdag\",\"open\":\"09:00\",\"close\":\"20:00\",\"isClosed\":false},{\"day\":\"Torsdag\",\"open\":\"09:00\",\"close\":\"20:00\",\"isClosed\":false},{\"day\":\"Fredag\",\"open\":\"09:00\",\"close\":\"20:00\",\"isClosed\":false},{\"day\":\"Lördag\",\"open\":\"09:00\",\"close\":\"19:00\",\"isClosed\":false},{\"day\":\"Söndag\",\"open\":\"09:00\",\"close\":\"19:00\",\"isClosed\":false}]",
             phone: "",
             website: ""
+        },
+        {
+            id: "cms5tx8os000004iht67oxhxx",
+            name: "Maxi ICA Stormarknad Vasa Handelsplats",
+            address: "Genetaleden 9, 151 59 Södertälje",
+            lat: 59.2161739,
+            lng: 17.5865468,
+            openingHours: "[{\"day\":\"Måndag\",\"open\":\"08:00\",\"close\":\"20:00\",\"isClosed\":false},{\"day\":\"Tisdag\",\"open\":\"08:00\",\"close\":\"20:00\",\"isClosed\":false},{\"day\":\"Onsdag\",\"open\":\"08:00\",\"close\":\"20:00\",\"isClosed\":false},{\"day\":\"Torsdag\",\"open\":\"08:00\",\"close\":\"20:00\",\"isClosed\":false},{\"day\":\"Fredag\",\"open\":\"08:00\",\"close\":\"20:00\",\"isClosed\":false},{\"day\":\"Lördag\",\"open\":\"10:00\",\"close\":\"18:00\",\"isClosed\":false},{\"day\":\"Söndag\",\"open\":\"10:00\",\"close\":\"18:00\",\"isClosed\":false}]",
+            phone: "",
+            website: ""
         }
     ];
 

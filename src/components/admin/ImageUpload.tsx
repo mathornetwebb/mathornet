@@ -68,12 +68,15 @@ export default function ImageUpload({ value, onChange, label = "Huvudbild" }: Im
       <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">{label}</label>
       
       {value ? (
-        <div className="relative group rounded-xl border border-slate-200 overflow-hidden bg-slate-50 aspect-video max-h-64 flex items-center justify-center">
+        <div className="relative group rounded-xl border border-slate-200 overflow-hidden aspect-video max-h-64 flex items-center justify-center p-4 bg-[linear-gradient(45deg,#f1f5f9_25%,transparent_25%),linear-gradient(-45deg,#f1f5f9_25%,transparent_25%),linear-gradient(45deg,transparent_75%,#f1f5f9_75%),linear-gradient(-45deg,transparent_75%,#f1f5f9_75%)] bg-[size:16px_16px] bg-[position:0_0,0_8px,8px_-8px,-8px_0]">
           <img 
             src={value.startsWith('http') ? value : `/${value}`} 
             alt="Uppladdad bild" 
-            className="w-full h-full object-contain"
+            className="w-full h-full object-contain filter drop-shadow-md"
           />
+          <div className="absolute top-2 left-2 bg-emerald-600/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
+            ✓ Fasta mått & transparent
+          </div>
           <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
             <button
               onClick={() => fileInputRef.current?.click()}
@@ -104,15 +107,15 @@ export default function ImageUpload({ value, onChange, label = "Huvudbild" }: Im
           {isUploading ? (
             <div className="flex flex-col items-center text-blue-500">
               <Loader2 className="w-8 h-8 animate-spin mb-2" />
-              <span className="text-sm font-medium">Laddar upp...</span>
+              <span className="text-sm font-medium">Optimerar bild & skapar transparens...</span>
             </div>
           ) : (
             <div className="flex flex-col items-center text-slate-500 group-hover:text-blue-500">
               <div className="w-12 h-12 mb-3 rounded-full bg-white shadow-sm flex items-center justify-center">
                 <UploadCloud className="w-6 h-6 text-blue-500" />
               </div>
-              <span className="text-sm font-bold text-slate-700 mb-1">Klicka eller dra och släpp en bild här</span>
-              <span className="text-xs text-slate-400">PNG, JPG, WEBP, GIF (Max 5MB)</span>
+              <span className="text-sm font-bold text-slate-700 mb-1">Klicka eller dra och släpp en produktbild här</span>
+              <span className="text-xs text-slate-400">Automatisk bakgrundsborttagning & fasta mått (Max 600×600)</span>
             </div>
           )}
         </div>

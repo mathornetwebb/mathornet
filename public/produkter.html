@@ -72,38 +72,93 @@
     </header>
 
     <main>
-        <section class="page-header" style="background-color: #fcfcfc; padding: 6rem 0 4rem 0; text-align: center; border-bottom: 1px solid #eee;">
+        <section class="page-header" style="background-color: #fcfcfc; padding: 5rem 0 3.5rem 0; text-align: center; border-bottom: 1px solid #eee;">
             <div class="container">
-                <h1 style="font-size: 3.5rem; font-weight: 800; color: #000; margin-bottom: 1.5rem;">Våra Produkter</h1>
-                <p style="font-size: 1.25rem; color: #555; max-width: 700px; margin: 0 auto; line-height: 1.6;">Upptäck vårt noga utvalda sortiment av autentiska mellanösternska specialiteter. Skapade med kärlek, de bästa råvarorna och generationers hantverkskunskap.</p>
+                <h1 style="font-size: 3.5rem; font-weight: 800; color: #000; margin-bottom: 1.25rem;">Våra Produkter</h1>
+                <p style="font-size: 1.25rem; color: #555; max-width: 700px; margin: 0 auto; line-height: 1.6;">Välj varumärke för att upptäcka respektive sortiment av autentiska mellanösternska delikatesser.</p>
             </div>
         </section>
 
-        <!-- Produktlista -->
-        <section class="products-section" style="padding: 6rem 0;">
+        <!-- STEG 1: VÄLJ VARUMÄRKE -->
+        <section id="brand-selection-view" class="brand-selection-section" style="padding: 5rem 0 7rem 0;">
             <div class="container">
-                <div class="products-grid-large">
-
-                    <!-- Dynamisk Produkt: Sandwich Kubbe -->
-                    <a href="sandwich-kubbe" class="product-card">
-                        
-                        <div class="product-img-wrapper">
-                            <img src="img/sandwich kubbe.png" alt="Sandwich Kubbe" loading="lazy">
-                        </div>
-                        <div class="product-info">
-                            <h3>Sandwich Kubbe</h3>
-                            <div class="product-meta">
-                                <span class="weight">450 g</span>
-                                <span class="read-more">Tryck för att läsa mer &rarr;</span>
+                <div class="brand-cards-grid">
+                    <!-- Mathörnet Kort -->
+                    <div class="brand-portal-card brand-card-mathornet" onclick="selectBrand('mathornet')">
+                        <div class="brand-card-bg" style="background-image: url('img/mathörnet.png');"></div>
+                        <div class="brand-card-overlay"></div>
+                        <div class="brand-card-content">
+                            <div class="brand-card-logo-wrap">
+                                <img src="img/mathornet_logo_ny_transparent.png" alt="Mathörnet" class="brand-card-logo">
+                            </div>
+                            <span class="brand-card-badge">Original Sortiment</span>
+                            <h2 class="brand-card-title">Mathörnet</h2>
+                            <p class="brand-card-desc">Autentiska orientaliska specialiteter. Vår klassiska serie av traditionell kubbe, tillverkad i Strängnäs med omsorg och genuina smaker.</p>
+                            <div class="brand-card-meta">
+                                <span class="product-count-tag">6 produkter</span>
+                                <span class="brand-card-btn">Utforska Mathörnet &rarr;</span>
                             </div>
                         </div>
-                    </a>
+                    </div>
+
+                    <!-- Ahalna Kort -->
+                    <div class="brand-portal-card brand-card-ahalna" onclick="selectBrand('ahalna')">
+                        <div class="brand-card-bg" style="background-image: url('img/hero_feast_1780604012322.png');"></div>
+                        <div class="brand-card-overlay"></div>
+                        <div class="brand-card-content">
+                            <div class="brand-card-logo-wrap">
+                                <div class="ahalna-text-logo">AHALNA</div>
+                            </div>
+                            <span class="brand-card-badge">Premium Delikatesser</span>
+                            <h2 class="brand-card-title">Ahalna</h2>
+                            <p class="brand-card-desc">En ny värld av orientaliska delikatesser och moderna smakupplevelser för både vardag och fest.</p>
+                            <div class="brand-card-meta">
+                                <span class="product-count-tag">Kommer snart</span>
+                                <span class="brand-card-btn">Utforska Ahalna &rarr;</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STEG 2: PRODUKTRUTNÄT -->
+        <section id="product-grid-view" class="products-section" style="padding: 4rem 0 6rem 0; display: none;">
+            <div class="container">
+                
+                <!-- Navigering & Varumärkesväxlare -->
+                <div class="product-view-nav-bar">
+                    <button type="button" class="back-to-brands-btn" onclick="showBrandSelection()">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>Alla Varumärken</span>
+                    </button>
+
+                    <div class="brand-toggle-tabs">
+                        <button type="button" class="brand-tab-btn active" data-brand="mathornet" onclick="selectBrand('mathornet')">
+                            Mathörnet (6)
+                        </button>
+                        <button type="button" class="brand-tab-btn" data-brand="ahalna" onclick="selectBrand('ahalna')">
+                            Ahalna (0)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mathörnet Banner & Grid -->
+                <div id="brand-banner-mathornet" class="active-brand-banner mathornet-banner">
+                    <div class="brand-banner-text">
+                        <span class="banner-pill">Sortiment: Mathörnet</span>
+                        <h2>Autentiska orientaliska specialiteter</h2>
+                        <p>Klassiska recept och traditionella smaker, tillagade och förpackade med högsta kvalitet.</p>
+                    </div>
+                </div>
+
+                <div id="grid-mathornet" class="products-grid-large brand-grid">
 
                     <!-- Dynamisk Produkt: Potatis Kubbe -->
                     <a href="potatis-kubbe" class="product-card">
                         
                         <div class="product-img-wrapper">
-                            <img src="img/potatis kubbe.png" alt="Potatis Kubbe" loading="lazy">
+                            <img src="img/products/potatis-kubbe.png" alt="Potatis Kubbe" loading="lazy">
                         </div>
                         <div class="product-info">
                             <h3>Potatis Kubbe</h3>
@@ -118,7 +173,7 @@
                     <a href="kubbe-mosel" class="product-card">
                         
                         <div class="product-img-wrapper">
-                            <img src="img/kubbe mosel.png" alt="Kubbe Mosel" loading="lazy">
+                            <img src="img/products/kubbe-mosel.png" alt="Kubbe Mosel" loading="lazy">
                         </div>
                         <div class="product-info">
                             <h3>Kubbe Mosel</h3>
@@ -133,25 +188,10 @@
                     <a href="kubbe-trabolsie" class="product-card">
                         
                         <div class="product-img-wrapper">
-                            <img src="img/kubbe trabolsie.png" alt="Kubbe Trabolsie" loading="lazy">
+                            <img src="img/products/kubbe-trabolsie.png" alt="Kubbe Trabolsie" loading="lazy">
                         </div>
                         <div class="product-info">
                             <h3>Kubbe Trabolsie</h3>
-                            <div class="product-meta">
-                                <span class="weight">500 g</span>
-                                <span class="read-more">Tryck för att läsa mer &rarr;</span>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Dynamisk Produkt: Kubbe Halab -->
-                    <a href="kubbe-halab" class="product-card">
-                        
-                        <div class="product-img-wrapper">
-                            <img src="img/kubbe halab.png" alt="Kubbe Halab" loading="lazy">
-                        </div>
-                        <div class="product-info">
-                            <h3>Kubbe Halab</h3>
                             <div class="product-meta">
                                 <span class="weight">500 g</span>
                                 <span class="read-more">Tryck för att läsa mer &rarr;</span>
@@ -163,7 +203,7 @@
                     <a href="ris-kubbe" class="product-card">
                         
                         <div class="product-img-wrapper">
-                            <img src="img/ris kubbe.png" alt="Ris Kubbe" loading="lazy">
+                            <img src="img/products/ris-kubbe.png" alt="Ris Kubbe" loading="lazy">
                         </div>
                         <div class="product-info">
                             <h3>Ris Kubbe</h3>
@@ -173,12 +213,127 @@
                             </div>
                         </div>
                     </a>
-</div>
+
+                    <!-- Dynamisk Produkt: Kubbe Toast -->
+                    <a href="sandwich-kubbe" class="product-card">
+                        
+                        <div class="product-img-wrapper">
+                            <img src="img/products/sandwich-kubbe.png" alt="Kubbe Toast" loading="lazy">
+                        </div>
+                        <div class="product-info">
+                            <h3>Kubbe Toast</h3>
+                            <div class="product-meta">
+                                <span class="weight">480 g</span>
+                                <span class="read-more">Tryck för att läsa mer &rarr;</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Dynamisk Produkt: Kubbe Halab -->
+                    <a href="kubbe-halab" class="product-card">
+                        
+                        <div class="product-img-wrapper">
+                            <img src="img/products/kubbe-halab.png" alt="Kubbe Halab" loading="lazy">
+                        </div>
+                        <div class="product-info">
+                            <h3>Kubbe Halab</h3>
+                            <div class="product-meta">
+                                <span class="weight">500 g</span>
+                                <span class="read-more">Tryck för att läsa mer &rarr;</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Ahalna Banner & Grid -->
+                <div id="brand-banner-ahalna" class="active-brand-banner ahalna-banner" style="display: none;">
+                    <div class="brand-banner-text">
+                        <span class="banner-pill">Sortiment: Ahalna</span>
+                        <h2>En ny värld av orientaliska delikatesser</h2>
+                        <p>Utvalda råvaror och moderna orientaliska smaker med premiumkänsla.</p>
+                    </div>
+                </div>
+
+                <div id="grid-ahalna" class="products-grid-large brand-grid" style="display: none;">
+
+                    <div class="empty-brand-state">
+                        <div class="empty-brand-icon">✨</div>
+                        <h3>Ahalna sortimentet lanseras inom kort</h3>
+                        <p>Vi arbetar just nu för fullt med att ta fram spännande nya produkter under varumärket Ahalna. Håll utkik här för lanseringen!</p>
+                        <button type="button" onclick="selectBrand('mathornet')" class="btn-switch-mathornet">Se Mathörnets sortiment istället &rarr;</button>
+                    </div>
+                </div>
+
             </div>
         </section>
 
+        <!-- Brand Assortment Logic -->
+        <script>
+            function selectBrand(brand) {
+                try { window.location.hash = brand; } catch(e) {}
+                const selectionView = document.getElementById('brand-selection-view');
+                const gridView = document.getElementById('product-grid-view');
+                if (!selectionView || !gridView) return;
+                
+                selectionView.style.display = 'none';
+                gridView.style.display = 'block';
 
+                document.querySelectorAll('.brand-tab-btn').forEach(btn => {
+                    if (btn.dataset.brand === brand) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
 
+                const mathornetBanner = document.getElementById('brand-banner-mathornet');
+                const ahalnaBanner = document.getElementById('brand-banner-ahalna');
+                const mathornetGrid = document.getElementById('grid-mathornet');
+                const ahalnaGrid = document.getElementById('grid-ahalna');
+
+                if (brand === 'ahalna') {
+                    if (mathornetBanner) mathornetBanner.style.display = 'none';
+                    if (ahalnaBanner) ahalnaBanner.style.display = 'block';
+                    if (mathornetGrid) mathornetGrid.style.display = 'none';
+                    if (ahalnaGrid) ahalnaGrid.style.display = 'grid';
+                } else {
+                    if (mathornetBanner) mathornetBanner.style.display = 'block';
+                    if (ahalnaBanner) ahalnaBanner.style.display = 'none';
+                    if (mathornetGrid) mathornetGrid.style.display = 'grid';
+                    if (ahalnaGrid) ahalnaGrid.style.display = 'none';
+                }
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            function showBrandSelection() {
+                try { history.pushState("", document.title, window.location.pathname + window.location.search); } catch(e) {}
+                const selectionView = document.getElementById('brand-selection-view');
+                const gridView = document.getElementById('product-grid-view');
+                if (selectionView && gridView) {
+                    selectionView.style.display = 'block';
+                    gridView.style.display = 'none';
+                }
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            function initBrandFromHash() {
+                const hash = window.location.hash.replace('#', '');
+                if (hash === 'mathornet' || hash === 'ahalna') {
+                    selectBrand(hash);
+                } else {
+                    const selectionView = document.getElementById('brand-selection-view');
+                    const gridView = document.getElementById('product-grid-view');
+                    if (selectionView && gridView) {
+                        selectionView.style.display = 'block';
+                        gridView.style.display = 'none';
+                    }
+                }
+            }
+
+            window.addEventListener('DOMContentLoaded', initBrandFromHash);
+            window.addEventListener('hashchange', initBrandFromHash);
+        </script>
     </main>
 
     <footer class="site-footer">

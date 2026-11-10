@@ -24,6 +24,8 @@ export async function saveProductAction(isNewVal: boolean, idVal: string, formDa
      if (pInfo?.packaging?.bag) {
        (data as any).countPerBag = pInfo.packaging.bag.count || null;
        (data as any).weightPerBag = pInfo.packaging.bag.weight || null;
+       if (pInfo.packaging.bag.artNr) data.artNr = pInfo.packaging.bag.artNr;
+       if (pInfo.packaging.bag.ean) data.ean = pInfo.packaging.bag.ean;
      }
   } catch(e) {}
   

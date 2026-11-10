@@ -2264,27 +2264,30 @@ body {
 }
 
 .teza-slide {
-    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    opacity: 0.4;
-    transform: scale(0.75) translateY(0px); /* Justerat upp de inaktiva lite för balans */
-    display: flex;
-    justify-content: center;
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.6s ease;
+    opacity: 0.45;
+    transform: scale(0.85) translateY(10px);
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center;
 }
 
 .teza-slide.swiper-slide-active {
     opacity: 1;
-    transform: scale(1.6) translateY(-20px); /* Minskade translateY något så den inte flyger upp lika mycket i rubriken */
+    transform: scale(1.15) translateY(-8px);
     z-index: 10;
 }
 
 .teza-product-link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
     text-decoration: none;
     color: inherit;
     width: 100%;
-    max-width: 600px;
+    max-width: 340px;
+    margin: 0 auto !important;
     position: relative;
 }
 
@@ -2349,19 +2352,23 @@ body {
 }
 
 .teza-product-img {
-    width: 100%;
-    height: auto;
+    width: auto;
+    height: 240px;
+    max-height: 250px;
+    max-width: 210px;
     object-fit: contain;
-    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    transform: scale(0.9);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease;
+    transform: scale(0.92);
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.12));
 }
 
 .teza-slide.swiper-slide-active .teza-product-img {
-    transform: scale(1.2) translateY(-10px);
+    transform: scale(1.08) translateY(-6px);
+    filter: drop-shadow(0 14px 28px rgba(0,0,0,0.18));
 }
 
 .teza-slide.swiper-slide-active .teza-product-img:hover {
-    transform: scale(1.25) translateY(-15px);
+    transform: scale(1.14) translateY(-10px);
 }
 
 .teza-product-info {
