@@ -2,11 +2,36 @@ import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase-server';
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import sharp from 'sharp';
 import fs from 'fs';
 import path from 'path';
 
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
+// Resilient load of sharp to avoid serverless module crashes
+let sharp: any = null;
+try {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  sharp = require('sharp');
+} catch (e) {
+  console.warn('Sharp native module could not be loaded in this environment:', e);
+}
+
+// Health check endpoint for monitoring upload service status
+export async function GET() {
+  return NextResponse.json({
+    status: 'ok',
+    sharpAvailable: typeof sharp === 'function',
+    node: process.version,
+    env: process.env.NODE_ENV,
+  });
+}
+
 async function processImage(inputBuffer: Buffer): Promise<{ buffer: Buffer; isPng: boolean }> {
+  if (!sharp) {
+    console.warn('Sharp is unavailable; skipping image manipulation');
+    return { buffer: inputBuffer, isPng: false };
+  }
   try {
     // Auto-orient according to EXIF and pre-scale if very large to prevent memory/timeout issues
     let img = sharp(inputBuffer).rotate();
@@ -128,7 +153,13 @@ async function processImage(inputBuffer: Buffer): Promise<{ buffer: Buffer; isPn
 
 export async function POST(req: Request) {
   try {
-    const session = await getServerSession(authOptions);
+    let session = null;
+    try {
+      session = await getServerSession(authOptions);
+    } catch (authErr) {
+      console.error('Auth verification error in /api/upload:', authErr);
+    }
+
     if (!session) {
       return NextResponse.json({ error: 'Obehörig (Unauthorized)' }, { status: 401 });
     }
@@ -137,7 +168,7 @@ export async function POST(req: Request) {
     const file = formData.get('file') as File;
     
     if (!file) {
-      return NextResponse.json({ error: 'Inget fil hittades' }, { status: 400 });
+      return NextResponse.json({ error: 'Ingen fil hittades i förfrågan' }, { status: 400 });
     }
 
     const isImage = file.type.startsWith('image/') || /\.(png|jpe?g|webp|heic|heif|avif|gif)$/i.test(file.name);
@@ -151,18 +182,19 @@ export async function POST(req: Request) {
     const { buffer: processedBuffer, isPng } = await processImage(rawBuffer);
 
     const safeBaseName = path.parse(file.name).name.replace(/[^a-zA-Z0-9.-]/g, '_');
-    const ext = isPng ? '.png' : path.extname(file.name) || '.png';
+    const ext = isPng ? '.png' : (path.extname(file.name) || '.png');
     const uniqueName = `upload_${Date.now()}_${safeBaseName}${ext}`;
     
     let returnUrl: string | null = null;
 
     // 1. Upload to Supabase Storage (primary cloud storage for persistence)
     try {
+      const contentType = isPng ? 'image/png' : (file.type || 'image/png');
       const { data, error } = await supabaseAdmin
         .storage
         .from('images')
         .upload(uniqueName, processedBuffer, {
-          contentType: isPng ? 'image/png' : (file.type || 'image/png'),
+          contentType,
           upsert: true
         });
 
@@ -192,16 +224,20 @@ export async function POST(req: Request) {
         returnUrl = `uploads/${uniqueName}`;
       }
     } catch (fsErr) {
-      console.log('Local disk write skipped (normal on read-only serverless environments like Vercel)');
+      // Normal on read-only serverless environments like Vercel
     }
 
     if (!returnUrl) {
-      return NextResponse.json({ error: 'Kunde inte spara bilden till lagringen. Kontrollera behörigheter.' }, { status: 500 });
+      return NextResponse.json({ 
+        error: 'Kunde inte spara bilden till molnlagringen. Kontrollera Supabase Storage behörigheter.' 
+      }, { status: 500 });
     }
 
     return NextResponse.json({ url: returnUrl });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Upload error:', error);
-    return NextResponse.json({ error: 'Kunde inte ladda upp filen' }, { status: 500 });
+    return NextResponse.json({ 
+      error: error?.message || 'Ett oväntat fel uppstod vid uppladdning.' 
+    }, { status: 500 });
   }
 }

@@ -36,8 +36,12 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
+    "puppeteer": "^25.17.0",
     "tailwindcss": "^4",
     "tsx": "^4.23.15",
     "typescript": "^5"
+  },
+  "optionalDependencies": {
+    "@img/sharp-linux-x64": "0.35.5"
   }
 }

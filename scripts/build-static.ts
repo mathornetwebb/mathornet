@@ -352,7 +352,7 @@ ${ahalnaGridHtml}
       const dStr = `${dObj.getDate().toString().padStart(2, '0')} ${mNames[dObj.getMonth()]} ${dObj.getFullYear()}`;
       
       const featuredHtml = `
-            <a href="${featuredNews.slug}" class="featured-post" style="position: relative; border-radius: 24px; overflow: hidden; min-height: 480px; margin-bottom: 3.5rem; display: flex; align-items: flex-end; text-decoration: none; box-shadow: 0 15px 40px rgba(0,0,0,0.12); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+            <a href="${featuredNews.slug}" class="featured-post" style="position: relative; border-radius: 24px; overflow: hidden; height: 500px; min-height: 500px; margin-bottom: 4rem; display: flex; align-items: flex-end; text-decoration: none; box-shadow: 0 15px 40px rgba(0,0,0,0.12); transition: transform 0.3s ease, box-shadow 0.3s ease;">
                 <img src="${featuredNews.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" class="featured-bg" alt="${featuredNews.title}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
                 <div class="featured-overlay" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15,23,42,0.1) 0%, rgba(15,23,42,0.85) 100%);"></div>
                 <div class="featured-content" style="position: relative; z-index: 2; padding: clamp(2rem, 5vw, 3.5rem); color: #fff; max-width: 800px;">

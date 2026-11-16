@@ -30,16 +30,21 @@ export default function ImageUpload({ value, onChange, label = "Huvudbild" }: Im
         method: 'POST',
         body: formData,
       });
-      const data = await res.json();
+      let data: any = {};
+      try {
+        data = await res.json();
+      } catch (jsonErr) {
+        console.error('Failed to parse response JSON:', jsonErr);
+      }
       
       if (res.ok && data.url) {
         onChange(data.url);
       } else {
-        alert(data.error || 'Något gick fel vid uppladdningen.');
+        alert(data.error || `Uppladdningen misslyckades (status ${res.status}).`);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      alert('Ett oväntat fel uppstod vid uppladdningen.');
+      alert('Ett fel uppstod vid uppladdningen: ' + (error?.message || 'Kontrollera nätverket.'));
     } finally {
       setIsUploading(false);
     }

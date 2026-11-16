@@ -4,7 +4,8 @@ import prisma from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 
 export const authOptions: NextAuthOptions = {
-  debug: true,
+  secret: process.env.NEXTAUTH_SECRET || "MathornetSecret2026",
+  debug: process.env.NODE_ENV === 'development',
   session: {
     strategy: "jwt",
   },
