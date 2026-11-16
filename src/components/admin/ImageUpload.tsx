@@ -15,8 +15,9 @@ export default function ImageUpload({ value, onChange, label = "Huvudbild" }: Im
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleUpload = async (file: File) => {
-    if (!file.type.startsWith('image/')) {
-      alert('Vänligen välj en giltig bildfil.');
+    const isImage = file.type.startsWith('image/') || /\.(png|jpe?g|webp|heic|heif|avif|gif)$/i.test(file.name);
+    if (!isImage) {
+      alert('Vänligen välj en giltig bildfil (JPG, PNG, WebP, etc).');
       return;
     }
 

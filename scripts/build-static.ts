@@ -352,17 +352,20 @@ ${ahalnaGridHtml}
       const dStr = `${dObj.getDate().toString().padStart(2, '0')} ${mNames[dObj.getMonth()]} ${dObj.getFullYear()}`;
       
       const featuredHtml = `
-            <a href="${featuredNews.slug}" class="featured-post">
-                <img src="${featuredNews.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" class="featured-bg" alt="${featuredNews.title}">
-                <div class="featured-overlay"></div>
-                <div class="featured-content">
-                    <div class="featured-meta">
-                        <span class="category" style="background: var(--navy-bg); color: #fff; padding: 6px 16px; border-radius: 50px; font-size: 0.95rem;">Nyhet</span>
-                        <span style="color: #fff; font-weight: 500;">${dStr}</span>
+            <a href="${featuredNews.slug}" class="featured-post" style="position: relative; border-radius: 24px; overflow: hidden; min-height: 480px; margin-bottom: 3.5rem; display: flex; align-items: flex-end; text-decoration: none; box-shadow: 0 15px 40px rgba(0,0,0,0.12); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                <img src="${featuredNews.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" class="featured-bg" alt="${featuredNews.title}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+                <div class="featured-overlay" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15,23,42,0.1) 0%, rgba(15,23,42,0.85) 100%);"></div>
+                <div class="featured-content" style="position: relative; z-index: 2; padding: clamp(2rem, 5vw, 3.5rem); color: #fff; max-width: 800px;">
+                    <div class="featured-meta" style="display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1rem;">
+                        <span class="category" style="background: #64b000; color: #fff; padding: 5px 14px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Utvald Nyhet</span>
+                        <span style="color: rgba(255,255,255,0.85); font-weight: 500; font-size: 0.95rem;">${dStr}</span>
                     </div>
-                    <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5); line-height: 1.2;">${featuredNews.title}</h2>
-                    <p style="font-size: 1.15rem; margin-bottom: 1rem; opacity: 0.95; text-shadow: 0 1px 5px rgba(0,0,0,0.5); max-width: 600px;">${featuredNews.excerpt || ''}</p>
-                    <span class="btn" style="background: #64b000; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; width: fit-content; margin-top: 1.5rem;">Läs inlägg</span>
+                    <h2 style="font-size: clamp(1.85rem, 4vw, 2.75rem); font-weight: 800; margin-bottom: 0.75rem; color: #fff; line-height: 1.25; font-family: 'Outfit', sans-serif;">${featuredNews.title}</h2>
+                    ${featuredNews.excerpt ? `<p style="font-size: 1.15rem; margin-bottom: 1.5rem; color: rgba(255,255,255,0.9); line-height: 1.6; max-width: 650px;">${featuredNews.excerpt}</p>` : ''}
+                    <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: #fff; color: #111; padding: 12px 24px; border-radius: 50px; font-weight: 700; font-size: 0.95rem; margin-top: 0.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
+                        <span>Läs hela artikeln</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                    </div>
                 </div>
             </a>`;
       nyheterHtml = nyheterHtml.replace(featuredRegex, featuredHtml);
@@ -383,19 +386,21 @@ ${ahalnaGridHtml}
         
         newNewsList += `
                     <!-- Dynamisk Nyhet: ${n.title} -->
-                    <a href="${n.slug}" class="news-card-v2" style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
-                        <div class="news-img" style="height: 250px; overflow: hidden;">
+                    <a href="${n.slug}" class="news-card-v2" style="background: #fff; border-radius: 18px; border: 1px solid rgba(0,0,0,0.07); overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.04); display: flex; flex-direction: column; text-decoration: none; transition: transform 0.25s ease, box-shadow 0.25s ease;">
+                        <div class="news-img" style="height: 240px; overflow: hidden; position: relative;">
                             <img src="${n.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${n.title}" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+                            <span style="position: absolute; top: 1rem; left: 1rem; background: rgba(255,255,255,0.92); backdrop-filter: blur(8px); color: #15803d; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 4px 10px; border-radius: 50px;">Nyhet</span>
                         </div>
-                        <div class="news-content" style="padding: 2rem; display: flex; flex-direction: column; flex-grow: 1;">
-                            <div class="news-meta" style="font-size: 0.85rem; color: #666; margin-bottom: 1rem; display: flex; gap: 0.5rem; align-items: center;">
-                                <span class="date">${dateStr}</span>
-                                <span class="divider">|</span>
-                                <span class="category" style="color: #666; font-weight: 600;">Nyhet</span>
+                        <div class="news-content" style="padding: 1.75rem; display: flex; flex-direction: column; flex-grow: 1;">
+                            <div class="news-meta" style="font-size: 0.85rem; color: #6b7280; margin-bottom: 0.75rem; display: flex; gap: 0.5rem; align-items: center; font-weight: 500;">
+                                <span>${dateStr}</span>
                             </div>
-                            <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #000;">${n.title}</h3>
-                            <p style="color: #555; margin-bottom: 2rem; flex-grow: 1; line-height: 1.6;">${n.excerpt || ''}</p>
-                            <span class="btn" style="background: #64b000; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; width: 100%; text-align: center; font-weight: bold; margin-top: auto;">Läs inlägg</span>
+                            <h3 style="font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem; color: #111827; line-height: 1.35; font-family: 'Outfit', sans-serif;">${n.title}</h3>
+                            ${n.excerpt ? `<p style="color: #4b5563; margin-bottom: 1.5rem; line-height: 1.6; font-size: 0.95rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">${n.excerpt}</p>` : ''}
+                            <div style="display: flex; align-items: center; gap: 0.5rem; color: #4d8e00; font-weight: 700; font-size: 0.95rem; margin-top: auto; padding-top: 1rem;">
+                                <span>Läs hela artikeln</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                            </div>
                         </div>
                     </a>\n`;
       }
@@ -735,15 +740,75 @@ ${(() => {
         
         let blocksHtml = '';
         try {
-            const blocks = JSON.parse(n.content || '[]');
-            blocksHtml = blocks.map((b: any) => {
-                if (b.type === 'h2') return `<h2 style="font-size: 2.25rem; font-weight: 800; color: #111; margin-top: 3rem; margin-bottom: 1rem; overflow-wrap: break-word; word-break: break-word;">${b.content}</h2>`;
-                if (b.type === 'h3') return `<h3 style="font-size: 1.5rem; font-weight: 700; color: #111; margin-top: 2rem; margin-bottom: 1rem; overflow-wrap: break-word; word-break: break-word;">${b.content}</h3>`;
-                if (b.type === 'text') return `<div style="font-size: 1.15rem; color: #444; line-height: 1.8; margin-bottom: 1.5rem; overflow-wrap: break-word; word-break: break-word;">${b.content}</div>`;
-                if (b.type === 'image') return `<figure style="margin: 3rem 0; text-align: center;"><img src="${b.content}" alt="" loading="lazy" style="width: 100%; max-height: 600px; object-fit: cover; border-radius: 12px;"><figcaption style="font-size: 0.9rem; color: #666; margin-top: 0.5rem; text-align: center;">${b.caption || ''}</figcaption></figure>`;
+            const rawBlocks = JSON.parse(n.content || '[]');
+            // Filter out empty blocks completely
+            const validBlocks = rawBlocks.filter((b: any) => {
+                if (!b || !b.content) return false;
+                if (b.type === 'image') return b.content.trim().length > 0;
+                const textOnly = b.content.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim();
+                return textOnly.length > 0;
+            });
+
+            blocksHtml = validBlocks.map((b: any, bIdx: number) => {
+                if (b.type === 'h2') {
+                    const cleanH2 = b.content.replace(/<span[^>]*>/gi, '').replace(/<\/span>/gi, '').trim();
+                    return `<h2 style="font-size: 2rem; font-weight: 800; color: #111827; margin-top: ${bIdx === 0 ? '0' : '2.5rem'}; margin-bottom: 0.85rem; font-family: 'Outfit', sans-serif; line-height: 1.3;">${cleanH2}</h2>`;
+                }
+                if (b.type === 'h3') {
+                    const cleanH3 = b.content.replace(/<span[^>]*>/gi, '').replace(/<\/span>/gi, '').trim();
+                    return `<h3 style="font-size: 1.4rem; font-weight: 700; color: #111827; margin-top: ${bIdx === 0 ? '0' : '2rem'}; margin-bottom: 0.75rem; font-family: 'Outfit', sans-serif; line-height: 1.35;">${cleanH3}</h3>`;
+                }
+                if (b.type === 'text') {
+                    let textHtml = b.content;
+                    // Strip empty paragraphs and breaks
+                    textHtml = textHtml.replace(/<p[^>]*>\s*(<strong>\s*)?(<br\s*\/?>|&nbsp;|\s*)*(<\/strong>\s*)?<\/p>/gi, '');
+                    textHtml = textHtml.replace(/\s*class=["']isSelectedEnd["']/gi, '');
+                    // Convert double <br> into paragraph breaks
+                    textHtml = textHtml.replace(/(<br\s*\/?>\s*){2,}/gi, '</p><p>');
+                    return `<div class="text-block" style="font-size: 1.15rem; color: #374151; line-height: 1.85; margin-bottom: 1.5rem;">${textHtml}</div>`;
+                }
+                if (b.type === 'image') {
+                    return `<figure style="margin: 2.5rem 0; text-align: center;"><img src="${b.content}" alt="${b.caption || n.title}" loading="lazy" style="width: 100%; max-height: 550px; object-fit: cover; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.06);">${b.caption ? `<figcaption style="font-size: 0.9rem; color: #6b7280; margin-top: 0.75rem; text-align: center; font-style: italic;">${b.caption}</figcaption>` : ''}</figure>`;
+                }
                 return '';
-            }).join('\n');
+            }).filter(Boolean).join('\n');
         } catch(e) {}
+
+        // Other news recommendations (2 items)
+        const otherNews = news.filter(item => item.id !== n.id).slice(0, 2);
+        let recommendationsHtml = '';
+        if (otherNews.length > 0) {
+            recommendationsHtml = `
+            <div style="margin-top: 5rem; padding-top: 3.5rem; border-top: 1px solid #e5e7eb;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                    <div>
+                        <span style="font-size: 0.85rem; font-weight: 700; color: #64b000; text-transform: uppercase; letter-spacing: 0.5px;">Fler artiklar</span>
+                        <h3 style="font-size: 1.75rem; font-weight: 800; color: #111827; font-family: 'Outfit', sans-serif; margin-top: 0.25rem;">Läs mer från Mathörnet</h3>
+                    </div>
+                    <a href="nyheter" style="color: #64b000; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.95rem;">
+                        <span>Visa alla nyheter</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                    </a>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                    ${otherNews.map(o => {
+                        const oDate = o.createdAt || new Date();
+                        const oDateStr = `${oDate.getDate().toString().padStart(2, '0')} ${months[oDate.getMonth()]} ${oDate.getFullYear()}`;
+                        return `
+                        <a href="${o.slug}" style="background: #fff; border-radius: 16px; border: 1px solid rgba(0,0,0,0.06); overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.03); display: flex; flex-direction: column; text-decoration: none; transition: transform 0.2s ease;">
+                            <div style="height: 180px; overflow: hidden;">
+                                <img src="${o.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${o.title}" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+                            </div>
+                            <div style="padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1;">
+                                <span style="font-size: 0.8rem; color: #6b7280; margin-bottom: 0.5rem;">${oDateStr}</span>
+                                <h4 style="font-size: 1.2rem; font-weight: 700; color: #111827; line-height: 1.35; font-family: 'Outfit', sans-serif; margin-bottom: 0.5rem;">${o.title}</h4>
+                                <span style="color: #64b000; font-weight: 700; font-size: 0.9rem; margin-top: auto; display: inline-flex; align-items: center; gap: 4px;">Läs inlägg →</span>
+                            </div>
+                        </a>`;
+                    }).join('')}
+                </div>
+            </div>`;
+        }
 
         const newsHtml = `<!DOCTYPE html>
 <html lang="sv">
@@ -751,47 +816,103 @@ ${(() => {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${n.title} | Mathörnet</title>
-    <meta name="description" content="${n.metaDescription || ''}">
+    <meta name="description" content="${n.metaDescription || n.excerpt || ''}">
     <meta property="og:title" content="${n.title} | Mathörnet">
-    <meta property="og:description" content="${n.metaDescription || ''}">
+    <meta property="og:description" content="${n.metaDescription || n.excerpt || ''}">
     <meta property="og:image" content="${n.featuredImage || 'img/mathornet_logo_ny_transparent.png'}">
     <meta property="og:type" content="article">
-    <link rel="stylesheet" href="style_v5.css">
+    <link rel="stylesheet" href="style_v5.css?v=8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .news-article-container {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        .copy-link-btn:hover {
+            background-color: #f3f4f6 !important;
+            border-color: #d1d5db !important;
+        }
+    </style>
 </head>
-<body>
+<body style="background-color: #f9fafb;">
     ${headerStr}
 
-    <main style="background-color: #fcfcfc; padding-bottom: 6rem;">
-        <!-- NEW FULL-WIDTH HERO SECTION -->
-        <header style="position: relative; width: 100%; min-height: 55vh; display: flex; align-items: center; justify-content: center; background: url('${n.featuredImage || ''}') center/cover no-repeat; padding: 6rem 2rem; margin-bottom: 4rem;">
-            <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.5);"></div>
-            <div style="position: relative; text-align: center; color: #fff; z-index: 1; max-width: 1400px; width: 100%; margin-top: 4rem; padding: 0 1rem;">
-                <h1 style="font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; line-height: 1.15; margin-bottom: 1.5rem; text-shadow: 0 2px 10px rgba(0,0,0,0.3); font-family: 'Outfit', sans-serif;">${n.title}</h1>
-                <div class="news-meta" style="font-size: 1.1rem; font-weight: 500; display: flex; gap: 0.8rem; align-items: center; justify-content: center; text-shadow: 0 1px 5px rgba(0,0,0,0.5);">
-                    <span class="category">Nyhet</span>
-                    <span class="divider" style="color: rgba(255,255,255,0.7);">|</span>
-                    <span class="date">${dateStr}</span>
+    <main style="padding-top: 2.5rem; padding-bottom: 6rem;">
+        <div class="news-article-container">
+            <!-- Navigation bar / Breadcrumbs -->
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                <a href="nyheter" style="display: inline-flex; align-items: center; gap: 0.5rem; color: #4b5563; text-decoration: none; font-size: 0.95rem; font-weight: 600; padding: 8px 16px; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 50px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); transition: all 0.2s ease;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
+                    <span>Tillbaka till alla nyheter</span>
+                </a>
+                <div style="font-size: 0.85rem; color: #9ca3af; display: flex; align-items: center; gap: 0.4rem;">
+                    <a href="mathornet" style="color: #6b7280; text-decoration: none;">Hem</a>
+                    <span>/</span>
+                    <a href="nyheter" style="color: #6b7280; text-decoration: none;">Nyheter</a>
                 </div>
             </div>
-        </header>
 
-        <div class="container" style="max-width: 850px; margin: 0 auto; padding: 0 1.5rem;">
-            <div class="breadcrumbs" style="font-size: 0.9rem; color: #888; margin-bottom: 2.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                <a href="mathornet" style="color: #666; text-decoration: none; font-weight: 500;">Hemsida</a> <span style="color: #ccc;">/</span> 
-                <a href="nyheter" style="color: #666; text-decoration: none; font-weight: 500;">Nyheter</a> <span style="color: #ccc;">/</span> 
-                <span style="color: #111; font-weight: 600;">${n.title}</span>
-            </div>
+            <!-- Article Main Card -->
+            <article style="background: #ffffff; padding: clamp(2rem, 5vw, 4rem); border-radius: 28px; box-shadow: 0 4px 25px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.05);">
+                <!-- Meta tags row -->
+                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.25rem;">
+                    <span style="background: rgba(100, 176, 0, 0.12); color: #4d8e00; padding: 4px 14px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Nyhet</span>
+                    <span style="display: inline-flex; align-items: center; gap: 0.4rem; color: #6b7280; font-size: 0.95rem; font-weight: 500;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect><line x1="16" x2="16" y1="2" y2="6"></line><line x1="8" x2="8" y1="2" y2="6"></line><line x1="3" x2="21" y1="10" y2="10"></line></svg>
+                        ${dateStr}
+                    </span>
+                    <span style="color: #d1d5db;">•</span>
+                    <span style="display: inline-flex; align-items: center; gap: 0.4rem; color: #6b7280; font-size: 0.95rem; font-weight: 500;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        2 min läsning
+                    </span>
+                </div>
 
-            <article style="background: #fff; padding: clamp(2rem, 5vw, 4rem); border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.03);">
-                ${n.excerpt ? `<p style="font-size: 1.35rem; color: #444; line-height: 1.7; font-weight: 500; margin-bottom: 3rem; font-family: 'Outfit', sans-serif;">${n.excerpt}</p>` : ''}
-                
-                <div class="article-content" style="font-size: 1.15rem; color: #333; line-height: 1.8;">
+                <!-- Title -->
+                <h1 style="font-size: clamp(2.25rem, 5vw, 3.25rem); font-weight: 800; line-height: 1.2; color: #111827; margin: 0 0 1.5rem 0; font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;">
+                    ${n.title}
+                </h1>
+
+                <!-- Ingress / Excerpt (styled lead quote) -->
+                ${n.excerpt ? `
+                <div style="font-size: 1.25rem; line-height: 1.7; color: #374151; font-weight: 500; border-left: 4px solid #64b000; padding: 1.25rem 1.5rem; background: #fbfdf9; border-radius: 0 14px 14px 0; margin-bottom: 2.5rem;">
+                    ${n.excerpt}
+                </div>` : ''}
+
+                <!-- Featured Image -->
+                ${n.featuredImage ? `
+                <div style="margin: 2rem 0 3rem; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.06); max-height: 500px;">
+                    <img src="${n.featuredImage}" alt="${n.title}" style="width: 100%; height: 100%; max-height: 500px; object-fit: cover; display: block;">
+                </div>` : ''}
+
+                <!-- Article Content Blocks -->
+                <div class="article-content">
                     ${blocksHtml}
                 </div>
-        </article>
+
+                <!-- Article Bottom Share & Actions -->
+                <div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #f3f4f6; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <span style="font-size: 0.9rem; font-weight: 700; color: #374151;">Dela inlägg:</span>
+                        <button class="copy-link-btn" onclick="navigator.clipboard.writeText(window.location.href); alert('Länk kopierad till urklipp!');" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 7px 14px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 0.85rem; font-weight: 600; color: #4b5563; cursor: pointer; transition: all 0.2s;">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                            Kopiera länk
+                        </button>
+                    </div>
+
+                    <a href="nyheter" style="display: inline-flex; align-items: center; gap: 0.4rem; color: #64b000; font-weight: 700; text-decoration: none; font-size: 0.95rem;">
+                        <span>Alla nyheter</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                    </a>
+                </div>
+            </article>
+
+            <!-- More news recommendations -->
+            ${recommendationsHtml}
+        </div>
     </main>
 
     ${footerStr}

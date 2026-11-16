@@ -578,24 +578,97 @@ ul {
     object-fit: cover;
 }
 
+/* SINGLE NEWS ARTICLE TYPOGRAPHY */
 .article-content {
-    padding: 2rem;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
+    display: block;
+    width: 100%;
+    font-size: 1.15rem;
+    line-height: 1.85;
+    color: #374151;
+}
+
+.article-content h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #111827;
+    margin-top: 2.25rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: -0.01em;
 }
 
 .article-content h3 {
-    font-size: 1.25rem;
+    font-size: 1.4rem;
     font-weight: 700;
-    margin-bottom: 1rem;
-    line-height: 1.4;
+    color: #111827;
+    margin-top: 1.75rem;
+    margin-bottom: 0.6rem;
+    line-height: 1.35;
+    font-family: 'Outfit', sans-serif;
+}
+
+.article-content h2:first-child,
+.article-content h3:first-child {
+    margin-top: 0 !important;
 }
 
 .article-content p {
+    font-size: 1.15rem;
+    color: #374151;
+    line-height: 1.85;
+    margin-top: 0;
+    margin-bottom: 1.25rem;
+}
+
+.article-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* Hide empty paragraphs and empty break tags */
+.article-content p:empty,
+.article-content p > br:only-child,
+.article-content p > strong:only-child > br:only-child {
+    display: none !important;
+}
+
+/* Visible, clickable links inside news content */
+.article-content a {
+    color: #4d8e00 !important;
+    text-decoration: underline !important;
+    text-decoration-color: rgba(100, 176, 0, 0.45) !important;
+    text-decoration-thickness: 2px !important;
+    text-underline-offset: 3px !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+    padding: 1px 3px !important;
+    border-radius: 4px !important;
+}
+
+.article-content a:hover {
+    color: #356300 !important;
+    text-decoration-color: #356300 !important;
+    background-color: rgba(100, 176, 0, 0.1) !important;
+}
+
+.article-content figure {
+    margin: 2.5rem 0;
+    text-align: center;
+}
+
+.article-content figure img {
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    max-width: 100%;
+    height: auto;
+}
+
+.article-content figcaption {
     font-size: 0.9rem;
-    color: #555;
-    margin-bottom: 1.5rem;
+    color: #6b7280;
+    margin-top: 0.5rem;
+    font-style: italic;
 }
 
 .article-tags {
@@ -2326,7 +2399,7 @@ body {
 /* Active State (Zoomed In) */
 .teza-slide.swiper-slide-active .teza-product-link::before {
     transform: translate(-50%, -50%) scale(1.05) rotate(45deg); /* Mindre scale så den inte blir FÖR dominant mot titeln */
-    opacity: 0.45; /* Increased opacity for more visible splash */
+    opacity: 0.42; /* Ljusare mörkgrön färg för den inre formen */
 }
 
 .teza-slide.swiper-slide-active .teza-product-link::after {

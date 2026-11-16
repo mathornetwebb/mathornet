@@ -8,7 +8,14 @@ import path from 'path';
 
 async function processImage(inputBuffer: Buffer): Promise<{ buffer: Buffer; isPng: boolean }> {
   try {
-    const img = sharp(inputBuffer);
+    // Auto-orient according to EXIF and pre-scale if very large to prevent memory/timeout issues
+    let img = sharp(inputBuffer).rotate();
+    const meta = await img.metadata();
+    
+    if ((meta.width && meta.width > 1200) || (meta.height && meta.height > 1200)) {
+      img = img.resize({ width: 1200, height: 1200, fit: 'inside', withoutEnlargement: true });
+    }
+
     const { data, info } = await img.ensureAlpha().raw().toBuffer({ resolveWithObject: true });
     const { width, height } = info;
 
@@ -98,11 +105,19 @@ async function processImage(inputBuffer: Buffer): Promise<{ buffer: Buffer; isPn
     }
 
     // Trim transparent margins and enforce fixed maximum dimensions (600x600 fit inside)
-    const outBuffer = await sharp(processedData, { raw: { width, height, channels: 4 } })
-      .trim()
-      .resize({ width: 600, height: 600, fit: 'inside', withoutEnlargement: true })
-      .png({ compressionLevel: 8 })
-      .toBuffer();
+    let outBuffer: Buffer;
+    try {
+      outBuffer = await sharp(processedData, { raw: { width, height, channels: 4 } })
+        .trim()
+        .resize({ width: 600, height: 600, fit: 'inside', withoutEnlargement: true })
+        .png({ compressionLevel: 8 })
+        .toBuffer();
+    } catch {
+      outBuffer = await sharp(processedData, { raw: { width, height, channels: 4 } })
+        .resize({ width: 600, height: 600, fit: 'inside', withoutEnlargement: true })
+        .png({ compressionLevel: 8 })
+        .toBuffer();
+    }
 
     return { buffer: outBuffer, isPng: true };
   } catch (err) {
@@ -125,7 +140,8 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Inget fil hittades' }, { status: 400 });
     }
 
-    if (!file.type.startsWith('image/')) {
+    const isImage = file.type.startsWith('image/') || /\.(png|jpe?g|webp|heic|heif|avif|gif)$/i.test(file.name);
+    if (!isImage) {
       return NextResponse.json({ error: 'Ogiltigt filformat. Endast bilder tillåts.' }, { status: 400 });
     }
 
@@ -138,26 +154,19 @@ export async function POST(req: Request) {
     const ext = isPng ? '.png' : path.extname(file.name) || '.png';
     const uniqueName = `upload_${Date.now()}_${safeBaseName}${ext}`;
     
-    // Always save to public/uploads as permanent reliable local static file
-    const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
-    if (!fs.existsSync(uploadsDir)) {
-      fs.mkdirSync(uploadsDir, { recursive: true });
-    }
-    fs.writeFileSync(path.join(uploadsDir, uniqueName), processedBuffer);
+    let returnUrl: string | null = null;
 
-    let returnUrl = `uploads/${uniqueName}`;
-
-    // Try uploading to Supabase if configured
+    // 1. Upload to Supabase Storage (primary cloud storage for persistence)
     try {
       const { data, error } = await supabaseAdmin
         .storage
         .from('images')
         .upload(uniqueName, processedBuffer, {
-          contentType: isPng ? 'image/png' : file.type,
+          contentType: isPng ? 'image/png' : (file.type || 'image/png'),
           upsert: true
         });
 
-      if (!error) {
+      if (!error && data) {
         const { data: publicUrlData } = supabaseAdmin
           .storage
           .from('images')
@@ -165,9 +174,29 @@ export async function POST(req: Request) {
         if (publicUrlData?.publicUrl) {
           returnUrl = publicUrlData.publicUrl;
         }
+      } else if (error) {
+        console.error('Supabase upload error:', error);
       }
-    } catch (e) {
-      console.log('Supabase storage optional fallback, using local upload:', returnUrl);
+    } catch (supabaseErr) {
+      console.error('Supabase storage exception:', supabaseErr);
+    }
+
+    // 2. Also save to public/uploads locally if writable (safe fallback for local development)
+    try {
+      const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
+      if (!fs.existsSync(uploadsDir)) {
+        fs.mkdirSync(uploadsDir, { recursive: true });
+      }
+      fs.writeFileSync(path.join(uploadsDir, uniqueName), processedBuffer);
+      if (!returnUrl) {
+        returnUrl = `uploads/${uniqueName}`;
+      }
+    } catch (fsErr) {
+      console.log('Local disk write skipped (normal on read-only serverless environments like Vercel)');
+    }
+
+    if (!returnUrl) {
+      return NextResponse.json({ error: 'Kunde inte spara bilden till lagringen. Kontrollera behörigheter.' }, { status: 500 });
     }
 
     return NextResponse.json({ url: returnUrl });

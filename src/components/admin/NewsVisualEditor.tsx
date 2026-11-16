@@ -99,7 +99,17 @@ export default function NewsVisualEditor({
       <input type="hidden" name="featuredImage" value={featuredImage} />
       <input type="hidden" name="seoTitle" value={seoTitle} />
       <input type="hidden" name="metaDescription" value={metaDescription} />
-      <input type="hidden" name="content" value={JSON.stringify(blocks)} />
+      <input type="hidden" name="content" value={JSON.stringify(
+        (() => {
+          const valid = blocks.filter(b => {
+            if (!b.content) return false;
+            const textOnly = b.content.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim();
+            if (b.type === 'image') return b.content.trim().length > 0;
+            return textOnly.length > 0;
+          });
+          return valid.length > 0 ? valid : [{ id: '1', type: 'text', content: '' }];
+        })()
+      )} />
 
       {/* LEFT SIDEBAR - SETTINGS */}
       <div className="w-full md:w-80 flex-shrink-0 space-y-6">
