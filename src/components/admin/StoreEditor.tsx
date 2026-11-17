@@ -65,9 +65,10 @@ export default function StoreEditor({ initialData }: StoreEditorProps) {
 
       if (!res.ok) throw new Error("Kunde inte spara butiken");
 
-      // Trigger rebuild
-      await fetch('/api/rebuild', { method: 'POST' }).catch(() => {});
+      // Trigger rebuild in background so UI responds instantly
+      fetch('/api/rebuild', { method: 'POST' }).catch(() => {});
 
+      if (typeof window !== 'undefined') (window as any).__isFormDirty = false;
       router.push("/admin/content/stores");
       router.refresh();
     } catch (error) {
@@ -80,15 +81,18 @@ export default function StoreEditor({ initialData }: StoreEditorProps) {
 
   const handleDelete = async () => {
     if (!initialData?.id) return;
-    if (!window.confirm('Är du säker på att du vill radera detta inlägg? Det går inte att ångra.')) return;
+    if (!window.confirm('Är du säker på att du vill radera denna butik? Det går inte att ångra.')) return;
     
     setIsSaving(true);
     try {
       const res = await fetch(`/api/stores/${initialData.id}`, { method: 'DELETE' });
       if (!res.ok) throw new Error("Kunde inte radera butiken");
       
-      await fetch('/api/rebuild', { method: 'POST' }).catch(() => {});
-      router.push("/admin/content/stores");
+      // Trigger rebuild in background
+      fetch('/api/rebuild', { method: 'POST' }).catch(() => {});
+      
+      if (typeof window !== 'undefined') (window as any).__isFormDirty = false;
+      router.replace("/admin/content/stores");
       router.refresh();
     } catch (error) {
       console.error(error);
@@ -98,63 +102,82 @@ export default function StoreEditor({ initialData }: StoreEditorProps) {
   };
 
   return (
-    <div className="max-w-3xl mx-auto space-y-8 pb-20 relative">
-      <div className="flex items-center justify-between">
+    <div className="max-w-3xl mx-auto space-y-6 pb-20 relative cms-animate-fade-in">
+      {/* Sticky Top Header Bar */}
+      <div className="sticky top-4 z-20 flex items-center justify-between bg-slate-900/90 backdrop-blur-md text-white rounded-2xl px-6 py-3.5 shadow-xl border border-slate-800">
         <div className="flex items-center gap-4">
-          <Link href="/admin/content/stores" className="p-2 bg-white rounded-full hover:bg-gray-50 transition-colors">
-            <ArrowLeft className="w-5 h-5 text-gray-600" />
+          <Link 
+            href="/admin/content/stores" 
+            className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-xl transition-colors"
+          >
+            <ArrowLeft className="w-5 h-5" />
           </Link>
-          <h1 className="text-3xl font-bold text-gray-900">
-            {initialData ? "Redigera butik" : "Ny butik"}
-          </h1>
+          <div>
+            <h1 className="text-lg font-bold font-outfit tracking-tight">
+              {initialData ? "Redigera butik" : "Ny butik"}
+            </h1>
+            <p className="text-xs text-slate-400">
+              {formData.name || "Namnlös butik"}
+            </p>
+          </div>
         </div>
         <button
           onClick={handleSave}
           disabled={isSaving || !formData.name || !formData.lat || !formData.lng}
-          className="flex items-center gap-2 px-6 py-2.5 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors"
+          className="flex items-center gap-2 px-5 py-2.5 bg-emerald-600 text-white rounded-xl text-xs font-bold tracking-wide hover:bg-emerald-500 disabled:opacity-50 transition-all shadow-sm active:scale-[0.98] cursor-pointer"
         >
-          <Save className="w-5 h-5" />
+          <Save className="w-4 h-4" />
           {isSaving ? "Sparar..." : "Spara butik"}
         </button>
       </div>
 
-      <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-6">
+      <div className="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/80 shadow-xs space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Namn på butik / återförsäljare *</label>
+          <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+            Namn på butik / återförsäljare *
+          </label>
           <input
             type="text"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none font-medium text-lg text-slate-900"
+            className="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none font-bold text-base text-slate-900 transition-all"
             placeholder="T.ex. ICA Maxi Erikslund"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Adress</label>
-          <input
-            type="text"
-            value={formData.address}
-            onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-            className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-slate-900"
-            placeholder="T.ex. Stora gatan 1, 123 45 Stad"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-3">Öppettider</label>
-          <div className="space-y-3">
+          <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+            Adress
+          </label>
+          <input
+            type="text"
+            value={formData.address}
+            onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+            className="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none text-sm text-slate-900 transition-all"
+            placeholder="T.ex. Stora gatan 1, 123 45 Stad"
+          />
+        </div>
+
+        <div className="pt-2">
+          <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">
+            Öppettider
+          </label>
+          <div className="space-y-2.5">
             {openingHours.map((dayData: any, index: number) => (
-              <div key={dayData.day} className="flex items-center gap-4 bg-gray-50 p-3 rounded-xl border border-gray-100">
-                <div className="w-24 font-medium text-gray-800">{dayData.day}</div>
+              <div 
+                key={dayData.day} 
+                className="flex items-center gap-3 bg-slate-50/80 p-3 rounded-xl border border-slate-200/70"
+              >
+                <div className="w-24 text-xs font-bold text-slate-800">{dayData.day}</div>
                 
-                <label className="flex items-center gap-2 cursor-pointer">
+                <label className="flex items-center gap-2 cursor-pointer select-none">
                   <input
                     type="checkbox"
                     checked={dayData.isClosed}
                     onChange={(e) => handleDayChange(index, "isClosed", e.target.checked)}
-                    className="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+                    className="w-4 h-4 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500 accent-emerald-600"
                   />
-                  <span className="text-sm text-gray-600">Stängt</span>
+                  <span className="text-xs font-semibold text-slate-600">Stängt</span>
                 </label>
 
                 {!dayData.isClosed ? (
@@ -163,18 +186,18 @@ export default function StoreEditor({ initialData }: StoreEditorProps) {
                       type="time"
                       value={dayData.open}
                       onChange={(e) => handleDayChange(index, "open", e.target.value)}
-                      className="px-3 py-1.5 border border-gray-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-sm text-slate-900 font-medium"
+                      className="px-2.5 py-1.5 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-xs text-slate-900 font-semibold bg-white"
                     />
-                    <span className="text-gray-500">-</span>
+                    <span className="text-slate-400 text-xs font-bold">-</span>
                     <input
                       type="time"
                       value={dayData.close}
                       onChange={(e) => handleDayChange(index, "close", e.target.value)}
-                      className="px-3 py-1.5 border border-gray-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-sm text-slate-900 font-medium"
+                      className="px-2.5 py-1.5 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-xs text-slate-900 font-semibold bg-white"
                     />
                   </div>
                 ) : (
-                  <div className="ml-auto text-sm font-medium text-red-500 bg-red-50 px-3 py-1.5 rounded-lg border border-red-100">
+                  <div className="ml-auto text-xs font-bold text-rose-600 bg-rose-50 px-2.5 py-1 rounded-lg border border-rose-200/60">
                     Stängt hela dagen
                   </div>
                 )}
@@ -183,44 +206,48 @@ export default function StoreEditor({ initialData }: StoreEditorProps) {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 pt-4 border-t border-gray-100">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-slate-100">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Latitud *</label>
+            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">
+              Latitud *
+            </label>
             <input
               type="number"
               step="any"
               value={formData.lat}
               onChange={(e) => setFormData({ ...formData, lat: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-slate-900"
+              className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none text-xs font-mono text-slate-900 bg-slate-50/50"
               placeholder="T.ex. 59.3293"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Longitud *</label>
+            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">
+              Longitud *
+            </label>
             <input
               type="number"
               step="any"
               value={formData.lng}
               onChange={(e) => setFormData({ ...formData, lng: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-slate-900"
+              className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none text-xs font-mono text-slate-900 bg-slate-50/50"
               placeholder="T.ex. 18.0686"
             />
           </div>
         </div>
         
-        <p className="text-xs text-gray-500">
-          * Du hittar koordinater via Google Maps: högerklicka på en plats på kartan och klicka på koordinaterna (högst upp i listan) för att kopiera dem.
+        <p className="text-[11px] text-slate-400 leading-relaxed">
+          * Du hittar koordinater via Google Maps: högerklicka på butikens plats på kartan och klicka på siffrorna (koordinaterna) högst upp i menyn för att kopiera dem.
         </p>
 
-        <div className="pt-4 border-t border-gray-100">
-          <label className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer w-fit border border-gray-100">
+        <div className="pt-4 border-t border-slate-100">
+          <label className="flex items-center gap-3 p-3.5 bg-slate-50 rounded-xl cursor-pointer w-fit border border-slate-200/60 hover:bg-slate-100/60 transition-colors">
             <input
               type="checkbox"
               checked={formData.published}
               onChange={(e) => setFormData({ ...formData, published: e.target.checked })}
-              className="w-5 h-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+              className="w-4 h-4 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500 accent-emerald-600"
             />
-            <span className="font-medium text-gray-900">Publicerad på kartan</span>
+            <span className="text-xs font-bold text-slate-800">Publicerad på kartan</span>
           </label>
         </div>
       </div>
@@ -230,10 +257,10 @@ export default function StoreEditor({ initialData }: StoreEditorProps) {
           <button 
             onClick={handleDelete}
             disabled={isSaving}
-            className="flex items-center gap-2 bg-red-100 text-red-600 hover:text-red-700 hover:bg-red-200 font-medium px-4 py-3 rounded-xl transition-colors shadow-sm disabled:opacity-50"
+            className="flex items-center gap-2 bg-white text-rose-600 hover:text-rose-700 hover:bg-rose-50 border border-rose-200 font-bold text-xs px-4 py-2.5 rounded-xl transition-all shadow-md active:scale-95 disabled:opacity-50 cursor-pointer"
           >
-            <Trash2 className="w-5 h-5" />
-            Ta bort inlägg
+            <Trash2 className="w-4 h-4" />
+            Ta bort butik
           </button>
         </div>
       )}

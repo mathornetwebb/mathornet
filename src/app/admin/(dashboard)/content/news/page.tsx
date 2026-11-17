@@ -1,7 +1,7 @@
 
 import Link from 'next/link';
 import prisma from '@/lib/prisma';
-import { Edit, Plus, Trash2 } from 'lucide-react';
+import { Edit, Plus, BookOpen } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,54 +11,114 @@ export default async function NyheterListPage() {
   });
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
+    <div className="space-y-6 max-w-7xl mx-auto cms-animate-fade-in">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200/80">
         <div>
-          <h1 className="text-3xl font-extrabold text-slate-900 font-outfit">Nyheter</h1>
-          <p className="text-slate-500 mt-1">Hantera nyheter på hemsidan.</p>
+          <div className="flex items-center gap-3">
+            <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight font-outfit">Nyheter</h1>
+            <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
+              {items.length} st
+            </span>
+          </div>
+          <p className="text-slate-500 text-sm mt-1">Hantera artiklar, recepttips och företagsnyheter.</p>
         </div>
         <Link 
           href="/admin/content/news/new" 
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-medium transition-colors shadow-sm shadow-blue-600/20"
+          className="inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-5 py-2.5 rounded-xl text-xs font-bold tracking-wide shadow-sm hover:shadow transition-all duration-200 active:scale-[0.98]"
         >
-          <Plus className="w-5 h-5" />
-          Lägg till ny
+          <Plus className="w-4 h-4" />
+          <span>Lägg till nyhet</span>
         </Link>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="bg-slate-50 border-b border-slate-100">
-              <th className="py-4 px-6 text-xs font-bold text-slate-500 uppercase tracking-wider">Titel/Namn</th>
-              <th className="py-4 px-6 text-xs font-bold text-slate-500 uppercase tracking-wider">Skapad</th>
-              <th className="py-4 px-6 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">Åtgärd</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100">
-            {items.map((item) => (
-              <tr key={item.id} className="hover:bg-slate-50/50 transition-colors">
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">{item.title}</td>
-                <td className="py-4 px-6 text-slate-500">{new Date(item.createdAt).toLocaleDateString('sv-SE')}</td>
-                <td className="py-4 px-6 text-right">
-                  <div className="flex justify-end gap-2">
-                    <Link href={`/admin/content/news/${item.id}`} className="p-2 text-slate-400 hover:text-blue-600 bg-white hover:bg-blue-50 rounded-lg transition-colors border border-transparent hover:border-blue-100">
-                      <Edit className="w-4 h-4" />
+      {/* Table Container */}
+      <div className="bg-white rounded-2xl shadow-xs border border-slate-200/80 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-slate-50/80 border-b border-slate-200/80">
+                <th className="py-3.5 px-6 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Artikel / Rubrik</th>
+                <th className="py-3.5 px-6 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Utdrag</th>
+                <th className="py-3.5 px-6 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Skapad</th>
+                <th className="py-3.5 px-6 text-[11px] font-bold text-slate-500 uppercase tracking-wider text-right">Åtgärd</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {items.map((item) => (
+                <tr key={item.id} className="hover:bg-slate-50/60 transition-colors group">
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-3.5">
+                      <div className="w-12 h-12 rounded-xl bg-slate-100 border border-slate-200/80 overflow-hidden shrink-0 flex items-center justify-center">
+                        {item.featuredImage ? (
+                          <img
+                            src={item.featuredImage.startsWith('http') ? item.featuredImage : `/${item.featuredImage}`}
+                            alt={item.title}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <BookOpen className="w-5 h-5 text-slate-400" />
+                        )}
+                      </div>
+                      <div className="min-w-0">
+                        <Link 
+                          href={`/admin/content/news/${item.id}`} 
+                          className="font-bold text-sm text-slate-900 group-hover:text-blue-600 transition-colors truncate block"
+                        >
+                          {item.title}
+                        </Link>
+                        <span className="text-xs text-slate-400 font-mono block truncate">
+                          /{item.slug}
+                        </span>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 max-w-xs">
+                    <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                      {item.excerpt || '—'}
+                    </p>
+                  </td>
+                  <td className="py-4 px-6 whitespace-nowrap text-xs text-slate-500">
+                    {new Date(item.createdAt).toLocaleDateString('sv-SE', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric'
+                    })}
+                  </td>
+                  <td className="py-4 px-6 text-right whitespace-nowrap">
+                    <Link 
+                      href={`/admin/content/news/${item.id}`} 
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200/80 rounded-lg transition-all"
+                    >
+                      <Edit className="w-3.5 h-3.5" />
+                      <span>Redigera</span>
                     </Link>
-                  </div>
-                </td>
-              </tr>
-            ))}
-            {items.length === 0 && (
-              <tr>
-                <td colSpan={3} className="py-12 text-center text-slate-500">
-                  Inga nyheter hittades.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+                  </td>
+                </tr>
+              ))}
+              {items.length === 0 && (
+                <tr>
+                  <td colSpan={4} className="py-16 text-center">
+                    <div className="w-12 h-12 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-3">
+                      <BookOpen className="w-6 h-6" />
+                    </div>
+                    <p className="font-bold text-slate-800 text-sm">Inga nyheter hittades</p>
+                    <p className="text-xs text-slate-400 mt-1 mb-4">Kom igång genom att skriva din första nyhetsartikel.</p>
+                    <Link
+                      href="/admin/content/news/new"
+                      className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition-all"
+                    >
+                      <Plus className="w-3.5 h-3.5" />
+                      <span>Skriv nyhet</span>
+                    </Link>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
 }
+

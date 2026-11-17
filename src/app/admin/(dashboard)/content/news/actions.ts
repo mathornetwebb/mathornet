@@ -21,11 +21,14 @@ export async function saveNewsAction(isNewVal: boolean, idVal: string, formData:
     await prisma.news.update({ where: { id: idVal }, data });
   }
   
-  await triggerRebuild();
+  // Trigger rebuild in background
+  triggerRebuild().catch(console.error);
   redirect('/admin/content/news');
 }
 
 export async function deleteNewsAction(idVal: string) {
   await prisma.news.delete({ where: { id: idVal } });
+  // Trigger rebuild in background
+  triggerRebuild().catch(console.error);
   redirect('/admin/content/news');
 }

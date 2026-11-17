@@ -48,3 +48,38 @@ body {
   margin-top: 1.25rem !important;
   margin-bottom: 0.75rem !important;
 }
+
+/* Modern CMS Animations & Utilities */
+@keyframes cmsFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cmsPulseGlow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.15); }
+}
+
+.cms-animate-fade-in {
+  animation: cmsFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.cms-pulse-glow {
+  animation: cmsPulseGlow 2.5s ease-in-out infinite;
+}
+
+/* Custom Sleek Scrollbar for CMS */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.4);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.6);
+}

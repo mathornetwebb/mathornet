@@ -122,7 +122,7 @@ export default function ProductVisualEditor({
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50 p-6 -m-6 rounded-2xl pb-20">
+    <div className="flex flex-col min-h-screen bg-slate-50 p-4 sm:p-6 -m-4 sm:-m-6 rounded-2xl pb-20 cms-animate-fade-in">
       {/* Hidden inputs for Form */}
       <input type="hidden" name="title" value={title} />
       <input type="hidden" name="slug" value={slug} />
@@ -137,24 +137,27 @@ export default function ProductVisualEditor({
       <input type="hidden" name="cookingInstructions" value={JSON.stringify(cooking)} />
 
       {/* HEADER */}
-      <div className="sticky top-4 z-20 flex justify-between items-center bg-slate-900 text-white rounded-2xl px-6 py-4 mb-8 shadow-xl">
+      <div className="sticky top-4 z-20 flex justify-between items-center bg-slate-900/90 backdrop-blur-md text-white rounded-2xl px-6 py-3.5 mb-6 shadow-xl border border-slate-800">
         <div className="flex items-center gap-4">
-          <Link href="/admin/content/products" className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
+          <Link href="/admin/content/products" className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-xl transition-colors">
             <ArrowLeft className="w-5 h-5" />
           </Link>
-          <h1 className="text-xl font-bold font-outfit">{isNew ? 'Skapa ny produkt' : 'Redigera produkt'}</h1>
+          <div>
+            <h1 className="text-lg font-bold font-outfit tracking-tight">{isNew ? 'Skapa ny produkt' : 'Redigera produkt'}</h1>
+            <p className="text-xs text-slate-400">{title || 'Namnlös produkt'}</p>
+          </div>
         </div>
-        <button type="submit" className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-xl text-sm font-bold transition-colors">
+        <button type="submit" className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2.5 rounded-xl text-xs font-bold tracking-wide transition-all shadow-sm active:scale-[0.98] cursor-pointer">
           <Save className="w-4 h-4" /> Spara Produkt
         </button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-6xl mx-auto w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 max-w-6xl mx-auto w-full">
         
         {/* LEFT COLUMN - MAIN INFO & IMAGE */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
-            <div className="mb-6">
+          <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs space-y-5">
+            <div>
               <ImageUpload 
                 value={featuredImage} 
                 onChange={setFeaturedImage} 
@@ -162,45 +165,50 @@ export default function ProductVisualEditor({
               />
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-4 pt-2 border-t border-slate-100">
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Varumärke / Sortiment *</label>
+                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Varumärke / Sortiment *</label>
                 <div className="grid grid-cols-2 gap-3">
                   <button
                     type="button"
                     onClick={() => updateProductInfo('brand', 'mathornet')}
-                    className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl border-2 font-bold text-sm transition-all cursor-pointer ${
+                    className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl border-2 font-bold text-xs transition-all cursor-pointer ${
                       (productInfo.brand || 'mathornet') === 'mathornet'
-                        ? 'border-emerald-600 bg-emerald-50 text-emerald-900 shadow-sm ring-2 ring-emerald-600/20'
+                        ? 'border-emerald-600 bg-emerald-50 text-emerald-900 shadow-xs ring-2 ring-emerald-600/20'
                         : 'border-slate-200 bg-slate-50 text-slate-500 hover:border-slate-300'
                     }`}
                   >
-                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-600"></span>
+                    <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
                     Mathörnet
                   </button>
                   <button
                     type="button"
                     onClick={() => updateProductInfo('brand', 'ahalna')}
-                    className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl border-2 font-bold text-sm transition-all cursor-pointer ${
+                    className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl border-2 font-bold text-xs transition-all cursor-pointer ${
                       productInfo.brand === 'ahalna'
-                        ? 'border-rose-700 bg-rose-50 text-rose-950 shadow-sm ring-2 ring-rose-700/20'
+                        ? 'border-rose-700 bg-rose-50 text-rose-950 shadow-xs ring-2 ring-rose-700/20'
                         : 'border-slate-200 bg-slate-50 text-slate-500 hover:border-slate-300'
                     }`}
                   >
-                    <span className="w-2.5 h-2.5 rounded-full bg-rose-700"></span>
+                    <span className="w-2 h-2 rounded-full bg-rose-700"></span>
                     Ahalna
                   </button>
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Benämning *</label>
-                <input type="text" value={title} onChange={e => setTitle(e.target.value)} placeholder="T.ex. Kubbe Mosel..." className="w-full rounded-xl border border-slate-200 px-4 py-3 text-slate-900 font-bold focus:outline-none focus:ring-2 focus:border-blue-500 bg-slate-50" required />
+                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Benämning *</label>
+                <input type="text" value={title} onChange={e => setTitle(e.target.value)} placeholder="T.ex. Kubbe Mosel..." className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-slate-900 font-bold text-base focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 bg-white transition-all" required />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">URL-slug</label>
+                <input type="text" value={slug} onChange={e => setSlug(e.target.value)} placeholder="T.ex. kubbe-mosel" className="w-full rounded-xl border border-slate-200 px-3 py-2 text-slate-800 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 bg-slate-50 transition-all" />
               </div>
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+          <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs space-y-6">
             <h3 className="text-lg font-bold text-slate-900 font-outfit flex items-center gap-2 border-b border-slate-100 pb-3">
               <Package className="w-5 h-5 text-orange-400" /> Förpackningsinformation (Typ)
             </h3>

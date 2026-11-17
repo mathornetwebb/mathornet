@@ -1,20 +1,31 @@
 'use client';
 
 import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 export default function DirtyStateTracker() {
+  const pathname = usePathname();
+
+  useEffect(() => {
+    // Reset dirty state whenever navigating to a new route
+    if (typeof window !== 'undefined') {
+      (window as any).__isFormDirty = false;
+    }
+  }, [pathname]);
+
   useEffect(() => {
     const handleInput = (e: Event) => {
       const target = e.target as HTMLElement;
+      // Only track inputs inside a form or editor
+      if (!target.closest('form') && !target.closest('.editor-container') && !target.isContentEditable) return;
+
       if (
         target.tagName === 'INPUT' || 
         target.tagName === 'TEXTAREA' || 
         target.tagName === 'SELECT' || 
         target.isContentEditable
       ) {
-        // If it's a search input, ignore
         if (target.tagName === 'INPUT' && (target as HTMLInputElement).type === 'search') return;
-        
         (window as any).__isFormDirty = true;
       }
     };

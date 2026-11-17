@@ -63,9 +63,10 @@ export default function RecipeEditor({ initialData }: RecipeEditorProps) {
 
       if (!res.ok) throw new Error("Kunde inte spara receptet");
 
-      // Trigger rebuild
-      await fetch('/api/rebuild', { method: 'POST' }).catch(() => {});
+      // Trigger rebuild in background so UI responds instantly
+      fetch('/api/rebuild', { method: 'POST' }).catch(() => {});
 
+      if (typeof window !== 'undefined') (window as any).__isFormDirty = false;
       router.push("/admin/content/recipes");
       router.refresh();
     } catch (error) {
@@ -78,15 +79,18 @@ export default function RecipeEditor({ initialData }: RecipeEditorProps) {
 
   const handleDelete = async () => {
     if (!initialData?.id) return;
-    if (!window.confirm('Är du säker på att du vill radera detta inlägg? Det går inte att ångra.')) return;
+    if (!window.confirm('Är du säker på att du vill radera detta recept? Det går inte att ångra.')) return;
     
     setIsSaving(true);
     try {
       const res = await fetch(`/api/recipes/${initialData.id}`, { method: 'DELETE' });
       if (!res.ok) throw new Error("Kunde inte radera receptet");
       
-      await fetch('/api/rebuild', { method: 'POST' }).catch(() => {});
-      router.push("/admin/content/recipes");
+      // Trigger rebuild in background
+      fetch('/api/rebuild', { method: 'POST' }).catch(() => {});
+      
+      if (typeof window !== 'undefined') (window as any).__isFormDirty = false;
+      router.replace("/admin/content/recipes");
       router.refresh();
     } catch (error) {
       console.error(error);
@@ -96,32 +100,43 @@ export default function RecipeEditor({ initialData }: RecipeEditorProps) {
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-8 pb-20 relative">
-      <div className="flex items-center justify-between">
+    <div className="max-w-5xl mx-auto space-y-6 pb-20 relative cms-animate-fade-in">
+      {/* Sticky Top Header Bar */}
+      <div className="sticky top-4 z-20 flex items-center justify-between bg-slate-900/90 backdrop-blur-md text-white rounded-2xl px-6 py-3.5 shadow-xl border border-slate-800">
         <div className="flex items-center gap-4">
-          <Link href="/admin/content/recipes" className="p-2 bg-white rounded-full hover:bg-gray-50 transition-colors">
-            <ArrowLeft className="w-5 h-5 text-gray-600" />
+          <Link 
+            href="/admin/content/recipes" 
+            className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-xl transition-colors"
+          >
+            <ArrowLeft className="w-5 h-5" />
           </Link>
-          <h1 className="text-3xl font-bold text-gray-900">
-            {initialData ? "Redigera recept" : "Nytt recept"}
-          </h1>
+          <div>
+            <h1 className="text-lg font-bold font-outfit tracking-tight">
+              {initialData ? "Redigera recept" : "Nytt recept"}
+            </h1>
+            <p className="text-xs text-slate-400">
+              {formData.title || "Namnlöst recept"}
+            </p>
+          </div>
         </div>
         <button
           onClick={handleSave}
           disabled={isSaving || !formData.title}
-          className="flex items-center gap-2 px-6 py-2.5 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors"
+          className="flex items-center gap-2 px-5 py-2.5 bg-emerald-600 text-white rounded-xl text-xs font-bold tracking-wide hover:bg-emerald-500 disabled:opacity-50 transition-all shadow-sm active:scale-[0.98] cursor-pointer"
         >
-          <Save className="w-5 h-5" />
+          <Save className="w-4 h-4" />
           {isSaving ? "Sparar..." : "Spara recept"}
         </button>
       </div>
 
-      <div className="grid grid-cols-3 gap-8">
-        <div className="col-span-2 space-y-6">
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 space-y-6">
+          {/* Main Info */}
+          <div className="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/80 shadow-xs space-y-5">
+            <h2 className="text-base font-bold text-slate-900 font-outfit tracking-tight">Grundinformation</h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Titel</label>
+                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Titel *</label>
                 <input
                   type="text"
                   value={formData.title}
@@ -133,28 +148,38 @@ export default function RecipeEditor({ initialData }: RecipeEditorProps) {
                       slug: initialData ? formData.slug : title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, ""),
                     });
                   }}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-lg font-medium text-slate-900"
+                  className="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none text-base font-bold text-slate-900 transition-all"
                   placeholder="T.ex. Krämig Hummus"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Kort beskrivning (Visas på kortet)</label>
+                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Kort beskrivning (Visas på kortet)</label>
                 <textarea
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   rows={3}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-slate-900"
+                  className="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none text-sm text-slate-800 transition-all"
+                  placeholder="En kort och aptitretande beskrivning..."
                 />
               </div>
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-6">
-            <h2 className="text-xl font-bold text-gray-900">Ingredienser</h2>
-            <div className="space-y-4">
+          {/* Ingredients */}
+          <div className="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/80 shadow-xs space-y-5">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-base font-bold text-slate-900 font-outfit tracking-tight">Ingredienser</h2>
+                <p className="text-xs text-slate-500 mt-0.5">Lägg till mängd och råvaror</p>
+              </div>
+              <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600">
+                {ingredientsBlocks.length} st
+              </span>
+            </div>
+            <div className="space-y-3">
               {ingredientsBlocks.map((block, index) => (
-                <div key={block.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl border border-gray-100 group hover:border-gray-300 transition-colors">
-                  <div className="w-5 h-5 rounded-full border-2 border-gray-300 bg-white flex-shrink-0" />
+                <div key={block.id} className="flex items-center gap-3 p-2.5 px-3.5 bg-slate-50/80 rounded-xl border border-slate-200/70 group hover:border-slate-300 transition-all">
+                  <div className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
                   <input
                     type="text"
                     value={block.content}
@@ -164,38 +189,72 @@ export default function RecipeEditor({ initialData }: RecipeEditorProps) {
                       newBlocks[index].type = 'text';
                       setIngredientsBlocks(newBlocks);
                     }}
-                    className="flex-1 bg-transparent border-none outline-none text-slate-900 placeholder-gray-400 font-medium"
+                    className="flex-1 bg-transparent border-none outline-none text-slate-900 placeholder-slate-400 text-sm font-medium"
                     placeholder="T.ex. 800 g kycklingfilé..."
                   />
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2">
-                    <button type="button" onClick={() => {
-                      if (index === 0) return;
-                      const newBlocks = [...ingredientsBlocks];
-                      [newBlocks[index - 1], newBlocks[index]] = [newBlocks[index], newBlocks[index - 1]];
-                      setIngredientsBlocks(newBlocks);
-                    }} className="text-gray-400 hover:text-blue-500">↑</button>
-                    <button type="button" onClick={() => {
-                      if (index === ingredientsBlocks.length - 1) return;
-                      const newBlocks = [...ingredientsBlocks];
-                      [newBlocks[index], newBlocks[index + 1]] = [newBlocks[index + 1], newBlocks[index]];
-                      setIngredientsBlocks(newBlocks);
-                    }} className="text-gray-400 hover:text-blue-500">↓</button>
-                    <button type="button" onClick={() => setIngredientsBlocks(ingredientsBlocks.filter(b => b.id !== block.id))} className="text-gray-400 hover:text-red-500 ml-2">✕</button>
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5">
+                    <button 
+                      type="button" 
+                      onClick={() => {
+                        if (index === 0) return;
+                        const newBlocks = [...ingredientsBlocks];
+                        [newBlocks[index - 1], newBlocks[index]] = [newBlocks[index], newBlocks[index - 1]];
+                        setIngredientsBlocks(newBlocks);
+                      }} 
+                      className="p-1 text-slate-400 hover:text-slate-800 rounded text-xs font-bold"
+                      title="Flytta upp"
+                    >
+                      ↑
+                    </button>
+                    <button 
+                      type="button" 
+                      onClick={() => {
+                        if (index === ingredientsBlocks.length - 1) return;
+                        const newBlocks = [...ingredientsBlocks];
+                        [newBlocks[index], newBlocks[index + 1]] = [newBlocks[index + 1], newBlocks[index]];
+                        setIngredientsBlocks(newBlocks);
+                      }} 
+                      className="p-1 text-slate-400 hover:text-slate-800 rounded text-xs font-bold"
+                      title="Flytta ner"
+                    >
+                      ↓
+                    </button>
+                    <button 
+                      type="button" 
+                      onClick={() => setIngredientsBlocks(ingredientsBlocks.filter(b => b.id !== block.id))} 
+                      className="p-1 text-slate-400 hover:text-rose-600 rounded text-xs font-bold ml-1"
+                      title="Ta bort"
+                    >
+                      ✕
+                    </button>
                   </div>
                 </div>
               ))}
-              <button type="button" onClick={() => setIngredientsBlocks([...ingredientsBlocks, { id: Math.random().toString(), type: 'text', content: '' }])} className="text-sm font-bold text-blue-600 hover:text-blue-800">
+              <button 
+                type="button" 
+                onClick={() => setIngredientsBlocks([...ingredientsBlocks, { id: Math.random().toString(), type: 'text', content: '' }])} 
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 hover:text-emerald-800 py-2 px-3 rounded-lg hover:bg-emerald-50 transition-colors"
+              >
                 + Lägg till ingrediens
               </button>
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-6">
-            <h2 className="text-xl font-bold text-gray-900">Gör så här</h2>
-            <div className="space-y-4">
+          {/* Instructions */}
+          <div className="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/80 shadow-xs space-y-5">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-base font-bold text-slate-900 font-outfit tracking-tight">Gör så här</h2>
+                <p className="text-xs text-slate-500 mt-0.5">Steg-för-steg instruktioner</p>
+              </div>
+              <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600">
+                {instructionsBlocks.length} steg
+              </span>
+            </div>
+            <div className="space-y-3.5">
               {instructionsBlocks.map((block, index) => (
-                <div key={block.id} className="flex gap-4 p-4 bg-gray-50 rounded-xl border border-gray-100 group hover:border-gray-300 transition-colors">
-                  <div className="w-10 h-10 rounded-full bg-[#f0f7e6] text-[#64b000] flex items-center justify-center font-bold text-xl flex-shrink-0">
+                <div key={block.id} className="flex gap-3.5 p-3.5 bg-slate-50/80 rounded-xl border border-slate-200/70 group hover:border-slate-300 transition-all items-start">
+                  <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200/60 flex items-center justify-center font-bold text-sm shrink-0 mt-0.5">
                     {index + 1}
                   </div>
                   <textarea
@@ -207,90 +266,119 @@ export default function RecipeEditor({ initialData }: RecipeEditorProps) {
                       setInstructionsBlocks(newBlocks);
                     }}
                     rows={2}
-                    className="flex-1 bg-transparent border-none outline-none text-slate-900 placeholder-gray-400 resize-none mt-2 font-medium"
+                    className="flex-1 bg-transparent border-none outline-none text-slate-900 placeholder-slate-400 resize-none text-sm font-medium leading-relaxed"
                     placeholder="T.ex. Skär kycklingen i jämna bitar..."
                   />
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center gap-2 justify-center">
-                    <button type="button" onClick={() => {
-                      if (index === 0) return;
-                      const newBlocks = [...instructionsBlocks];
-                      [newBlocks[index - 1], newBlocks[index]] = [newBlocks[index], newBlocks[index - 1]];
-                      setInstructionsBlocks(newBlocks);
-                    }} className="text-gray-400 hover:text-blue-500">↑</button>
-                    <button type="button" onClick={() => {
-                      if (index === instructionsBlocks.length - 1) return;
-                      const newBlocks = [...instructionsBlocks];
-                      [newBlocks[index], newBlocks[index + 1]] = [newBlocks[index + 1], newBlocks[index]];
-                      setInstructionsBlocks(newBlocks);
-                    }} className="text-gray-400 hover:text-blue-500">↓</button>
-                    <button type="button" onClick={() => setInstructionsBlocks(instructionsBlocks.filter(b => b.id !== block.id))} className="text-gray-400 hover:text-red-500 mt-1">✕</button>
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center gap-1 justify-center shrink-0">
+                    <button 
+                      type="button" 
+                      onClick={() => {
+                        if (index === 0) return;
+                        const newBlocks = [...instructionsBlocks];
+                        [newBlocks[index - 1], newBlocks[index]] = [newBlocks[index], newBlocks[index - 1]];
+                        setInstructionsBlocks(newBlocks);
+                      }} 
+                      className="p-1 text-slate-400 hover:text-slate-800 rounded text-xs font-bold"
+                      title="Flytta upp"
+                    >
+                      ↑
+                    </button>
+                    <button 
+                      type="button" 
+                      onClick={() => {
+                        if (index === instructionsBlocks.length - 1) return;
+                        const newBlocks = [...instructionsBlocks];
+                        [newBlocks[index], newBlocks[index + 1]] = [newBlocks[index + 1], newBlocks[index]];
+                        setInstructionsBlocks(newBlocks);
+                      }} 
+                      className="p-1 text-slate-400 hover:text-slate-800 rounded text-xs font-bold"
+                      title="Flytta ner"
+                    >
+                      ↓
+                    </button>
+                    <button 
+                      type="button" 
+                      onClick={() => setInstructionsBlocks(instructionsBlocks.filter(b => b.id !== block.id))} 
+                      className="p-1 text-slate-400 hover:text-rose-600 rounded text-xs font-bold mt-1"
+                      title="Ta bort"
+                    >
+                      ✕
+                    </button>
                   </div>
                 </div>
               ))}
-              <button type="button" onClick={() => setInstructionsBlocks([...instructionsBlocks, { id: Math.random().toString(), type: 'text', content: '' }])} className="text-sm font-bold text-blue-600 hover:text-blue-800">
+              <button 
+                type="button" 
+                onClick={() => setInstructionsBlocks([...instructionsBlocks, { id: Math.random().toString(), type: 'text', content: '' }])} 
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 hover:text-emerald-800 py-2 px-3 rounded-lg hover:bg-emerald-50 transition-colors"
+              >
                 + Lägg till steg
               </button>
             </div>
           </div>
         </div>
 
+        {/* Right Sidebar: Details & Publishing */}
         <div className="space-y-6">
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-6">
-            <h3 className="font-bold text-gray-900">Publicering</h3>
+          <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs space-y-4">
+            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100 pb-2">Publicering</h3>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">URL-slug</label>
+              <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">URL-slug</label>
               <input
                 type="text"
                 value={formData.slug}
                 onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none font-mono text-sm text-slate-900"
+                className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none font-mono text-xs text-slate-800 bg-slate-50"
               />
             </div>
-            <label className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer">
+            <label className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl cursor-pointer border border-slate-100 hover:bg-slate-100/60 transition-colors">
               <input
                 type="checkbox"
                 checked={formData.published}
                 onChange={(e) => setFormData({ ...formData, published: e.target.checked })}
-                className="w-5 h-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+                className="w-4 h-4 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500 accent-emerald-600"
               />
-              <span className="font-medium text-gray-900">Publicerad</span>
+              <span className="text-xs font-bold text-slate-800">Publicerad på webbplatsen</span>
             </label>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-6">
-            <h3 className="font-bold text-gray-900">Receptdetaljer</h3>
-            <div className="space-y-4">
+          <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs space-y-4">
+            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100 pb-2">Receptdetaljer</h3>
+            <div className="space-y-3.5">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Tillagningstid (t.ex. 15 min)</label>
+                <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">Tillagningstid</label>
                 <input
                   type="text"
                   value={formData.prepTime}
                   onChange={(e) => setFormData({ ...formData, prepTime: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-slate-900"
+                  placeholder="T.ex. 25 min"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none text-xs text-slate-900"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Portioner (t.ex. 4 portioner)</label>
+                <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">Portioner</label>
                 <input
                   type="text"
                   value={formData.portions || ""}
                   onChange={(e) => setFormData({ ...formData, portions: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-slate-900"
+                  placeholder="T.ex. 4 portioner"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none text-xs text-slate-900"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Svårighetsgrad (t.ex. Enkel)</label>
+                <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">Svårighetsgrad</label>
                 <input
                   type="text"
                   value={formData.difficulty || ""}
                   onChange={(e) => setFormData({ ...formData, difficulty: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-slate-900"
+                  placeholder="T.ex. Enkel / Medel"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none text-xs text-slate-900"
                 />
               </div>
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4">
+          <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs space-y-4">
             <ImageUpload 
               value={formData.featuredImage} 
               onChange={(url) => setFormData({ ...formData, featuredImage: url })} 
@@ -305,9 +393,9 @@ export default function RecipeEditor({ initialData }: RecipeEditorProps) {
           <button 
             onClick={handleDelete}
             disabled={isSaving}
-            className="flex items-center gap-2 bg-red-100 text-red-600 hover:text-red-700 hover:bg-red-200 font-medium px-4 py-3 rounded-xl transition-colors shadow-sm disabled:opacity-50"
+            className="flex items-center gap-2 bg-white text-rose-600 hover:text-rose-700 hover:bg-rose-50 border border-rose-200 font-bold text-xs px-4 py-2.5 rounded-xl transition-all shadow-md active:scale-95 disabled:opacity-50 cursor-pointer"
           >
-            <Trash2 className="w-5 h-5" />
+            <Trash2 className="w-4 h-4" />
             Ta bort inlägg
           </button>
         </div>

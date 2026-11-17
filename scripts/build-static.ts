@@ -929,20 +929,14 @@ ${(() => {
 
     // --- REBUILD RECEPT.HTML ---
     const recipes = await prisma.recipe.findMany({ orderBy: { createdAt: 'desc' } });
-    if (recipes.length > 0) {
-      const receptPath = path.join(publicDir, 'recept.html');
-      let receptHtml = fs.readFileSync(receptPath, 'utf8');
-      
-      const featuredRecipe = recipes[0];
-      const otherRecipes = recipes;
-      
-      // Replace featured post
-      const featuredStartStr = '<a href="recept-libanesisk-toum" class="featured-post">';
-      // We will just find the first <a ... class="featured-post"> and replace until </a>
-      const fStartIdx = receptHtml.indexOf('<a ');
-      // We need to be careful, let's use a regex to replace the featured-post block
-      // But actually, we can find '<a ' and 'class="featured-post"'
-      const featuredRegex = /<a [^>]*class="featured-post"[^>]*>[\s\S]*?<\/a>/i;
+    const publishedRecipes = recipes.filter(r => r.published !== false);
+    const receptPath = path.join(publicDir, 'recept.html');
+    let receptHtml = fs.readFileSync(receptPath, 'utf8');
+    const featuredRegex = /<a [^>]*class="featured-post"[^>]*>[\s\S]*?<\/a>/i;
+
+    if (publishedRecipes.length > 0) {
+      const featuredRecipe = publishedRecipes[0];
+      const otherRecipes = publishedRecipes;
       
       const featuredHtml = `
             <a href="${featuredRecipe.slug}" class="featured-post">
@@ -988,7 +982,41 @@ ${(() => {
         const afterGrid = receptHtml.substring(gridEndIdx);
         receptHtml = beforeGrid + '\n' + newRecipesList + afterGrid;
       }
-      fs.writeFileSync(receptPath, receptHtml);
+    } else {
+      // Empty state: remove featured post and show friendly message in grid
+      receptHtml = receptHtml.replace(featuredRegex, '');
+      const gridStartStr = '<div class="news-grid-layout">';
+      const gridStartIdx = receptHtml.indexOf(gridStartStr);
+      if (gridStartIdx !== -1) {
+        const afterGridStart = receptHtml.substring(gridStartIdx + gridStartStr.length);
+        const gridEndIdx = gridStartIdx + gridStartStr.length + afterGridStart.indexOf('</div>\n        </div>\n    </main>');
+        const emptyStateHtml = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 5rem 2rem; background: #fff; border-radius: 20px; border: 1px dashed #cbd5e1; margin-bottom: 3rem;">
+                <div style="width: 64px; height: 64px; background: #f0fdf4; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 1.75rem;">
+                    🍽️
+                </div>
+                <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e293b; margin-bottom: 0.5rem; font-family: 'Outfit', sans-serif;">Inga recept publicerade just nu</h3>
+                <p style="font-size: 1.05rem; color: #64748b; max-width: 500px; margin: 0 auto 1.5rem; line-height: 1.6;">Vi fyller snart på med läckra och autentiska recept från Mellanöstern. Håll utkik!</p>
+                <a href="produkter" style="display: inline-flex; align-items: center; gap: 0.5rem; background: #64b000; color: #fff; padding: 12px 24px; border-radius: 50px; font-weight: 700; text-decoration: none; font-size: 0.95rem;">Utforska våra produkter</a>
+            </div>\n`;
+        const beforeGrid = receptHtml.substring(0, gridStartIdx + gridStartStr.length);
+        const afterGrid = receptHtml.substring(gridEndIdx);
+        receptHtml = beforeGrid + '\n' + emptyStateHtml + afterGrid;
+      }
+    }
+    fs.writeFileSync(receptPath, receptHtml);
+
+    // Clean up any stale recipe html files that no longer exist in DB
+    const activeRecipeFiles = new Set(recipes.map(r => `${r.slug}.html`));
+    const allPublicFiles = fs.readdirSync(publicDir);
+    const knownOldRecipeFiles = ['oxhj-rta.html', 'hummua.html', 'test.html'];
+    for (const f of allPublicFiles) {
+      if ((f.startsWith('recept-') || knownOldRecipeFiles.includes(f)) && f.endsWith('.html') && f !== 'recept.html') {
+        if (!activeRecipeFiles.has(f)) {
+          console.log(`Cleaning up deleted recipe static file: ${f}`);
+          try { fs.unlinkSync(path.join(publicDir, f)); } catch(e) {}
+        }
+      }
     }
     
     // --- BUILD INDIVIDUAL RECIPE PAGES ---

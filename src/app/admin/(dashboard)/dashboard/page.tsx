@@ -3,10 +3,16 @@ import {
   Package, 
   ChefHat, 
   MapPin,
-  ArrowUpRight
+  ArrowUpRight,
+  ExternalLink,
+  Plus,
+  Sparkles,
+  Server,
+  Activity
 } from "lucide-react";
 import Link from "next/link";
 import prisma from "@/lib/prisma";
+import { PublishButton } from "./PublishButton";
 
 export const dynamic = "force-dynamic";
 
@@ -19,76 +25,187 @@ export default async function AdminDashboard() {
   ]);
 
   const stats = [
-    { name: "Nyheter", value: newsCount.toString(), icon: BookOpen, href: "/admin/content/news", color: "bg-blue-500" },
-    { name: "Produkter", value: productCount.toString(), icon: Package, href: "/admin/content/products", color: "bg-emerald-500" },
-    { name: "Recept", value: recipeCount.toString(), icon: ChefHat, href: "/admin/content/recipes", color: "bg-amber-500" },
-    { name: "Butiker", value: storeCount.toString(), icon: MapPin, href: "/admin/content/stores", color: "bg-purple-500" },
+    { 
+      name: "Nyheter", 
+      value: newsCount.toString(), 
+      icon: BookOpen, 
+      href: "/admin/content/news", 
+      gradient: "from-blue-600 to-indigo-600",
+      bgTint: "bg-blue-50 text-blue-700 border-blue-100",
+      desc: "Artiklar & inlägg"
+    },
+    { 
+      name: "Produkter", 
+      value: productCount.toString(), 
+      icon: Package, 
+      href: "/admin/content/products", 
+      gradient: "from-emerald-600 to-teal-600",
+      bgTint: "bg-emerald-50 text-emerald-700 border-emerald-100",
+      desc: "Mathörnet & Ahalna"
+    },
+    { 
+      name: "Recept", 
+      value: recipeCount.toString(), 
+      icon: ChefHat, 
+      href: "/admin/content/recipes", 
+      gradient: "from-amber-500 to-orange-500",
+      bgTint: "bg-amber-50 text-amber-700 border-amber-100",
+      desc: "Middagar & rätter"
+    },
+    { 
+      name: "Butiker", 
+      value: storeCount.toString(), 
+      icon: MapPin, 
+      href: "/admin/content/stores", 
+      gradient: "from-purple-600 to-pink-600",
+      bgTint: "bg-purple-50 text-purple-700 border-purple-100",
+      desc: "Återförsäljare"
+    },
+  ];
+
+  const quickActions = [
+    { title: "Ny Nyhet", subtitle: "Skriv ett nyhetsinlägg", href: "/admin/content/news/new", icon: BookOpen, color: "text-blue-600 bg-blue-50 group-hover:bg-blue-600 group-hover:text-white" },
+    { title: "Ny Produkt", subtitle: "Lägg till i sortimentet", href: "/admin/content/products/new", icon: Package, color: "text-emerald-600 bg-emerald-50 group-hover:bg-emerald-600 group-hover:text-white" },
+    { title: "Nytt Recept", subtitle: "Skapa matinspiration", href: "/admin/content/recipes/new", icon: ChefHat, color: "text-amber-600 bg-amber-50 group-hover:bg-amber-600 group-hover:text-white" },
+    { title: "Ny Butik", subtitle: "Lägg till återförsäljare", href: "/admin/content/stores/new", icon: MapPin, color: "text-purple-600 bg-purple-50 group-hover:bg-purple-600 group-hover:text-white" },
   ];
 
   return (
-    <div className="space-y-10">
-      <div>
-        <h1 className="text-3xl font-extrabold text-slate-900 font-outfit">Dashboard</h1>
-        <p className="text-slate-500 mt-2">Välkommen tillbaka! Här är en översikt av ditt innehåll.</p>
+    <div className="space-y-8 max-w-7xl mx-auto cms-animate-fade-in">
+      {/* Top Welcome Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200/80">
+        <div>
+          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-slate-900/5 text-slate-700 text-xs font-semibold mb-2">
+            <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+            <span>Mathörnet Administration</span>
+          </div>
+          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight font-outfit">Dashboard</h1>
+          <p className="text-slate-500 text-sm mt-1">Välkommen tillbaka! Här är en översikt av ditt innehåll och administration.</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <a
+            href="/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 hover:text-slate-900 hover:border-slate-300 text-xs font-bold shadow-xs hover:shadow-sm transition-all"
+          >
+            <span>Visa live-sida</span>
+            <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
+          </a>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* 4 Stat Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {stats.map((stat) => {
           const Icon = stat.icon;
           return (
-            <div key={stat.name} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow group">
-              <div className="flex justify-between items-start">
-                <div className={`${stat.color} p-3 rounded-xl text-white`}>
-                  <Icon className="w-6 h-6" />
+            <Link 
+              key={stat.name} 
+              href={stat.href}
+              className="group relative bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md hover:border-slate-300 transition-all duration-200 hover:-translate-y-0.5 block cursor-pointer overflow-hidden"
+            >
+              <div className="flex justify-between items-start mb-4">
+                <div className={`p-3 rounded-xl bg-gradient-to-br ${stat.gradient} text-white shadow-sm shadow-slate-900/10 transition-transform duration-200 group-hover:scale-105`}>
+                  <Icon className="w-5 h-5" />
                 </div>
-                <Link href={stat.href} className="text-slate-400 hover:text-blue-600 transition-colors">
-                  <ArrowUpRight className="w-5 h-5" />
-                </Link>
+                <div className="p-1.5 rounded-lg text-slate-400 group-hover:text-slate-900 group-hover:bg-slate-100 transition-colors">
+                  <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </div>
               </div>
-              <div className="mt-4">
-                <h3 className="text-slate-500 text-sm font-medium">{stat.name}</h3>
-                <p className="text-2xl font-bold text-slate-900 mt-1">{stat.value}</p>
+              <div>
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">{stat.name}</p>
+                <div className="flex items-baseline gap-2 mt-1">
+                  <span className="text-3xl font-extrabold text-slate-900 tracking-tight">{stat.value}</span>
+                  <span className="text-xs text-slate-400 font-medium">{stat.desc}</span>
+                </div>
               </div>
-            </div>
+            </Link>
           );
         })}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
-          <h3 className="text-xl font-bold text-slate-900 font-outfit mb-6">Snabba åtgärder</h3>
-          <div className="grid grid-cols-2 gap-4">
-            <Link href="/admin/content/news/new" className="p-4 bg-slate-50 rounded-xl hover:bg-blue-50 transition-colors text-center border border-slate-100">
-              <span className="block font-bold text-slate-900">Ny Nyhet</span>
-            </Link>
-            <Link href="/admin/content/products/new" className="p-4 bg-slate-50 rounded-xl hover:bg-emerald-50 transition-colors text-center border border-slate-100">
-              <span className="block font-bold text-slate-900">Ny Produkt</span>
-            </Link>
-            <Link href="/admin/content/recipes/new" className="p-4 bg-slate-50 rounded-xl hover:bg-amber-50 transition-colors text-center border border-slate-100">
-              <span className="block font-bold text-slate-900">Nytt Recept</span>
-            </Link>
-            <Link href="/admin/content/stores/new" className="p-4 bg-slate-50 rounded-xl hover:bg-purple-50 transition-colors text-center border border-slate-100">
-              <span className="block font-bold text-slate-900">Ny Butik</span>
-            </Link>
+      {/* Quick Actions & System Status Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        {/* Left Column: Snabba åtgärder (7 cols) */}
+        <div className="lg:col-span-7 bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/80 shadow-xs">
+          <div className="flex items-center justify-between mb-5">
+            <div>
+              <h3 className="text-lg font-bold text-slate-900 font-outfit tracking-tight">Snabba åtgärder</h3>
+              <p className="text-xs text-slate-500 mt-0.5">Skapa nytt innehåll med ett klick</p>
+            </div>
+            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">4 genvägar</span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            {quickActions.map((action) => {
+              const Icon = action.icon;
+              return (
+                <Link
+                  key={action.title}
+                  href={action.href}
+                  className="group flex items-center justify-between p-4 rounded-xl border border-slate-200/70 hover:border-slate-300 bg-slate-50/50 hover:bg-slate-50 transition-all duration-200 cursor-pointer"
+                >
+                  <div className="flex items-center gap-3.5 min-w-0">
+                    <div className={`p-2.5 rounded-lg transition-colors duration-200 ${action.color}`}>
+                      <Icon className="w-4 h-4" />
+                    </div>
+                    <div className="min-w-0">
+                      <span className="block font-bold text-sm text-slate-900 group-hover:text-slate-950 truncate">
+                        {action.title}
+                      </span>
+                      <span className="block text-xs text-slate-500 truncate mt-0.5">
+                        {action.subtitle}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="w-7 h-7 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:text-slate-900 group-hover:border-slate-300 transition-colors shrink-0">
+                    <Plus className="w-3.5 h-3.5" />
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
 
-        <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col justify-center items-center text-center space-y-4">
-          <div className="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center">
-            <SettingsIcon />
-          </div>
+        {/* Right Column: Systemstatus & Publicering (5 cols) */}
+        <div className="lg:col-span-5 bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
           <div>
-            <h3 className="text-xl font-bold text-slate-900 font-outfit">Systemstatus</h3>
-            <p className="text-slate-500">Allt system rullar på som det ska.</p>
+            <div className="flex items-center justify-between mb-5">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center border border-emerald-100">
+                  <Activity className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900 font-outfit tracking-tight">Systemstatus</h3>
+                  <p className="text-xs text-slate-500">Driftstatus och plattform</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 cms-pulse-glow"></span>
+                <span>Online</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 mb-6">
+              <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
+                <span className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider">Miljö</span>
+                <span className="block text-sm font-bold text-slate-800 mt-0.5">Produktion</span>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
+                <span className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider">Version</span>
+                <span className="block text-sm font-bold text-slate-800 mt-0.5">v1.0.0</span>
+              </div>
+            </div>
           </div>
-          <div className="flex gap-2">
-            <span className="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-bold uppercase tracking-wider">Online</span>
-            <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold uppercase tracking-wider">v1.0.0</span>
-          </div>
-          
-          <div className="w-full pt-4 mt-2 border-t border-slate-100">
-            <h4 className="text-sm font-bold text-slate-700 mb-2">Publicera ändringar</h4>
-            <p className="text-xs text-slate-500 mb-4">När du har lagt till eller ändrat innehåll måste du publicera för att det ska synas på live-sidan.</p>
+
+          <div className="pt-5 border-t border-slate-100">
+            <div className="mb-3">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700">Publicera ändringar</h4>
+              <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                När du har lagt till eller ändrat innehåll klickar du nedan för att omedelbart uppdatera live-sidan.
+              </p>
+            </div>
             <PublishButton />
           </div>
         </div>
@@ -97,10 +214,3 @@ export default async function AdminDashboard() {
   );
 }
 
-import { PublishButton } from "./PublishButton";
-
-function SettingsIcon() {
-  return (
-    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-  );
-}

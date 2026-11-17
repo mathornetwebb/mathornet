@@ -113,17 +113,17 @@ export default function NewsVisualEditor({
 
       {/* LEFT SIDEBAR - SETTINGS */}
       <div className="w-full md:w-80 flex-shrink-0 space-y-6">
-        <div className="flex items-center justify-between mb-8">
-          <Link href="/admin/content/news" className="p-2 text-slate-400 hover:text-slate-900 bg-white rounded-lg transition-colors border border-slate-200 shadow-sm">
+        <div className="flex items-center justify-between">
+          <Link href="/admin/content/news" className="p-2 text-slate-500 hover:text-slate-900 bg-white rounded-xl transition-colors border border-slate-200/80 shadow-xs">
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Visual Editor</span>
+            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Artikel Editor</span>
           </div>
         </div>
 
-        <div className="space-y-6 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 border-b border-slate-100 pb-2">Innehåll</h3>
+        <div className="space-y-5 bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs">
+          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100 pb-2">Innehåll</h3>
           
           <div>
             <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">Huvudtitel *</label>
@@ -132,7 +132,7 @@ export default function NewsVisualEditor({
               value={title} 
               onChange={e => setTitle(e.target.value)} 
               placeholder="T.ex. Ny produktlansering..." 
-              className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors" 
+              className="w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all" 
               required
             />
           </div>
@@ -144,7 +144,7 @@ export default function NewsVisualEditor({
               onChange={e => setExcerpt(e.target.value)} 
               placeholder="En kort och säljande introtext som visas under rubriken..." 
               rows={3}
-              className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors" 
+              className="w-full rounded-xl border border-slate-200 px-3.5 py-2 text-xs text-slate-800 leading-relaxed focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all" 
             />
           </div>
 
@@ -154,11 +154,11 @@ export default function NewsVisualEditor({
               type="text" 
               value={slug} 
               onChange={e => setSlug(e.target.value)} 
-              className="w-full rounded-lg bg-slate-50 border border-slate-200 px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors" 
+              className="w-full rounded-xl bg-slate-50 border border-slate-200 px-3 py-2 text-xs font-mono text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all" 
             />
           </div>
 
-          <div className="mb-4">
+          <div className="mb-2">
             <ImageUpload 
               value={featuredImage} 
               onChange={setFeaturedImage} 
@@ -167,8 +167,10 @@ export default function NewsVisualEditor({
           </div>
         </div>
 
-        <div className="space-y-6 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 border-b border-slate-100 pb-2 flex items-center gap-1"><Settings2 className="w-3 h-3"/> SEO Inställningar</h3>
+        <div className="space-y-4 bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs">
+          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100 pb-2 flex items-center gap-1.5">
+            <Settings2 className="w-3.5 h-3.5 text-slate-400"/> SEO Inställningar
+          </h3>
           
           <div>
             <label className="block text-[11px] font-bold text-slate-500 uppercase mb-1">Meta Titel</label>
@@ -177,7 +179,7 @@ export default function NewsVisualEditor({
               value={seoTitle} 
               onChange={e => setSeoTitle(e.target.value)} 
               placeholder="Titel för Google..." 
-              className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors" 
+              className="w-full rounded-xl border border-slate-200 px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all" 
             />
           </div>
           <div>
@@ -187,7 +189,7 @@ export default function NewsVisualEditor({
               onChange={e => setMetaDescription(e.target.value)} 
               placeholder="Kort beskrivning för sökresultat..." 
               rows={3}
-              className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors" 
+              className="w-full rounded-xl border border-slate-200 px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all" 
             />
           </div>
         </div>
@@ -196,45 +198,48 @@ export default function NewsVisualEditor({
       {/* MAIN EDITOR AREA */}
       <div className="flex-1 flex flex-col">
         {/* Top Action Bar */}
-        <div className="sticky top-4 z-50 flex justify-between items-center bg-slate-900 text-white rounded-2xl px-2 py-2 mb-6 shadow-xl shadow-slate-900/10">
-          <div className="flex items-center gap-1 px-2">
-            <button type="button" onClick={() => addBlock('h2')} className="flex items-center gap-1 hover:bg-slate-800 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors">
-              <Heading2 className="w-4 h-4 text-slate-400" /> H2 Rubrik
+        <div className="sticky top-4 z-50 flex flex-wrap justify-between items-center bg-slate-900/90 backdrop-blur-md text-white rounded-2xl px-3 py-2.5 mb-6 shadow-xl border border-slate-800 gap-2">
+          <div className="flex items-center gap-1 px-1 flex-wrap">
+            <button type="button" onClick={() => addBlock('h2')} className="flex items-center gap-1.5 hover:bg-slate-800 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors">
+              <Heading2 className="w-3.5 h-3.5 text-slate-400" /> H2 Rubrik
             </button>
-            <button type="button" onClick={() => addBlock('h3')} className="flex items-center gap-1 hover:bg-slate-800 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors">
-              <Heading3 className="w-4 h-4 text-slate-400" /> H3 Rubrik
+            <button type="button" onClick={() => addBlock('h3')} className="flex items-center gap-1.5 hover:bg-slate-800 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors">
+              <Heading3 className="w-3.5 h-3.5 text-slate-400" /> H3 Rubrik
             </button>
-            <button type="button" onClick={() => addBlock('text')} className="flex items-center gap-1 hover:bg-slate-800 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors">
-              <Type className="w-4 h-4 text-slate-400" /> Text
+            <button type="button" onClick={() => addBlock('text')} className="flex items-center gap-1.5 hover:bg-slate-800 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors">
+              <Type className="w-3.5 h-3.5 text-slate-400" /> Text
             </button>
-            <button type="button" onClick={() => addBlock('image')} className="flex items-center gap-1 hover:bg-slate-800 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors">
-              <ImageIcon className="w-4 h-4 text-slate-400" /> Bild
+            <button type="button" onClick={() => addBlock('image')} className="flex items-center gap-1.5 hover:bg-slate-800 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors">
+              <ImageIcon className="w-3.5 h-3.5 text-slate-400" /> Bild
             </button>
           </div>
           
-          <div className="flex items-center gap-2 pr-2">
-            <button type="submit" className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-5 py-1.5 rounded-lg text-sm font-bold transition-colors">
+          <div className="flex items-center gap-2 pr-1 ml-auto">
+            <button type="submit" className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2 rounded-xl text-xs font-bold tracking-wide transition-all shadow-sm active:scale-[0.98] cursor-pointer">
               <Save className="w-4 h-4" /> Spara Inlägg
             </button>
           </div>
         </div>
 
         {/* Hero Preview */}
-        <div className="relative bg-slate-200 rounded-3xl overflow-hidden mb-12 shadow-2xl aspect-[2/1] flex flex-col justify-center items-center text-center p-12">
-          {featuredImage && (
+        <div className="relative bg-slate-900 rounded-3xl overflow-hidden mb-10 shadow-lg aspect-[2/1] flex flex-col justify-center items-center text-center p-8 sm:p-12">
+          {featuredImage ? (
             <img src={featuredImage} alt="Omslag" className="absolute inset-0 w-full h-full object-cover" />
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
           )}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/50 to-slate-950/20" />
           
           <div className="relative z-10 max-w-3xl flex flex-col items-center">
-            <h1 className="text-4xl md:text-5xl font-extrabold text-white font-outfit mb-4 leading-tight drop-shadow-lg">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white font-outfit mb-3 leading-tight drop-shadow-md">
               {title || 'Din Huvudtitel'}
             </h1>
-            <div className="flex items-center justify-center gap-3 text-white/90 font-medium mb-4 drop-shadow-md">
-               <span className="uppercase tracking-wider text-sm">Nyhet</span>
-               <span className="text-white/50">|</span>
+            <div className="flex items-center justify-center gap-3 text-white/80 font-medium mb-3 text-xs tracking-wider">
+               <span className="uppercase font-bold text-emerald-400">Nyhet</span>
+               <span className="text-white/40">•</span>
                <span>{new Date().toLocaleDateString('sv-SE', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
             </div>
-            <p className="text-lg md:text-xl text-slate-200 font-light leading-relaxed max-w-2xl drop-shadow-md">
+            <p className="text-sm sm:text-base text-slate-200 font-normal leading-relaxed max-w-2xl drop-shadow">
               {excerpt || 'Din ingress/introtext kommer att visas här med snygg vit färg över bakgrundsbilden.'}
             </p>
           </div>

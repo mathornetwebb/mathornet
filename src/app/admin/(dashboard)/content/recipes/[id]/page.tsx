@@ -1,6 +1,8 @@
 import RecipeEditor from "@/components/admin/RecipeEditor";
 import prisma from "@/lib/prisma";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
+
+export const dynamic = 'force-dynamic';
 
 export default async function EditRecipePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -10,7 +12,7 @@ export default async function EditRecipePage({ params }: { params: Promise<{ id:
   });
 
   if (!recipe) {
-    notFound();
+    redirect('/admin/content/recipes');
   }
 
   return <RecipeEditor initialData={recipe} />;

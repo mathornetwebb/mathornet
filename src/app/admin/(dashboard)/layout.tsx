@@ -10,8 +10,8 @@ export default function AdminLayout({
     <div className="flex min-h-screen bg-slate-50">
       <DirtyStateTracker />
       <Sidebar />
-      <main className="flex-1 ml-64 p-8 min-w-0">
-        <div className="w-full h-full">
+      <main className="flex-1 md:ml-64 p-4 md:p-8 min-w-0 pt-20 md:pt-8">
+        <div className="w-full h-full max-w-7xl mx-auto">
           {children}
         </div>
       </main>
