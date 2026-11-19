@@ -15,6 +15,7 @@ export default function ProductVisualEditor({
 }) {
   const [title, setTitle] = useState(initialData?.title || '');
   const [slug, setSlug] = useState(initialData?.slug || '');
+  const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
   const [artNr, setArtNr] = useState(initialData?.artNr || '');
   const [ean, setEan] = useState(initialData?.ean || '');
   const [featuredImage, setFeaturedImage] = useState(initialData?.featuredImage || '');
@@ -30,6 +31,9 @@ export default function ProductVisualEditor({
       if (parsed && typeof parsed === 'object') {
         const result = { ...fallback, ...parsed };
         result.brand = parsed.brand || 'mathornet';
+        if (fallback.properties && !Array.isArray(result.properties)) {
+          result.properties = fallback.properties;
+        }
         if (fallback.packaging) {
           result.packaging = {
             bag: { ...fallback.packaging.bag, ...(parsed.packaging?.bag || {}) },
@@ -75,19 +79,22 @@ export default function ProductVisualEditor({
     general: 'Tillaga från djupfryst, vänd efter halva tiden.', oven: '', airfryer: '', pan: ''
   }));
 
-  // Auto-generate slug from title if new
+  // Auto-generate slug from title and brand if new (and not manually overridden)
   useEffect(() => {
-    if (isNew && title) {
-      let newSlug = title
+    if (isNew && title && !slugManuallyEdited) {
+      let baseSlug = title
         .toLowerCase()
         .replace(/[åä]/g, 'a')
         .replace(/ö/g, 'o')
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/(^-|-$)+/g, '');
-      if (!newSlug) newSlug = 'ny-produkt-' + Date.now();
-      setSlug(newSlug);
+      if (!baseSlug) baseSlug = 'ny-produkt-' + Date.now();
+      if (productInfo.brand === 'ahalna' && !baseSlug.startsWith('ahalna-')) {
+        baseSlug = `ahalna-${baseSlug}`;
+      }
+      setSlug(baseSlug);
     }
-  }, [title, isNew]);
+  }, [title, productInfo.brand, isNew, slugManuallyEdited]);
 
   // Handlers for deep state updates
   const updateProductInfo = (key: string, value: any) => setProductInfo({ ...productInfo, [key]: value });
@@ -203,7 +210,17 @@ export default function ProductVisualEditor({
 
               <div>
                 <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">URL-slug</label>
-                <input type="text" value={slug} onChange={e => setSlug(e.target.value)} placeholder="T.ex. kubbe-mosel" className="w-full rounded-xl border border-slate-200 px-3 py-2 text-slate-800 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 bg-slate-50 transition-all" />
+                <input
+                  type="text"
+                  value={slug}
+                  onChange={e => {
+                    const val = e.target.value;
+                    setSlug(val);
+                    setSlugManuallyEdited(val.trim().length > 0);
+                  }}
+                  placeholder="T.ex. kubbe-mosel"
+                  className="w-full rounded-xl border border-slate-200 px-3 py-2 text-slate-800 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 bg-slate-50 transition-all"
+                />
               </div>
             </div>
           </div>

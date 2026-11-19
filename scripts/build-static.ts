@@ -5,6 +5,7 @@ import prisma from '@/lib/prisma';
 
 async function main() {
   console.log('Starting static build script...');
+  const cleanSlug = (slug?: string | null) => (slug || '').replace(/^\/+/, '');
   try {
     const publicDir = path.join(process.cwd(), 'public');
     
@@ -40,9 +41,10 @@ async function main() {
         } catch(e) {}
         
         const badgeHtml = isNyhet ? '<span class="product-badge">Nyhet</span>' : '';
+        const slug = cleanSlug(p.slug);
         const cardHtml = `
                     <!-- Dynamisk Produkt: ${p.title} -->
-                    <a href="${p.slug}" class="product-card">
+                    <a href="${slug}" class="product-card">
                         ${badgeHtml}
                         <div class="product-img-wrapper">
                             <img src="${p.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${p.title}" loading="lazy">
@@ -268,10 +270,11 @@ ${ahalnaGridHtml}
             if (wrapperEndIdx !== -1) {
               let newSliderList = '';
               for (const p of products) {
+                const slug = cleanSlug(p.slug);
                 newSliderList += `
                     <!-- Dynamisk Produkt: ${p.title} -->
                     <div class="swiper-slide teza-slide">
-                        <a href="${p.slug}" class="teza-product-link">
+                        <a href="${slug}" class="teza-product-link">
                             <img src="${p.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${p.title}" class="teza-product-img" loading="lazy">
                             <div class="teza-product-info">
                                 <h3>${p.title}</h3>
@@ -652,8 +655,9 @@ ${(() => {
             if (info.packaging?.bag?.weight) pWeight = info.packaging.bag.weight;
         } catch(e) {}
         
+        const opSlug = cleanSlug(op.slug);
         return `
-                            <a href="${op.slug}" class="product-card carousel-card" style="text-decoration: none;">
+                            <a href="${opSlug}" class="product-card carousel-card" style="text-decoration: none;">
                                 <div class="product-img-wrapper">
                                     <img src="${op.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${op.title}" loading="lazy">
                                 </div>
@@ -729,7 +733,10 @@ ${(() => {
     </script>
 </body>
 </html>`;
-        fs.writeFileSync(path.join(publicDir, `${p.slug}.html`), productHtml);
+        const targetSlug = cleanSlug(p.slug);
+        if (targetSlug) {
+            fs.writeFileSync(path.join(publicDir, `${targetSlug}.html`), productHtml);
+        }
     }
 
     // --- BUILD INDIVIDUAL NEWS PAGES ---
@@ -1199,7 +1206,7 @@ ${instBlocksHtml}
     const sitemapUrls = [
         '/', '/mathornet', '/produkter', '/nyheter', '/recept', '/om-oss', '/aterforsaljare', '/hitta-oss', '/kontakt', '/jobba-hos-oss', '/faq', '/kopvillkor'
     ];
-    products.forEach(p => sitemapUrls.push(`/${p.slug}`));
+    products.forEach(p => sitemapUrls.push(`/${cleanSlug(p.slug)}`));
     news.forEach(n => sitemapUrls.push(`/${n.slug}`));
     recipes.forEach(r => sitemapUrls.push(`/${r.slug}`));
 

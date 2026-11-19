@@ -78,7 +78,7 @@ export default async function ProdukterListPage() {
                             {item.title}
                           </Link>
                           <span className="text-xs text-slate-400 font-mono block truncate">
-                            /{item.slug}
+                            /{item.slug.replace(/^\/+/, '')}
                           </span>
                         </div>
                       </div>
