@@ -10,6 +10,36 @@ document.addEventListener('DOMContentLoaded', () => {
             openingHours: "[{\"day\":\"Måndag\",\"open\":\"09:00\",\"close\":\"20:00\",\"isClosed\":false},{\"day\":\"Tisdag\",\"open\":\"09:00\",\"close\":\"20:00\",\"isClosed\":false},{\"day\":\"Onsdag\",\"open\":\"09:00\",\"close\":\"20:00\",\"isClosed\":false},{\"day\":\"Torsdag\",\"open\":\"09:00\",\"close\":\"20:00\",\"isClosed\":false},{\"day\":\"Fredag\",\"open\":\"09:00\",\"close\":\"20:00\",\"isClosed\":false},{\"day\":\"Lördag\",\"open\":\"09:00\",\"close\":\"19:00\",\"isClosed\":false},{\"day\":\"Söndag\",\"open\":\"09:00\",\"close\":\"19:00\",\"isClosed\":false}]",
             phone: "",
             website: ""
+        },
+        {
+            id: "cmwn246xz000008l8df7bd6i2",
+            name: "Lebsan Food",
+            address: "Importörvägen 4-44, 120 44 Årsta",
+            lat: 59.2936521708894,
+            lng: 18.0292765073558,
+            openingHours: "[{\"day\":\"Måndag\",\"open\":\"05:00\",\"close\":\"15:30\",\"isClosed\":false},{\"day\":\"Tisdag\",\"open\":\"05:00\",\"close\":\"15:30\",\"isClosed\":false},{\"day\":\"Onsdag\",\"open\":\"05:00\",\"close\":\"15:30\",\"isClosed\":false},{\"day\":\"Torsdag\",\"open\":\"05:00\",\"close\":\"15:30\",\"isClosed\":false},{\"day\":\"Fredag\",\"open\":\"05:00\",\"close\":\"15:30\",\"isClosed\":false},{\"day\":\"Lördag\",\"open\":\"05:00\",\"close\":\"14:00\",\"isClosed\":false},{\"day\":\"Söndag\",\"open\":\"10:00\",\"close\":\"18:00\",\"isClosed\":true}]",
+            phone: "",
+            website: ""
+        },
+        {
+            id: "cmwn27u5v000008jv1ir93f3a",
+            name: "Tasty Södertälje",
+            address: "Nygatan 30B, 151 72 Södertälje",
+            lat: 59.198032238391,
+            lng: 17.6237069410802,
+            openingHours: "[{\"day\":\"Måndag\",\"open\":\"10:00\",\"close\":\"21:00\",\"isClosed\":false},{\"day\":\"Tisdag\",\"open\":\"10:00\",\"close\":\"21:00\",\"isClosed\":false},{\"day\":\"Onsdag\",\"open\":\"10:00\",\"close\":\"21:00\",\"isClosed\":false},{\"day\":\"Torsdag\",\"open\":\"10:00\",\"close\":\"21:00\",\"isClosed\":false},{\"day\":\"Fredag\",\"open\":\"10:00\",\"close\":\"21:00\",\"isClosed\":false},{\"day\":\"Lördag\",\"open\":\"11:00\",\"close\":\"21:00\",\"isClosed\":false},{\"day\":\"Söndag\",\"open\":\"11:00\",\"close\":\"21:00\",\"isClosed\":false}]",
+            phone: "",
+            website: ""
+        },
+        {
+            id: "cmwn2c9cs000008l60t9fmjwb",
+            name: "Yalda Grossist",
+            address: "Kabelvägen 17, 602 10 Norrköping",
+            lat: 58.5992148971108,
+            lng: 16.1381051676706,
+            openingHours: "[{\"day\":\"Måndag\",\"open\":\"09:00\",\"close\":\"17:00\",\"isClosed\":false},{\"day\":\"Tisdag\",\"open\":\"09:00\",\"close\":\"17:00\",\"isClosed\":false},{\"day\":\"Onsdag\",\"open\":\"09:00\",\"close\":\"17:00\",\"isClosed\":false},{\"day\":\"Torsdag\",\"open\":\"09:00\",\"close\":\"17:00\",\"isClosed\":false},{\"day\":\"Fredag\",\"open\":\"09:00\",\"close\":\"17:00\",\"isClosed\":false},{\"day\":\"Lördag\",\"open\":\"10:00\",\"close\":\"18:00\",\"isClosed\":true},{\"day\":\"Söndag\",\"open\":\"10:00\",\"close\":\"18:00\",\"isClosed\":true}]",
+            phone: "",
+            website: ""
         }
     ];
 

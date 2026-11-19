@@ -239,7 +239,91 @@ ${ahalnaGridHtml}
                 }
             }
 
+            function escHtml(str) {
+                return String(str || '')
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;');
+            }
+
+            async function syncLiveProducts() {
+                try {
+                    const res = await fetch('/api/products?t=' + Date.now(), { cache: 'no-store' });
+                    if (!res.ok) return;
+                    const data = await res.json();
+                    if (!data || !Array.isArray(data.products) || data.products.length === 0) return;
+
+                    const mathornetCards = [];
+                    const ahalnaCards = [];
+
+                    for (const p of data.products) {
+                        let brand = 'mathornet';
+                        let weight = '-';
+                        try {
+                            const info = JSON.parse(p.productInfo || '{}');
+                            if (info.brand) brand = info.brand;
+                            if (info.packaging && info.packaging.bag && info.packaging.bag.weight) weight = info.packaging.bag.weight;
+                            else if (info.packaging && info.packaging.box && info.packaging.box.weight) weight = info.packaging.box.weight;
+                        } catch (e) {}
+
+                        const cleanProductSlug = (p.slug || '').replace(new RegExp('^/+'), '');
+                        const imgSrc = escHtml(p.featuredImage || 'img/mathornet_logo_ny_transparent.png');
+                        const safeTitle = escHtml(p.title);
+                        const safeWeight = escHtml(weight);
+                        const cardHtml =
+                            '<a href="' + escHtml(cleanProductSlug) + '" class="product-card">' +
+                            '<div class="product-img-wrapper">' +
+                            '<img src="' + imgSrc + '" alt="' + safeTitle + '" loading="lazy">' +
+                            '</div>' +
+                            '<div class="product-info">' +
+                            '<h3>' + safeTitle + '</h3>' +
+                            '<div class="product-meta">' +
+                            '<span class="weight">' + safeWeight + '</span>' +
+                            '<span class="read-more">Tryck för att läsa mer &rarr;</span>' +
+                            '</div>' +
+                            '</div>' +
+                            '</a>';
+
+                        if (brand === 'ahalna') {
+                            ahalnaCards.push(cardHtml);
+                        } else {
+                            mathornetCards.push(cardHtml);
+                        }
+                    }
+
+                    const mathornetGrid = document.getElementById('grid-mathornet');
+                    if (mathornetGrid) mathornetGrid.innerHTML = mathornetCards.join('\\n');
+
+                    const ahalnaGrid = document.getElementById('grid-ahalna');
+                    if (ahalnaGrid) {
+                        ahalnaGrid.innerHTML = ahalnaCards.length > 0 ? ahalnaCards.join('\\n') :
+                            '<div class="empty-brand-state">' +
+                            '<div class="empty-brand-icon">✨</div>' +
+                            '<h3>Ahalna sortimentet lanseras inom kort</h3>' +
+                            '<p>Vi arbetar just nu för fullt med att ta fram spännande nya produkter under varumärket Ahalna. Håll utkik här för lanseringen!</p>' +
+                            '<button type="button" onclick="selectBrand(\\'mathornet\\')" class="btn-switch-mathornet">Se Mathörnets sortiment istället &rarr;</button>' +
+                            '</div>';
+                    }
+
+                    const mathornetCountTag = document.querySelector('.brand-card-mathornet .product-count-tag');
+                    if (mathornetCountTag) mathornetCountTag.textContent = mathornetCards.length + ' produkter';
+
+                    const ahalnaCountTag = document.querySelector('.brand-card-ahalna .product-count-tag');
+                    if (ahalnaCountTag) ahalnaCountTag.textContent = ahalnaCards.length > 0 ? ahalnaCards.length + ' produkter' : 'Kommer snart';
+
+                    const mathornetTabBtn = document.querySelector('.brand-tab-btn[data-brand="mathornet"]');
+                    if (mathornetTabBtn) mathornetTabBtn.textContent = 'Mathörnet (' + mathornetCards.length + ')';
+
+                    const ahalnaTabBtn = document.querySelector('.brand-tab-btn[data-brand="ahalna"]');
+                    if (ahalnaTabBtn) ahalnaTabBtn.textContent = 'Ahalna (' + ahalnaCards.length + ')';
+                } catch (err) {
+                    console.error('Failed to sync live products:', err);
+                }
+            }
+
             window.addEventListener('DOMContentLoaded', initBrandFromHash);
+            window.addEventListener('DOMContentLoaded', syncLiveProducts);
             window.addEventListener('hashchange', initBrandFromHash);
         </script>
     </main>`;

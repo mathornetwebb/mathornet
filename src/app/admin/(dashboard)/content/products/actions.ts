@@ -71,14 +71,14 @@ export async function saveProductAction(isNewVal: boolean, idVal: string, formDa
     await prisma.product.update({ where: { id: idVal }, data });
   }
   
-  // Trigger rebuild in background
-  triggerRebuild().catch(console.error);
+  // Trigger rebuild and ensure deploy hook request completes before redirect
+  await triggerRebuild().catch(console.error);
   redirect('/admin/content/products');
 }
 
 export async function deleteProductAction(idVal: string) {
   await prisma.product.delete({ where: { id: idVal } });
-  // Trigger rebuild in background
-  triggerRebuild().catch(console.error);
+  // Trigger rebuild and ensure deploy hook request completes before redirect
+  await triggerRebuild().catch(console.error);
   redirect('/admin/content/products');
 }
