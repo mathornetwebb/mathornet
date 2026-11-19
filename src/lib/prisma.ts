@@ -11,14 +11,18 @@ declare global {
 }
 
 const prismaClientSingleton = () => {
+  let connectionString = process.env.DATABASE_URL || '';
+  if (connectionString.includes('pooler.supabase.com:5432')) {
+    connectionString = connectionString.replace('pooler.supabase.com:5432', 'pooler.supabase.com:6543');
+  }
+
   const pool = new pg.Pool({ 
-    connectionString: process.env.DATABASE_URL,
-    max: 10,
+    connectionString,
+    max: process.env.NODE_ENV === 'production' ? 1 : 3,
     min: 0,
-    idleTimeoutMillis: 15000,
+    idleTimeoutMillis: 1000,
     connectionTimeoutMillis: 8000,
-    keepAlive: true,
-    keepAliveInitialDelayMillis: 10000,
+    allowExitOnIdle: true,
     ssl: { rejectUnauthorized: false } // Supabase requires SSL
   });
 
@@ -36,8 +40,6 @@ const prismaClientSingleton = () => {
 
 const prisma = globalThis.prisma ?? prismaClientSingleton();
 
-if (process.env.NODE_ENV !== 'production') {
-  globalThis.prisma = prisma;
-}
+globalThis.prisma = prisma;
 
 export default prisma;

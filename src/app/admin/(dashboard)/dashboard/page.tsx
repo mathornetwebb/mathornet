@@ -17,12 +17,10 @@ import { PublishButton } from "./PublishButton";
 export const dynamic = "force-dynamic";
 
 export default async function AdminDashboard() {
-  const [newsCount, productCount, recipeCount, storeCount] = await Promise.all([
-    prisma.news.count(),
-    prisma.product.count(),
-    prisma.recipe.count(),
-    prisma.store.count(),
-  ]);
+  const newsCount = await prisma.news.count();
+  const productCount = await prisma.product.count();
+  const recipeCount = await prisma.recipe.count();
+  const storeCount = await prisma.store.count();
 
   const stats = [
     { 
