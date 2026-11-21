@@ -759,8 +759,49 @@ ul {
     z-index: 1;
 }
 
-.site-footer p, .site-footer .social-links a {
+.site-footer p {
     color: var(--dark-text) !important;
+}
+
+/* Modern Minimalist Social Media Icons */
+.social-links {
+    display: flex;
+    gap: 0.65rem;
+    margin-top: 1.5rem;
+    align-items: center;
+}
+
+.social-links a {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: #f3f4f6;
+    color: #111827 !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e5e7eb;
+    text-decoration: none;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.social-links a svg {
+    width: 17px;
+    height: 17px;
+    transition: transform 0.25s ease;
+}
+
+.social-links a:hover {
+    background-color: #111827;
+    color: #ffffff !important;
+    border-color: #111827;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+.social-links a:hover svg {
+    transform: scale(1.12);
 }
 
 .footer-spacer {
@@ -2869,172 +2910,209 @@ html[dir="rtl"] .pack-type-selector > span {
    BRAND ASSORTMENT SELECTION (PRODUKTER.HTML)
    ========================================================================== */
 
+/* ==========================================================================
+   Brand & Assortment Menu Selection (Clean Minimalist Grid - Fast Casual)
+   ========================================================================== */
+
 .brand-selection-section {
-    background-color: #fafafa;
-    min-height: 60vh;
+    background-color: #ffffff;
+    padding: 3.5rem 0 6rem 0;
+    min-height: 70vh;
 }
 
-.brand-cards-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2.5rem;
-    max-width: 1280px;
+.brand-selection-container {
+    max-width: 960px;
     margin: 0 auto;
+    padding: 0 1.5rem;
 }
 
-.brand-portal-card {
-    position: relative;
-    border-radius: 28px;
-    overflow: hidden;
-    min-height: 520px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 3.5rem;
-    cursor: pointer;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.brand-portal-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 25px 60px rgba(0,0,0,0.2);
-}
-
-.brand-card-bg {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 1;
-}
-
-.brand-portal-card:hover .brand-card-bg {
-    transform: scale(1.06);
-}
-
-.brand-card-overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    transition: opacity 0.4s ease;
-}
-
-.brand-card-mathornet .brand-card-overlay {
-    background: linear-gradient(180deg, rgba(11, 29, 58, 0.35) 0%, rgba(11, 29, 58, 0.95) 85%);
-}
-
-.brand-card-ahalna .brand-card-overlay {
-    background: linear-gradient(180deg, rgba(123, 44, 44, 0.35) 0%, rgba(123, 44, 44, 0.95) 85%);
-}
-
-.brand-card-content {
-    position: relative;
-    z-index: 3;
-    color: #ffffff;
+.menu-page-header {
+    margin-bottom: 2.5rem;
     text-align: left;
 }
 
-.brand-card-logo-wrap {
-    height: 90px;
+.menu-page-title {
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 3.25rem;
+    font-weight: 900;
+    color: #111827;
+    letter-spacing: -0.03em;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.1;
+}
+
+.menu-page-subtitle {
+    font-size: 1.15rem;
+    color: #6b7280;
+    margin: 0;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+/* Minimalist MAX-style grid with thin 1px dividers */
+.brand-menu-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    background-color: #e5e7eb; /* Crisp 1px divider border line */
+    gap: 1px;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+}
+
+.brand-menu-card {
+    background-color: #ffffff;
+    padding: 3.5rem 2.5rem 2rem 2.5rem;
     display: flex;
-    align-items: center;
-    margin-bottom: 1.5rem;
-}
-
-.brand-card-logo {
-    max-height: 80px;
-    width: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
-}
-
-.ahalna-text-logo {
-    font-family: 'Outfit', sans-serif;
-    font-size: 3.2rem;
-    font-weight: 800;
-    letter-spacing: 4px;
-    color: #ffffff;
-    text-transform: uppercase;
-    text-shadow: 0 4px 15px rgba(0,0,0,0.4);
-}
-
-.brand-card-badge {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    padding: 0.35rem 0.85rem;
-    border-radius: 50px;
-    background: rgba(255,255,255,0.18);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,0.3);
-    margin-bottom: 1rem;
-    color: #ffffff;
-}
-
-.brand-card-title {
-    font-size: 2.5rem;
-    font-weight: 800;
-    margin-bottom: 0.75rem;
-    font-family: 'Outfit', sans-serif;
-    color: #ffffff;
-    line-height: 1.15;
-}
-
-.brand-card-desc {
-    font-size: 1.1rem;
-    color: rgba(255,255,255,0.9);
-    line-height: 1.6;
-    margin-bottom: 2rem;
-    max-width: 520px;
-}
-
-.brand-card-meta {
-    display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
+    min-height: 380px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+    user-select: none;
+    outline: none;
 }
 
-.product-count-tag {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: rgba(255,255,255,0.85);
-    background: rgba(0,0,0,0.25);
-    padding: 0.45rem 1rem;
-    border-radius: 50px;
-    border: 1px solid rgba(255,255,255,0.15);
+.brand-menu-card:hover,
+.brand-menu-card:focus-visible {
+    background-color: #fafafa;
 }
 
-.brand-card-btn {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #ffffff;
-    display: inline-flex;
+.brand-menu-img-wrap {
+    height: 220px;
+    display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.8rem 1.85rem;
-    border-radius: 50px;
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(8px);
-    border: 1.5px solid rgba(255,255,255,0.7);
-    transition: all 0.3s ease;
+    justify-content: center;
+    margin-bottom: 2rem;
+    position: relative;
+    padding: 0.5rem;
 }
 
-.brand-portal-card:hover .brand-card-btn {
-    background: #ffffff;
-    color: #0b1d3a;
-    border-color: #ffffff;
+.brand-menu-img {
+    max-height: 200px;
+    max-width: 88%;
+    object-fit: contain;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.06));
+}
+
+.brand-menu-card:hover .brand-menu-img,
+.brand-menu-card:focus-visible .brand-menu-img {
+    transform: translateY(-4px) scale(1.04);
+}
+
+.brand-menu-footer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #f3f4f6;
+}
+
+.brand-menu-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.brand-menu-name {
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: #111827;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    transition: color 0.15s ease;
+    display: inline-block;
+}
+
+.brand-menu-card:hover .brand-menu-name,
+.brand-menu-card:focus-visible .brand-menu-name {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 2.5px;
+}
+
+.brand-menu-desc {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #6b7280;
+    letter-spacing: 0.01em;
+}
+
+.brand-menu-chevron {
+    color: #e3000f; /* Signature red chevron */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.15s ease;
+    flex-shrink: 0;
+}
+
+.brand-menu-chevron svg {
+    width: 24px;
+    height: 24px;
+    stroke-width: 3;
+}
+
+.brand-menu-card:hover .brand-menu-chevron,
+.brand-menu-card:focus-visible .brand-menu-chevron {
     transform: translateX(4px);
+    color: #c9000d;
 }
 
-.brand-card-ahalna:hover .brand-card-btn {
-    color: #7b2c2c;
+/* Fallback aliases for legacy card classes */
+.brand-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    background-color: #e5e7eb;
+    gap: 1px;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.brand-portal-card {
+    background-color: #ffffff;
+    cursor: pointer;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .menu-page-header {
+        margin-bottom: 1.75rem;
+    }
+    .menu-page-title {
+        font-size: 2.25rem;
+    }
+    .menu-page-subtitle {
+        font-size: 1rem;
+    }
+    .brand-menu-grid,
+    .brand-cards-grid {
+        grid-template-columns: 1fr;
+        border-radius: 16px;
+    }
+    .brand-menu-card {
+        padding: 2.5rem 1.75rem 1.75rem 1.75rem;
+        min-height: 320px;
+    }
+    .brand-menu-img-wrap {
+        height: 180px;
+        margin-bottom: 1.5rem;
+    }
+    .brand-menu-img {
+        max-height: 160px;
+    }
+    .brand-menu-name {
+        font-size: 1.25rem;
+    }
+    .brand-menu-desc {
+        font-size: 0.88rem;
+    }
 }
 
 /* Product View Nav Bar & Tabs */

@@ -75,50 +75,48 @@ async function main() {
                     </div>`;
 
       const newMainHtml = `<main>
-        <section class="page-header" style="background-color: #fcfcfc; padding: 5rem 0 3.5rem 0; text-align: center; border-bottom: 1px solid #eee;">
-            <div class="container">
-                <h1 style="font-size: 3.5rem; font-weight: 800; color: #000; margin-bottom: 1.25rem;">Våra Produkter</h1>
-                <p style="font-size: 1.25rem; color: #555; max-width: 700px; margin: 0 auto; line-height: 1.6;">Välj varumärke för att upptäcka respektive sortiment av autentiska mellanösternska delikatesser.</p>
-            </div>
-        </section>
-
         <!-- STEG 1: VÄLJ VARUMÄRKE -->
-        <section id="brand-selection-view" class="brand-selection-section" style="padding: 5rem 0 7rem 0;">
-            <div class="container">
-                <div class="brand-cards-grid">
+        <section id="brand-selection-view" class="brand-selection-section">
+            <div class="brand-selection-container">
+                <div class="menu-page-header">
+                    <h1 class="menu-page-title">Meny</h1>
+                    <p class="menu-page-subtitle">Välj varumärke för att upptäcka sortimentet</p>
+                </div>
+
+                <div class="brand-menu-grid">
                     <!-- Mathörnet Kort -->
-                    <div class="brand-portal-card brand-card-mathornet" onclick="selectBrand('mathornet')">
-                        <div class="brand-card-bg" style="background-image: url('img/mathörnet.png');"></div>
-                        <div class="brand-card-overlay"></div>
-                        <div class="brand-card-content">
-                            <div class="brand-card-logo-wrap">
-                                <img src="img/mathornet_logo_ny_transparent.png" alt="Mathörnet" class="brand-card-logo">
+                    <div class="brand-menu-card brand-card-mathornet" onclick="selectBrand('mathornet')" onkeydown="if(event.key==='Enter'||event.key===' '){selectBrand('mathornet');event.preventDefault();}" role="button" tabindex="0" aria-label="Mathörnet sortiment">
+                        <div class="brand-menu-img-wrap">
+                            <img src="img/products/kubbe-trabolsie.png" alt="Mathörnet produkter" class="brand-menu-img" loading="eager">
+                        </div>
+                        <div class="brand-menu-footer">
+                            <div class="brand-menu-info">
+                                <span class="brand-menu-name">Mathörnet</span>
+                                <span class="brand-menu-desc">Originalsortiment • ${mathornetProducts.length} produkter</span>
                             </div>
-                            <span class="brand-card-badge">Original Sortiment</span>
-                            <h2 class="brand-card-title">Mathörnet</h2>
-                            <p class="brand-card-desc">Autentiska orientaliska specialiteter. Vår klassiska serie av traditionell kubbe, tillverkad i Strängnäs med omsorg och genuina smaker.</p>
-                            <div class="brand-card-meta">
-                                <span class="product-count-tag">${mathornetProducts.length} produkter</span>
-                                <span class="brand-card-btn">Utforska Mathörnet &rarr;</span>
-                            </div>
+                            <span class="brand-menu-chevron" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </span>
                         </div>
                     </div>
 
                     <!-- Ahalna Kort -->
-                    <div class="brand-portal-card brand-card-ahalna" onclick="selectBrand('ahalna')">
-                        <div class="brand-card-bg" style="background-image: url('img/hero_feast_1780604012322.png');"></div>
-                        <div class="brand-card-overlay"></div>
-                        <div class="brand-card-content">
-                            <div class="brand-card-logo-wrap">
-                                <div class="ahalna-text-logo">AHALNA</div>
+                    <div class="brand-menu-card brand-card-ahalna" onclick="selectBrand('ahalna')" onkeydown="if(event.key==='Enter'||event.key===' '){selectBrand('ahalna');event.preventDefault();}" role="button" tabindex="0" aria-label="Ahalna delikatesser">
+                        <div class="brand-menu-img-wrap">
+                            <img src="https://zgylvcwzwfqmligweato.supabase.co/storage/v1/object/public/images/upload_1794897091125_AH_Trabolsie.jpeg" alt="Ahalna delikatesser" class="brand-menu-img" loading="eager">
+                        </div>
+                        <div class="brand-menu-footer">
+                            <div class="brand-menu-info">
+                                <span class="brand-menu-name">Ahalna</span>
+                                <span class="brand-menu-desc">Premium Delikatesser • ${ahalnaProducts.length > 0 ? ahalnaProducts.length + ' produkter' : 'Kommer snart'}</span>
                             </div>
-                            <span class="brand-card-badge">Premium Delikatesser</span>
-                            <h2 class="brand-card-title">Ahalna</h2>
-                            <p class="brand-card-desc">En ny värld av orientaliska delikatesser och moderna smakupplevelser för både vardag och fest.</p>
-                            <div class="brand-card-meta">
-                                <span class="product-count-tag">${ahalnaProducts.length > 0 ? ahalnaProducts.length + ' produkter' : 'Kommer snart'}</span>
-                                <span class="brand-card-btn">Utforska Ahalna &rarr;</span>
-                            </div>
+                            <span class="brand-menu-chevron" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -458,20 +456,16 @@ ${ahalnaGridHtml}
       nyheterHtml = nyheterHtml.replace(featuredRegex, featuredHtml);
     }
     
-    const newsGridStartStr = '<div class="news-grid-layout">';
-    const newsGridStartIdx = nyheterHtml.indexOf(newsGridStartStr);
-    if (newsGridStartIdx !== -1) {
-      const afterNewsGridStart = nyheterHtml.substring(newsGridStartIdx + newsGridStartStr.length);
-      const newsGridEndIdx = newsGridStartIdx + newsGridStartStr.length + afterNewsGridStart.indexOf('</div>\n        </div>\n    </main>');
+    // News grid: display other news (excluding the featured news[0] to avoid duplicates)
+    const otherNews = news.slice(1);
+    let newNewsList = '';
+    for (const n of otherNews) {
+      // Format date: "24 sep 2026"
+      const dateObj = n.createdAt || new Date();
+      const months = ['jan', 'feb', 'mar', 'apr', 'maj', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+      const dateStr = `${dateObj.getDate().toString().padStart(2, '0')} ${months[dateObj.getMonth()]} ${dateObj.getFullYear()}`;
       
-      let newNewsList = '';
-      for (const n of news) {
-        // Format date: "24 sep 2026"
-        const dateObj = n.createdAt || new Date();
-        const months = ['jan', 'feb', 'mar', 'apr', 'maj', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
-        const dateStr = `${dateObj.getDate().toString().padStart(2, '0')} ${months[dateObj.getMonth()]} ${dateObj.getFullYear()}`;
-        
-        newNewsList += `
+      newNewsList += `
                     <!-- Dynamisk Nyhet: ${n.title} -->
                     <a href="${n.slug}" class="news-card-v2" style="background: #fff; border-radius: 18px; border: 1px solid rgba(0,0,0,0.07); overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.04); display: flex; flex-direction: column; text-decoration: none; transition: transform 0.25s ease, box-shadow 0.25s ease;">
                         <div class="news-img" style="height: 240px; overflow: hidden; position: relative;">
@@ -490,12 +484,12 @@ ${ahalnaGridHtml}
                             </div>
                         </div>
                     </a>\n`;
-      }
-      
-      const beforeNewsGrid = nyheterHtml.substring(0, newsGridStartIdx + newsGridStartStr.length);
-      const afterNewsGrid = nyheterHtml.substring(newsGridEndIdx);
-      
-      nyheterHtml = beforeNewsGrid + '\n' + newNewsList + afterNewsGrid;
+    }
+    
+    const gridRegex = /(<div class="news-grid-layout"[^>]*>)[\s\S]*?(<\/div>\s*<\/div>\s*<\/main>)/i;
+    const gridDisplay = otherNews.length > 0 ? '' : ' style="display: none;"';
+    if (gridRegex.test(nyheterHtml)) {
+      nyheterHtml = nyheterHtml.replace(gridRegex, `<div class="news-grid-layout"${gridDisplay}>\n${newNewsList}            $2`);
       fs.writeFileSync(nyheterPath, nyheterHtml);
     }
     
@@ -1048,14 +1042,9 @@ ${(() => {
       
       // Replace grid layout for other recipes
       const gridStartStr = '<div class="news-grid-layout">';
-      const gridStartIdx = receptHtml.indexOf(gridStartStr);
-      if (gridStartIdx !== -1) {
-        const afterGridStart = receptHtml.substring(gridStartIdx + gridStartStr.length);
-        const gridEndIdx = gridStartIdx + gridStartStr.length + afterGridStart.indexOf('</div>\n        </div>\n    </main>');
-        
-        let newRecipesList = '';
-        for (const r of otherRecipes) {
-          newRecipesList += `
+      let newRecipesList = '';
+      for (const r of otherRecipes) {
+        newRecipesList += `
             <a href="${r.slug}" class="news-card-v2" style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
                 <div class="news-img" style="height: 250px; overflow: hidden; position: relative;">
                     <img src="${r.featuredImage || 'img/mathornet_logo_ny_transparent.png'}" alt="${r.title}" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
@@ -1067,21 +1056,17 @@ ${(() => {
                     <span class="btn" style="background: #64b000; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; width: 100%; text-align: center; font-weight: bold; margin-top: auto;">Till receptet</span>
                 </div>
             </a>\n`;
-        }
-        
-        const beforeGrid = receptHtml.substring(0, gridStartIdx + gridStartStr.length);
-        const afterGrid = receptHtml.substring(gridEndIdx);
-        receptHtml = beforeGrid + '\n' + newRecipesList + afterGrid;
+      }
+      
+      const gridRegex = /(<div class="news-grid-layout"[^>]*>)[\s\S]*?(<\/div>\s*<\/div>\s*<\/main>)/i;
+      const gridDisplay = otherRecipes.length > 0 ? '' : ' style="display: none;"';
+      if (gridRegex.test(receptHtml)) {
+        receptHtml = receptHtml.replace(gridRegex, `<div class="news-grid-layout"${gridDisplay}>\n${newRecipesList}            $2`);
       }
     } else {
       // Empty state: remove featured post and show friendly message in grid
       receptHtml = receptHtml.replace(featuredRegex, '');
-      const gridStartStr = '<div class="news-grid-layout">';
-      const gridStartIdx = receptHtml.indexOf(gridStartStr);
-      if (gridStartIdx !== -1) {
-        const afterGridStart = receptHtml.substring(gridStartIdx + gridStartStr.length);
-        const gridEndIdx = gridStartIdx + gridStartStr.length + afterGridStart.indexOf('</div>\n        </div>\n    </main>');
-        const emptyStateHtml = `
+      const emptyStateHtml = `
             <div style="grid-column: 1 / -1; text-align: center; padding: 5rem 2rem; background: #fff; border-radius: 20px; border: 1px dashed #cbd5e1; margin-bottom: 3rem;">
                 <div style="width: 64px; height: 64px; background: #f0fdf4; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 1.75rem;">
                     🍽️
@@ -1090,9 +1075,9 @@ ${(() => {
                 <p style="font-size: 1.05rem; color: #64748b; max-width: 500px; margin: 0 auto 1.5rem; line-height: 1.6;">Vi fyller snart på med läckra och autentiska recept från Mellanöstern. Håll utkik!</p>
                 <a href="produkter" style="display: inline-flex; align-items: center; gap: 0.5rem; background: #64b000; color: #fff; padding: 12px 24px; border-radius: 50px; font-weight: 700; text-decoration: none; font-size: 0.95rem;">Utforska våra produkter</a>
             </div>\n`;
-        const beforeGrid = receptHtml.substring(0, gridStartIdx + gridStartStr.length);
-        const afterGrid = receptHtml.substring(gridEndIdx);
-        receptHtml = beforeGrid + '\n' + emptyStateHtml + afterGrid;
+      const gridRegex = /(<div class="news-grid-layout"[^>]*>)[\s\S]*?(<\/div>\s*<\/div>\s*<\/main>)/i;
+      if (gridRegex.test(receptHtml)) {
+        receptHtml = receptHtml.replace(gridRegex, `<div class="news-grid-layout">\n${emptyStateHtml}            $2`);
       }
     }
     fs.writeFileSync(receptPath, receptHtml);
@@ -1107,6 +1092,47 @@ ${(() => {
           console.log(`Cleaning up deleted recipe static file: ${f}`);
           try { fs.unlinkSync(path.join(publicDir, f)); } catch(e) {}
         }
+      }
+    }
+
+    // Clean up stale product files
+    const activeProductFiles = new Set(products.map(p => `${cleanSlug(p.slug)}.html`));
+    const knownOldProductFiles = [
+      '17-5865468.html',
+      'ahalna-jesper-testar-123.html',
+      'fwefwefwe.html',
+      'jesper-testar-123.html',
+      'kuttle.html',
+      'testarTESTAR123.html'
+    ];
+    for (const f of knownOldProductFiles) {
+      if (!activeProductFiles.has(f) && fs.existsSync(path.join(publicDir, f))) {
+        console.log(`Cleaning up stale product file: ${f}`);
+        try { fs.unlinkSync(path.join(publicDir, f)); } catch(e) {}
+      }
+    }
+
+    // Clean up stale news files
+    const activeNewsFiles = new Set(news.map(n => `${n.slug}.html`));
+    const knownOldNewsFiles = [
+      'nyhet-arets-leverantor-2026.html',
+      'nyhet-blu-grossist.html',
+      'nyhet-hallbar-framtid.html',
+      'nyhet-hostens-sortiment.html',
+      'nyhet-ica-maxi-avtal.html',
+      'nyhet-ny-produktionsanlaggning.html',
+      'nyhet-ny-vd-utsedd.html',
+      'nyhet-okad-produktion-veganskt.html',
+      'nyhet-perfekta-falafeln.html',
+      'nyhet-sommarbuffe.html',
+      'nyhet-sponsrar-fotbollslag.html',
+      'nyhet-staller-ut-pa-massa.html',
+      'nytt-samarbete-med-webix.html'
+    ];
+    for (const f of knownOldNewsFiles) {
+      if (!activeNewsFiles.has(f) && fs.existsSync(path.join(publicDir, f))) {
+        console.log(`Cleaning up stale news file: ${f}`);
+        try { fs.unlinkSync(path.join(publicDir, f)); } catch(e) {}
       }
     }
     
