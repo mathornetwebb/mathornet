@@ -252,7 +252,8 @@
                     <h2 style="font-size: 2.5rem; margin-bottom: 1rem; color: #111;">Bli vår nästa framgångssaga!</h2>
                     <p style="font-size: 1.2rem; font-weight: 500; color: #111; line-height: 1.6; margin-bottom: 2rem;">Vi letar alltid efter passionerade återförsäljare som vill erbjuda det lilla extra till sina kunder. Fyll i formuläret så tar vi nästa steg tillsammans.</p>
                     
-                    <form class="about-contact-form" action="#" method="POST">
+                    <form class="about-contact-form" data-form-type="aterforsaljare" action="/api/contact" method="POST">
+                        <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;pointer-events:none;" aria-hidden="true">
                         <div class="form-row">
                             <div class="form-group half">
                                 <label for="company">Företagsnamn *</label>
@@ -393,6 +394,7 @@
             });
         });
     </script>
+    <script src="js/contact-form.js"></script>
     <!-- Google Translate Script & Custom Logic -->
     <div id="google_translate_element" style="display:none;"></div>
     <script src="js/translate.js"></script>

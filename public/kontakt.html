@@ -84,7 +84,8 @@
                     <p style="font-size: 1.2rem; font-weight: 500; color: #111; line-height: 1.6; margin-bottom: 0;">Vi hör av oss inom 24 timmar</p>
                 </div>
                 
-                <form class="about-contact-form" action="#" method="POST" style="background: #fff; padding: 2.5rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #eee;">
+                <form class="about-contact-form" data-form-type="kontakt" action="/api/contact" method="POST" style="background: #fff; padding: 2.5rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #eee;">
+                    <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;pointer-events:none;" aria-hidden="true">
                     <div class="form-row">
                         <div class="form-group half">
                             <label for="company">Företag (frivilligt)</label>
@@ -252,6 +253,7 @@
             }, 100);
         });
     </script>
+    <script src="js/contact-form.js"></script>
     <!-- Google Translate Script & Custom Logic -->
     <div id="google_translate_element" style="display:none;"></div>
     <script src="js/translate.js"></script>
