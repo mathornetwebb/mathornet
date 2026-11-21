@@ -105,7 +105,7 @@ const FOOTER_HTML = `<footer class="site-footer">
                 <p style="color: rgba(255,255,255,0.9); max-width: 260px; font-size: 0.9rem; line-height: 1.6;">Mathörnet bygger på generationer av kunskap om orientalisk matlagning. Äkta råvaror, äkta smak.</p>
                 <div class="social-links">
                     <!-- Facebook -->
-                    <a href="https://www.facebook.com/mathornet" target="_blank" rel="noopener noreferrer" aria-label="Mathörnet på Facebook">
+                    <a href="https://www.facebook.com/p/Math%C3%B6rnet-61595362481669/" target="_blank" rel="noopener noreferrer" aria-label="Mathörnet på Facebook">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.5-.14-2.75-.14-2.8 0-4.75 1.7-4.75 4.86V9.5H7v4h3V22h4v-8.5z"/>
                         </svg>
@@ -117,7 +117,7 @@ const FOOTER_HTML = `<footer class="site-footer">
                         </svg>
                     </a>
                     <!-- Instagram -->
-                    <a href="https://www.instagram.com/mathornet" target="_blank" rel="noopener noreferrer" aria-label="Mathörnet på Instagram">
+                    <a href="https://www.instagram.com/mathornet/" target="_blank" rel="noopener noreferrer" aria-label="Mathörnet på Instagram">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
@@ -125,7 +125,7 @@ const FOOTER_HTML = `<footer class="site-footer">
                         </svg>
                     </a>
                     <!-- TikTok -->
-                    <a href="https://www.tiktok.com/@mathornet" target="_blank" rel="noopener noreferrer" aria-label="Mathörnet på TikTok">
+                    <a href="https://www.tiktok.com/@mathornet1" target="_blank" rel="noopener noreferrer" aria-label="Mathörnet på TikTok">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.04-.1z"/>
                         </svg>
@@ -147,11 +147,11 @@ const FOOTER_HTML = `<footer class="site-footer">
             </div>
 
             <div class="footer-col">
-                <h3>Kontakt</h3>
+                <h3>Besöksadress</h3>
                 <ul class="contact-info">
-                    <li>Strängnäsvägen 123, 132 44 Strängnäs</li>
+                    <li>Mariefredsvägen 35, 64541, Strängnäs</li>
                     <li><a href="mailto:info@mathornet.se">info@mathornet.se</a></li>
-                    <li><a href="tel:0721826784" style="color: inherit; text-decoration: none; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">072 - 182 67 84</a></li>
+                    <li><a href="tel:0766319971" style="color: inherit; text-decoration: none; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">0766319971</a></li>
                 </ul>
             </div>
         </div>
