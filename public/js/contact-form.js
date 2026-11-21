@@ -2,8 +2,47 @@ document.addEventListener('DOMContentLoaded', () => {
   const forms = document.querySelectorAll('form.about-contact-form');
   if (!forms.length) return;
 
-  forms.forEach((form) => {
-    // Create status message container if not already present
+  function renderThankYou(form, formType, originalHtml) {
+    const isReseller = formType === 'aterforsaljare';
+    const baseUrl = isReseller ? '/aterforsaljare' : '/kontakt';
+    const title = isReseller ? 'Tack för din intresseanmälan!' : 'Tack för ditt meddelande!';
+    const body = isReseller
+      ? 'Vi har tagit emot din intresseanmälan och återkommer till dig så snart som möjligt.'
+      : 'Vi har tagit emot din förfrågan och hör av oss inom 24 timmar.';
+
+    form.innerHTML = `
+      <div class="contact-thank-you" style="text-align: center; padding: 2.5rem 1.5rem;">
+        <div style="width: 64px; height: 64px; border-radius: 50%; background: #f0fdf4; border: 1px solid #bbf7d0; color: #64b000; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1.25rem;">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <h2 style="font-size: 1.85rem; font-weight: 800; color: #111827; margin-bottom: 0.75rem; letter-spacing: -0.02em;">${title}</h2>
+        <p style="font-size: 1.05rem; color: #4b5563; max-width: 420px; margin: 0 auto 2rem auto; line-height: 1.6;">${body}</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center;">
+          <a href="/" style="display: inline-flex; align-items: center; justify-content: center; background: #64b000; color: #ffffff; padding: 0.85rem 1.75rem; border-radius: 8px; font-weight: 600; font-size: 0.95rem; text-decoration: none;">Tillbaka till startsidan</a>
+          <button type="button" class="reset-contact-form-btn" style="display: inline-flex; align-items: center; justify-content: center; background: #f3f4f6; color: #111827; padding: 0.85rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.95rem; border: 1px solid #e5e7eb; cursor: pointer;">Skicka ett nytt meddelande</button>
+        </div>
+      </div>
+    `;
+
+    const resetBtn = form.querySelector('.reset-contact-form-btn');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        try {
+          window.history.pushState({}, '', baseUrl);
+        } catch (e) {}
+        form.innerHTML = originalHtml;
+        attachFormHandler(form);
+      });
+    }
+  }
+
+  function attachFormHandler(form) {
+    const formType = form.dataset.formType || 'kontakt';
+    const originalHtml = form.innerHTML;
+
+    // Create status message container for errors
     let statusEl = form.querySelector('.form-status-message');
     if (!statusEl) {
       statusEl = document.createElement('div');
@@ -21,7 +60,14 @@ document.addEventListener('DOMContentLoaded', () => {
       form.appendChild(statusEl);
     }
 
-    form.addEventListener('submit', async (e) => {
+    // If user lands directly on /kontakt-tack or /aterforsaljare-tack, show thank-you view
+    const currentPath = window.location.pathname.replace(/\/+$/, '');
+    if (currentPath.endsWith('-tack')) {
+      renderThankYou(form, formType, originalHtml);
+      return;
+    }
+
+    form.onsubmit = async (e) => {
       e.preventDefault();
 
       const submitBtn = form.querySelector('button[type="submit"]');
@@ -29,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const formData = new FormData(form);
       const payload = {
-        formType: form.dataset.formType || 'kontakt',
+        formType,
         company: formData.get('company') || '',
         orgnr: formData.get('orgnr') || '',
         name: formData.get('name') || formData.get('contact') || '',
@@ -61,15 +107,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await res.json().catch(() => ({}));
 
         if (res.ok && data.success) {
-          statusEl.style.display = 'block';
-          statusEl.style.backgroundColor = '#f0fdf4';
-          statusEl.style.color = '#166534';
-          statusEl.style.border = '1px solid #bbf7d0';
-          statusEl.textContent =
-            payload.formType === 'aterforsaljare'
-              ? 'Tack för din intresseanmälan! Vi återkommer till dig så snart som möjligt.'
-              : 'Tack för ditt meddelande! Vi hör av oss inom 24 timmar.';
-          form.reset();
+          const thankYouUrl = formType === 'aterforsaljare' ? '/aterforsaljare-tack' : '/kontakt-tack';
+
+          // Update URL for Google Ads & Google Tag Manager (History Change / Pageview trigger)
+          try {
+            window.history.pushState({ formSubmitted: true, formType }, '', thankYouUrl);
+          } catch (err) {}
+
+          // Push event to GTM dataLayer if present
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: 'form_submit_success',
+            form_type: formType,
+            page_path: thankYouUrl,
+          });
+
+          // Replace form with clean thank-you box
+          renderThankYou(form, formType, originalHtml);
+          form.scrollIntoView({ behavior: 'smooth', block: 'center' });
         } else {
           throw new Error(data.error || 'Något gick fel');
         }
@@ -80,7 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
         statusEl.style.border = '1px solid #fecaca';
         statusEl.textContent =
           'Kunde inte skicka meddelandet just nu. Försök igen eller mejla oss direkt på info@mathornet.se.';
-      } finally {
         if (submitBtn) {
           submitBtn.disabled = false;
           submitBtn.style.opacity = '1';
@@ -88,6 +142,8 @@ document.addEventListener('DOMContentLoaded', () => {
           submitBtn.textContent = originalBtnText;
         }
       }
-    });
-  });
+    };
+  }
+
+  forms.forEach((form) => attachFormHandler(form));
 });
