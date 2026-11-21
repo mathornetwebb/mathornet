@@ -820,6 +820,13 @@ main {
     padding-bottom: 2rem;
 }
 
+/* Keep fixed reveal-footer hidden above the fold on large/wide desktop screens */
+@media (min-width: 1500px) {
+    body:has(.site-footer) main {
+        min-height: calc(100vh - 80px);
+    }
+}
+
 .news-grid-layout {
     margin-bottom: 2rem !important;
 }
