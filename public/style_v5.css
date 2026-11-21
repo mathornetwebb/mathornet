@@ -3044,7 +3044,7 @@ html[dir="rtl"] .pack-type-selector > span {
 }
 
 .brand-menu-chevron {
-    color: #e3000f; /* Signature red chevron */
+    color: var(--theme-green, #64b000);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3061,7 +3061,7 @@ html[dir="rtl"] .pack-type-selector > span {
 .brand-menu-card:hover .brand-menu-chevron,
 .brand-menu-card:focus-visible .brand-menu-chevron {
     transform: translateX(4px);
-    color: #c9000d;
+    color: #4d8e00;
 }
 
 /* Fallback aliases for legacy card classes */
@@ -3179,48 +3179,29 @@ html[dir="rtl"] .pack-type-selector > span {
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
-/* Active Brand Banner */
+/* Minimalist Brand Header */
 .active-brand-banner {
-    padding: 2.5rem 3rem;
-    border-radius: 20px;
-    margin-bottom: 3.5rem;
-    color: #ffffff;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-}
-
-.mathornet-banner {
-    background: linear-gradient(135deg, #0b1d3a 0%, #173663 100%);
-}
-
-.ahalna-banner {
-    background: linear-gradient(135deg, #7b2c2c 0%, #a83838 100%);
-}
-
-.banner-pill {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    background: rgba(255,255,255,0.2);
-    padding: 0.3rem 0.8rem;
-    border-radius: 50px;
-    margin-bottom: 0.75rem;
-    color: #ffffff;
+    text-align: center;
+    padding: 1rem 0 2.75rem 0;
+    margin: 0 auto;
+    max-width: 620px;
 }
 
 .active-brand-banner h2 {
-    font-size: 2.2rem;
+    font-size: 2.25rem;
     font-weight: 800;
-    margin-bottom: 0.5rem;
-    color: #ffffff !important;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.65rem;
+    color: #111827 !important;
 }
 
 .active-brand-banner p {
-    font-size: 1.1rem;
-    color: rgba(255,255,255,0.9);
-    max-width: 600px;
-    line-height: 1.5;
+    font-size: 1.05rem;
+    color: #6b7280;
+    line-height: 1.6;
+    max-width: 480px;
+    margin: 0 auto;
+    text-wrap: balance;
 }
 
 /* Empty Brand State */
@@ -3284,10 +3265,10 @@ html[dir="rtl"] .pack-type-selector > span {
         font-size: 2rem;
     }
     .active-brand-banner {
-        padding: 1.75rem 1.5rem;
+        padding: 0.5rem 0 2rem 0;
     }
     .active-brand-banner h2 {
-        font-size: 1.6rem !important;
+        font-size: 1.75rem !important;
     }
 }
 

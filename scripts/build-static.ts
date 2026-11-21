@@ -79,7 +79,7 @@ async function main() {
         <section id="brand-selection-view" class="brand-selection-section">
             <div class="brand-selection-container">
                 <div class="menu-page-header">
-                    <h1 class="menu-page-title">Meny</h1>
+                    <h1 class="menu-page-title">Våra produkter</h1>
                     <p class="menu-page-subtitle">Välj varumärke för att upptäcka sortimentet</p>
                 </div>
 
@@ -92,7 +92,7 @@ async function main() {
                         <div class="brand-menu-footer">
                             <div class="brand-menu-info">
                                 <span class="brand-menu-name">Mathörnet</span>
-                                <span class="brand-menu-desc">Originalsortiment • ${mathornetProducts.length} produkter</span>
+                                <span class="brand-menu-desc">Original &amp; Premium • ${mathornetProducts.length} produkter</span>
                             </div>
                             <span class="brand-menu-chevron" aria-hidden="true">
                                 <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
@@ -103,14 +103,14 @@ async function main() {
                     </div>
 
                     <!-- Ahalna Kort -->
-                    <div class="brand-menu-card brand-card-ahalna" onclick="selectBrand('ahalna')" onkeydown="if(event.key==='Enter'||event.key===' '){selectBrand('ahalna');event.preventDefault();}" role="button" tabindex="0" aria-label="Ahalna delikatesser">
+                    <div class="brand-menu-card brand-card-ahalna" onclick="selectBrand('ahalna')" onkeydown="if(event.key==='Enter'||event.key===' '){selectBrand('ahalna');event.preventDefault();}" role="button" tabindex="0" aria-label="Ahalna sortiment">
                         <div class="brand-menu-img-wrap">
-                            <img src="https://zgylvcwzwfqmligweato.supabase.co/storage/v1/object/public/images/upload_1794897091125_AH_Trabolsie.jpeg" alt="Ahalna delikatesser" class="brand-menu-img" loading="eager">
+                            <img src="https://zgylvcwzwfqmligweato.supabase.co/storage/v1/object/public/images/upload_1794897091125_AH_Trabolsie.jpeg" alt="Ahalna produkter" class="brand-menu-img" loading="eager">
                         </div>
                         <div class="brand-menu-footer">
                             <div class="brand-menu-info">
                                 <span class="brand-menu-name">Ahalna</span>
-                                <span class="brand-menu-desc">Premium Delikatesser • ${ahalnaProducts.length > 0 ? ahalnaProducts.length + ' produkter' : 'Kommer snart'}</span>
+                                <span class="brand-menu-desc">Standardsortiment • ${ahalnaProducts.length > 0 ? ahalnaProducts.length + ' produkter' : 'Kommer snart'}</span>
                             </div>
                             <span class="brand-menu-chevron" aria-hidden="true">
                                 <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
@@ -144,26 +144,20 @@ async function main() {
                     </div>
                 </div>
 
-                <!-- Mathörnet Banner & Grid -->
-                <div id="brand-banner-mathornet" class="active-brand-banner mathornet-banner">
-                    <div class="brand-banner-text">
-                        <span class="banner-pill">Sortiment: Mathörnet</span>
-                        <h2>Autentiska orientaliska specialiteter</h2>
-                        <p>Klassiska recept och traditionella smaker, tillagade och förpackade med högsta kvalitet.</p>
-                    </div>
+                <!-- Mathörnet Rubrik & Grid -->
+                <div id="brand-banner-mathornet" class="active-brand-banner">
+                    <h2>Mathörnet</h2>
+                    <p>Vårt original- och premiumsortiment. Klassiska recept tillagade med högsta kvalitet.</p>
                 </div>
 
                 <div id="grid-mathornet" class="products-grid-large brand-grid">
 ${mathornetGridHtml}
                 </div>
 
-                <!-- Ahalna Banner & Grid -->
-                <div id="brand-banner-ahalna" class="active-brand-banner ahalna-banner" style="display: none;">
-                    <div class="brand-banner-text">
-                        <span class="banner-pill">Sortiment: Ahalna</span>
-                        <h2>En ny värld av orientaliska delikatesser</h2>
-                        <p>Utvalda råvaror och moderna orientaliska smaker med premiumkänsla.</p>
-                    </div>
+                <!-- Ahalna Rubrik & Grid -->
+                <div id="brand-banner-ahalna" class="active-brand-banner" style="display: none;">
+                    <h2>Ahalna</h2>
+                    <p>Vårt prisvärda standardsortiment med goda orientaliska smaker för vardagen.</p>
                 </div>
 
                 <div id="grid-ahalna" class="products-grid-large brand-grid" style="display: none;">
@@ -304,11 +298,11 @@ ${ahalnaGridHtml}
                             '</div>';
                     }
 
-                    const mathornetCountTag = document.querySelector('.brand-card-mathornet .product-count-tag');
-                    if (mathornetCountTag) mathornetCountTag.textContent = mathornetCards.length + ' produkter';
+                    const mathornetDescEl = document.querySelector('.brand-card-mathornet .brand-menu-desc');
+                    if (mathornetDescEl) mathornetDescEl.textContent = 'Original & Premium • ' + mathornetCards.length + ' produkter';
 
-                    const ahalnaCountTag = document.querySelector('.brand-card-ahalna .product-count-tag');
-                    if (ahalnaCountTag) ahalnaCountTag.textContent = ahalnaCards.length > 0 ? ahalnaCards.length + ' produkter' : 'Kommer snart';
+                    const ahalnaDescEl = document.querySelector('.brand-card-ahalna .brand-menu-desc');
+                    if (ahalnaDescEl) ahalnaDescEl.textContent = 'Standardsortiment • ' + (ahalnaCards.length > 0 ? ahalnaCards.length + ' produkter' : 'Kommer snart');
 
                     const mathornetTabBtn = document.querySelector('.brand-tab-btn[data-brand="mathornet"]');
                     if (mathornetTabBtn) mathornetTabBtn.textContent = 'Mathörnet (' + mathornetCards.length + ')';

@@ -1,6 +1,32 @@
+import fs from 'fs';
+import path from 'path';
 import prisma from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
+
+async function tryServeStaticHtml(normalizedSlug: string, reqUrl: string): Promise<Response | null> {
+  if (!/^[a-zA-Z0-9._-]+$/.test(normalizedSlug)) return null;
+  try {
+    const filePath = path.join(process.cwd(), 'public', `${normalizedSlug}.html`);
+    if (fs.existsSync(filePath)) {
+      const html = fs.readFileSync(filePath, 'utf8');
+      return new Response(html, {
+        headers: { 'Content-Type': 'text/html; charset=utf-8' },
+      });
+    }
+  } catch (e) {}
+  try {
+    const staticUrl = new URL(`/${encodeURIComponent(normalizedSlug)}.html`, reqUrl);
+    const staticRes = await fetch(staticUrl);
+    if (staticRes.ok) {
+      const html = await staticRes.text();
+      return new Response(html, {
+        headers: { 'Content-Type': 'text/html; charset=utf-8' },
+      });
+    }
+  } catch (e) {}
+  return null;
+}
 
 function cleanSlug(slug?: string | null): string {
   return (slug || '').replace(/^\/+/, '');
@@ -143,10 +169,11 @@ export async function GET(
   _req: Request,
   { params }: { params: Promise<{ slug: string }> }
 ) {
+  let normalizedSlug = '';
   try {
     const { slug } = await params;
     const decodedSlug = decodeURIComponent(slug || '');
-    const normalizedSlug = decodedSlug.replace(/\.html$/i, '').replace(/^\/+/, '');
+    normalizedSlug = decodedSlug.replace(/\.html$/i, '').replace(/^\/+/, '');
 
     if (!normalizedSlug) {
       return new Response('Not found', { status: 404 });
@@ -162,18 +189,8 @@ export async function GET(
     });
 
     if (!product) {
-      if (/^[a-zA-Z0-9._-]+$/.test(normalizedSlug)) {
-        try {
-          const staticUrl = new URL(`/${encodeURIComponent(normalizedSlug)}.html`, _req.url);
-          const staticRes = await fetch(staticUrl);
-          if (staticRes.ok) {
-            const html = await staticRes.text();
-            return new Response(html, {
-              headers: { 'Content-Type': 'text/html; charset=utf-8' },
-            });
-          }
-        } catch (e) {}
-      }
+      const staticResp = await tryServeStaticHtml(normalizedSlug, _req.url);
+      if (staticResp) return staticResp;
       return new Response('Not found', { status: 404 });
     }
 
@@ -499,7 +516,11 @@ ${otherProductsHtml}
       },
     });
   } catch (error) {
-    console.error('Failed to render product page:', error);
+    console.error('Failed to render product page from DB, falling back to static HTML:', error);
+    if (normalizedSlug) {
+      const staticResp = await tryServeStaticHtml(normalizedSlug, _req.url);
+      if (staticResp) return staticResp;
+    }
     return new Response('Internal server error', { status: 500 });
   }
 }
